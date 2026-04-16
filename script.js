@@ -3,7 +3,7 @@
 // =============================================
 
 // ---- CONFIGURATION ----
-// Update this ISO date when 2026 event date is confirmed
+// OSFNA 2026: July 25 – Aug 1, 2026
 const EVENT_DATE = new Date('2026-07-25T10:00:00');
 
 // ---- COUNTDOWN TIMER ----
