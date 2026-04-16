@@ -384,10 +384,10 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
 }
 .section-light {
-  background: var(--off-white);
+  background: #080808;
 }
 .section-mid {
-  background: #EDE9DE;
+  background: #0a0a0a;
 }
 
 .section-label {
@@ -1422,7 +1422,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-head);
 }
 .register-form {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 2.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -1484,7 +1484,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---- FEE CARD ---- */
 .fee-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid #E0DDD5;
   border-radius: var(--radius);
   padding: 1.5rem;
@@ -1521,7 +1521,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---- INFO BOX ---- */
 .info-box {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid #E0DDD5;
   border-radius: var(--radius);
   padding: 1.5rem;
@@ -1551,7 +1551,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .contact-box {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid #E0DDD5;
   border-radius: var(--radius);
   padding: 1.5rem;
@@ -1572,7 +1572,7 @@ a { color: inherit; text-decoration: none; }
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: rgba(255,255,255,0.04);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -1696,7 +1696,7 @@ a { color: inherit; text-decoration: none; }
   gap: 2rem;
 }
 .other-sport-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 2rem;
   border-radius: var(--radius);
   border: 1px solid #E0DDD5;
@@ -1733,7 +1733,7 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 3rem;
 }
 .booth-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 2rem;
   border-radius: var(--radius);
   border: 1px solid #E0DDD5;
@@ -1788,7 +1788,7 @@ a { color: inherit; text-decoration: none; }
   gap: 1.5rem;
 }
 .category-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 2rem;
   border-radius: var(--radius);
   border: 1px solid #E0DDD5;
@@ -1829,7 +1829,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-head);
 }
 .sponsor-tier {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid #E0DDD5;
   border-radius: var(--radius);
   padding: 1.5rem;
@@ -1866,7 +1866,7 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
 }
 .vendor-form {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 2.5rem;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -2089,7 +2089,7 @@ a { color: inherit; text-decoration: none; }
   gap: 2rem;
 }
 .timeline-item {
-  background: white;
+  background: rgba(255,255,255,0.04);
   padding: 1.5rem;
   border-radius: var(--radius);
   border: 1px solid #E0DDD5;
@@ -2140,7 +2140,7 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 2rem;
 }
 .sport-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: var(--radius);
   padding: 2rem;
@@ -2230,7 +2230,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .fee-card {
-  background: white;
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: var(--radius);
   padding: 2rem;
