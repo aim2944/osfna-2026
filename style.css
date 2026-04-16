@@ -2273,7 +2273,7 @@ a { color: inherit; text-decoration: none; }
   .sport-cards { grid-template-columns: 1fr; }
   .divisions { grid-template-columns: 1fr; }
   .champions-grid-compact { grid-template-columns: repeat(2, 1fr); }
-}
+  .tiktok-strip-grid { grid-template-columns: 1fr !important; }}
 
 /* =============================================
    DARK SPORTS PLATFORM — FULL OVERRIDE
