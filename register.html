@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Your Team — OSFNA 2026</title>
+  <meta name="description" content="Register your team for OSFNA 2026 — Soccer, Basketball, Golf. July 25–Aug 1, 2026." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#tournament">Tournament</a></li>
+    <li><a href="vendor.html">Vendors</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="media.html">Media</a></li>
+    <li><a href="register.html" class="active">Register</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <li><a href="index.html#about">About</a></li>
+  <li><a href="index.html#tournament">Tournament</a></li>
+  <li><a href="vendor.html">Vendors</a></li>
+  <li><a href="schedule.html">Schedule</a></li>
+  <li><a href="media.html">Media</a></li>
+  <li><a href="register.html">Register</a></li>
+  <li><a href="index.html#contact">Contact</a></li>
+</ul>
+
+<section class="page-hero" style="border-bottom:4px solid var(--red);">
+  <div class="page-hero-content">
+    <h1>Register Your Team</h1>
+    <p>OSFNA 2026 — July 25 – August 1, 2026</p>
+  </div>
+</section>
+
+<!-- WHY REGISTER -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <div class="quick-stats">
+      <div class="stat-box reveal">
+        <div class="stat-number" style="color:var(--red);">30+</div>
+        <div class="stat-label">Teams Competing</div>
+      </div>
+      <div class="stat-box reveal reveal-delay-1">
+        <div class="stat-number" style="color:var(--red);">5</div>
+        <div class="stat-label">Divisions Across 3 Sports</div>
+      </div>
+      <div class="stat-box reveal reveal-delay-2">
+        <div class="stat-number" style="color:var(--red);">7</div>
+        <div class="stat-label">Days of Competition</div>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center;color:rgba(255,255,255,0.82);margin-top:2rem;max-width:650px;margin-left:auto;margin-right:auto;line-height:1.8;">
+      Representing your city at OSFNA is more than a tournament — it's a homecoming. Join clubs from across North America for the most competitive and celebrated Oromo sports event of the year.
+    </p>
+  </div>
+</section>
+
+<!-- REGISTRATION FORM -->
+<section class="section section-light">
+  <div class="section-inner">
+    <div class="register-container">
+
+      <div class="register-sidebar">
+        <h2>Registration Info</h2>
+
+        <div class="fee-card">
+          <div class="fee-title">Team Entry Fees</div>
+          <ul class="fee-list">
+            <li><span class="fee-sport">Soccer Div A/B</span><span class="fee-amount">$400</span></li>
+            <li><span class="fee-sport">Soccer Div C</span><span class="fee-amount">$300</span></li>
+            <li><span class="fee-sport">Basketball</span><span class="fee-amount">$300</span></li>
+            <li><span class="fee-sport">Golf</span><span class="fee-amount">$250</span></li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="info-title">What's Included?</div>
+          <ul class="info-list">
+            <li>Team roster verification</li>
+            <li>Bracket placement</li>
+            <li>Official OSFNA 2026 materials</li>
+            <li>Player badges + event access</li>
+            <li>Cultural event access</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="info-title">Important Dates</div>
+          <p style="font-size:.9rem;color:#444;line-height:1.8;">
+            <strong>Early Registration:</strong> By May 31 — $50 discount<br>
+            <strong>Regular Registration:</strong> June 1 – July 10<br>
+            <strong>Late Registration:</strong> July 11–20 (+$50 fee)<br>
+            <strong>Tournament Begins:</strong> July 25
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-title">Questions?</div>
+          <p style="font-size:.9rem;color:#444;">
+            Email <a href="mailto:myosfna@gmail.com" style="color:var(--red);font-weight:600;">myosfna@gmail.com</a><br>
+            or call <a href="tel:7632188700" style="color:var(--red);font-weight:600;">763-218-8700</a>
+          </p>
+        </div>
+      </div>
+
+      <form class="register-form" id="team-register-form" novalidate>
+
+        <fieldset>
+          <legend>Team Information</legend>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="team-name">Team Name <span aria-label="required">*</span></label>
+              <input type="text" id="team-name" name="team_name" placeholder="Your team name" required />
+            </div>
+            <div class="form-field">
+              <label for="team-city">City / State <span aria-label="required">*</span></label>
+              <input type="text" id="team-city" name="team_city" placeholder="e.g., Minneapolis, MN" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="club-affiliation">Club Affiliation (if any)</label>
+              <input type="text" id="club-affiliation" name="club_affiliation" placeholder="e.g., Dire Dawa FC" />
+            </div>
+            <div class="form-field">
+              <label><input type="checkbox" id="returning-team" name="returning_team" /> Returning team (OSFNA 2025)</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sport &amp; Division</legend>
+          <div class="form-field">
+            <label for="sport">Select Sport <span aria-label="required">*</span></label>
+            <select id="sport" name="sport" required onchange="updateDivisions(this)">
+              <option value="">— Choose a sport —</option>
+              <option value="Soccer">Soccer</option>
+              <option value="Basketball">Basketball</option>
+              <option value="Golf">Golf</option>
+            </select>
+          </div>
+          <div class="form-field" id="division-field" style="display:none;">
+            <label for="division">Division <span aria-label="required">*</span></label>
+            <select id="division" name="division">
+              <option value="">— Select division —</option>
+              <option value="Div A">Division A (Elite)</option>
+              <option value="Div B">Division B (Competitive)</option>
+              <option value="Div C">Division C (Recreational)</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Head Coach</legend>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="coach-name">Coach Name <span aria-label="required">*</span></label>
+              <input type="text" id="coach-name" name="coach_name" placeholder="Full name" required />
+            </div>
+            <div class="form-field">
+              <label for="coach-email">Coach Email <span aria-label="required">*</span></label>
+              <input type="email" id="coach-email" name="coach_email" placeholder="email@example.com" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="coach-phone">Coach Phone <span aria-label="required">*</span></label>
+            <input type="tel" id="coach-phone" name="coach_phone" placeholder="(555) 123-4567" required />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Team Details</legend>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="roster-count">Roster Size <span aria-label="required">*</span></label>
+              <select id="roster-count" name="roster_count" required>
+                <option value="">— Choose size —</option>
+                <option value="15-18">15–18 players</option>
+                <option value="19-22">19–22 players</option>
+                <option value="23-25">23–25 players</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="shirt-color">Jersey Color <span aria-label="required">*</span></label>
+              <input type="text" id="shirt-color" name="shirt_color" placeholder="e.g., Green and White" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="special-notes">Special Requests or Notes</label>
+            <textarea id="special-notes" name="special_notes" placeholder="Any accommodations or info we should know?" style="min-height:80px;"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Agreement</legend>
+          <div class="form-field">
+            <label><input type="checkbox" id="bylaw-agree" name="bylaw_agree" required /> I confirm that my team will follow all OSFNA 2026 bylaws, rules, and competition standards. I understand that OSFNA reserves the right to adjust division placement if necessary.</label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;font-size:1.05rem;padding:1rem;">
+          Submit Registration →
+        </button>
+
+        <p style="font-size:0.8rem;color:#888;text-align:center;margin-top:1rem;">
+          Payment instructions will be sent to your coach email after submission. Questions? <a href="mailto:myosfna@gmail.com" style="color:var(--red);">myosfna@gmail.com</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">OSFNA<span> 2026</span></div>
+        <p>The Oromo Sports Federation in North America is a nonprofit organization registered in Minnesota.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Quick Links</p>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="vendor.html">Vendors</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Oromo Sports Federation in North America. Nonprofit 501(c) registered in Minnesota.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
