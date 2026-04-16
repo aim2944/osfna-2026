@@ -718,14 +718,16 @@ a { color: inherit; text-decoration: none; }
   font-size: 1.4rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--dark);
   margin-bottom: 0.5rem;
 }
 .sport-detail {
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.5);
+  color: #555;
   line-height: 1.6;
 }
+.sport-card.primary .sport-name { color: #fff; }
+.sport-card.primary .sport-detail { color: rgba(255,255,255,0.7); }
 .sport-badge {
   display: inline-block;
   margin-top: 1rem;
@@ -1303,6 +1305,18 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--gold);
   color: var(--gold);
   background: rgba(240,192,64,0.08);
+}
+/* Social links on light backgrounds */
+.section-light .social-link,
+.contact-grid .social-link {
+  border-color: rgba(0,0,0,0.18);
+  color: var(--text-muted);
+}
+.section-light .social-link:hover,
+.contact-grid .social-link:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(27,94,53,0.07);
 }
 
 /* =============================================
