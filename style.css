@@ -1944,6 +1944,68 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.9rem;
 }
 
+.champions-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.champion-card-compact {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(240,192,64,0.2);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.champion-card-compact:hover {
+  transform: translateY(-4px);
+  border-color: rgba(240,192,64,0.3);
+}
+.champion-card-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.champion-card-title {
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1rem 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+}
+.champion-card-name {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+.champion-card-sub {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  padding: 0 1rem 1rem;
+}
+
+.sponsors-strip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.sponsor-logo {
+  max-height: 80px;
+  max-width: 180px;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+.sponsor-logo:hover {
+  opacity: 1;
+}
+
 /* =============================================
    ABOUT PAGE (about.html)
    ============================================= */
@@ -2030,8 +2092,147 @@ a { color: inherit; text-decoration: none; }
   margin-top: 0.5rem;
 }
 
+/* =============================================
+   TOURNAMENT PAGE (tournament.html)
+   ============================================= */
+.sport-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.sport-card {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.sport-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.sport-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.sport-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+  font-family: var(--font-head);
+}
+.sport-subtitle {
+  font-size: 0.85rem;
+  color: var(--green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.sport-card p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.sport-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 0.4rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.sport-card.primary {
+  background: linear-gradient(135deg, var(--green), var(--dark));
+  color: white;
+  border: none;
+}
+.sport-card.primary h3,
+.sport-card.primary p {
+  color: white;
+}
+.sport-card.primary .sport-subtitle {
+  color: var(--gold);
+}
+
+.divisions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.division {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+.division-letter {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--gold);
+  font-family: var(--font-head);
+  margin-bottom: 0.5rem;
+}
+.division-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.division-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.fee-card {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+.fee-sport {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--green);
+}
+.fee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.fee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.95rem;
+}
+.fee-item:last-child {
+  border-bottom: none;
+}
+.fee-amount {
+  font-weight: 700;
+  color: var(--green);
+  font-size: 1.1rem;
+}
+
 @media (max-width: 768px) {
   .quick-stats { grid-template-columns: 1fr; }
   .landing-cta-grid { grid-template-columns: 1fr; }
   .timeline { grid-template-columns: 1fr; }
+  .sport-cards { grid-template-columns: 1fr; }
+  .divisions { grid-template-columns: 1fr; }
+  .champions-grid-compact { grid-template-columns: repeat(2, 1fr); }
 }
