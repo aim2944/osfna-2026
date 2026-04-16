@@ -2,7 +2,7 @@
    OSFNA 2026 — Design System
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@700&display=swap');
 
 :root {
   --green:       #1B5E35;
@@ -10,18 +10,20 @@
   --green-dark:  #0F3A20;
   --red:         #CC2020;
   --red-dark:    #9A1515;
-  --dark:        #0C140F;
-  --dark-card:   #131F16;
-  --off-white:   #F4F1E8;
-  --text:        #111111;
-  --text-muted:  #444444;
+  --dark:        #000000;
+  --dark-card:   #0d0d0d;
+  --off-white:   #000000;
+  --text:        #ffffff;
+  --text-muted:  rgba(255,255,255,0.82);
   --text-light:  rgba(255,255,255,0.88);
-  --text-light-muted: rgba(255,255,255,0.65);
-  --border:      rgba(204,32,32,0.2);
+  --text-light-muted: rgba(255,255,255,0.55);
+  --border:      rgba(255,255,255,0.08);
+  --card-bg:     rgba(255,255,255,0.04);
+  --card-border: rgba(255,255,255,0.08);
 
-  --font-head: 'Oswald', sans-serif;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-head:    'Oswald', sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 150ms;
@@ -35,7 +37,7 @@
   --space-2xl: 10rem;
 
   --max-w: 1200px;
-  --radius: 4px;
+  --radius: 12px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,54 +49,26 @@ html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   font-family: var(--font-body);
-  background: var(--off-white);
-  color: var(--text);
+  background: #000000;
+  color: #ffffff;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.7;
 }
 
-/* ── Global dark/green section text defaults ── */
-.section-dark,
-.section-green,
-.footer {
-  color: var(--text-light);
-}
-.section-dark p,
-.section-green p,
-.section-dark li,
-.section-green li,
-.footer p,
-.footer li {
-  color: var(--text-light);
-}
-.section-dark h1,
-.section-dark h2,
-.section-dark h3,
-.section-dark h4,
-.section-green h1,
-.section-green h2,
-.section-green h3,
-.section-green h4 {
-  color: #ffffff;
-}
+/* ── All sections dark — no alternating light/dark blocks ── */
+.section-dark  { background: #000000; }
+.section-light { background: #080808; }
+.section-mid   { background: #0a0a0a; }
+.section-green { background: #050e08; }
 
-/* ── Global light section text defaults ── */
-.section-light p,
-.section-mid p {
-  color: var(--text-muted);
+/* ── Universal text on dark ── */
+p, li, span, td, th, label, figcaption, blockquote {
+  color: rgba(255,255,255,0.82);
 }
-.section-light h1,
-.section-light h2,
-.section-light h3,
-.section-light h4,
-.section-mid h1,
-.section-mid h2,
-.section-mid h3,
-.section-mid h4 {
-  color: var(--text);
-}
+h1, h2, h3, h4, h5, h6 { color: #ffffff; }
+strong { color: #ffffff; }
 
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -438,7 +412,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .section-title {
-  font-family: var(--font-head);
+  font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 700;
   text-transform: uppercase;
@@ -2300,3 +2274,278 @@ a { color: inherit; text-decoration: none; }
   .divisions { grid-template-columns: 1fr; }
   .champions-grid-compact { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* =============================================
+   DARK SPORTS PLATFORM — FULL OVERRIDE
+   Converts all light-background components to
+   glass-morphism on pure black backgrounds.
+   ============================================= */
+
+/* ── Nav scrolled ── */
+.nav.scrolled {
+  background: rgba(0,0,0,0.92) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ── Page hero ── */
+.page-hero {
+  background: #000000;
+  border-bottom: 3px solid var(--red);
+}
+.page-hero-content h1 { color: #ffffff; }
+.page-hero-content p  { color: rgba(255,255,255,0.6); }
+
+/* ── Section separator ── */
+.section { border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+/* ── Cards — glass morphism ── */
+.timeline-item,
+.leadership-card,
+.sport-card,
+.fee-card,
+.info-box,
+.contact-box,
+.booth-card,
+.week-card,
+.category-card,
+.champion-card-compact,
+.sponsor-tier,
+.landing-cta-card,
+.stat-box,
+.division,
+.gallery-item {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px;
+}
+
+/* Primary sport card keeps red tint */
+.sport-card.primary {
+  background: rgba(204,32,32,0.12) !important;
+  border: 1px solid rgba(204,32,32,0.3) !important;
+}
+
+/* Booth highlight card */
+.booth-card.highlight {
+  background: rgba(204,32,32,0.1) !important;
+  border: 1px solid rgba(204,32,32,0.4) !important;
+}
+
+/* ── Register/vendor sidebar ── */
+.register-sidebar,
+.vendor-sidebar {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px;
+}
+
+/* ── Form elements — dark glass ── */
+.form-field input,
+.form-field select,
+.form-field textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #ffffff;
+  border-radius: 10px;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--red);
+  outline: none;
+  background: rgba(255,255,255,0.07);
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+.form-field select option {
+  background: #111;
+  color: #fff;
+}
+fieldset {
+  border-color: rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+fieldset legend { color: rgba(255,255,255,0.5); }
+
+/* Contact form */
+.contact-form {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px;
+}
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  border-radius: 10px;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── FAQ details ── */
+details {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  color: white;
+}
+details summary { color: #ffffff !important; cursor: pointer; }
+details p { color: rgba(255,255,255,0.7) !important; }
+
+/* ── Timeline ── */
+.timeline-year { color: var(--red) !important; }
+.timeline-title { color: #ffffff !important; }
+.timeline-desc { color: rgba(255,255,255,0.65) !important; }
+
+/* ── Leadership ── */
+.leadership-role { color: var(--red) !important; }
+.leadership-name { color: #ffffff !important; }
+.leadership-desc { color: rgba(255,255,255,0.65) !important; }
+
+/* ── Sport cards ── */
+.sport-name  { color: #ffffff !important; }
+.sport-detail { color: rgba(255,255,255,0.72) !important; }
+.sport-badge { background: var(--red) !important; color: #ffffff !important; border: none !important; }
+
+/* ── Champion cards ── */
+.champion-card-title { color: var(--red) !important; }
+.champion-card-name  { color: #ffffff !important; }
+.champion-card-sub   { color: rgba(255,255,255,0.55) !important; }
+
+/* ── Divisions ── */
+.division-letter { color: var(--red) !important; }
+.division-name   { color: #ffffff !important; }
+.division-desc   { color: rgba(255,255,255,0.65) !important; }
+
+/* ── Fee / sidebar ── */
+.fee-title, .info-title, .contact-title { color: #ffffff !important; }
+.fee-sport  { color: rgba(255,255,255,0.75) !important; }
+.fee-amount { color: var(--red) !important; }
+.info-list li { color: rgba(255,255,255,0.75) !important; }
+.info-list li::before { color: var(--red) !important; }
+
+/* ── Stat boxes ── */
+.stat-number { color: var(--red) !important; }
+.stat-label  { color: rgba(255,255,255,0.65) !important; }
+
+/* ── About / pull-quote ── */
+.about-prose p { color: rgba(255,255,255,0.82) !important; }
+.pull-quote {
+  background: rgba(204,32,32,0.08) !important;
+  border-left-color: var(--red) !important;
+}
+.pull-quote p { color: rgba(255,255,255,0.9) !important; }
+.founding-clubs .club-tag {
+  background: rgba(204,32,32,0.12) !important;
+  border: 1px solid rgba(204,32,32,0.3) !important;
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* ── Booth pricing ── */
+.booth-size  { color: #ffffff !important; }
+.booth-price { color: var(--red) !important; }
+.booth-desc  { color: rgba(255,255,255,0.72) !important; }
+.booth-features li { color: rgba(255,255,255,0.65) !important; }
+.booth-features li::before { color: var(--red) !important; }
+
+/* ── Vendor categories ── */
+.category-name { color: #ffffff !important; }
+.category-desc { color: rgba(255,255,255,0.65) !important; }
+
+/* ── Week cards ── */
+.week-card-title { color: var(--red) !important; }
+.week-card-desc  { color: rgba(255,255,255,0.72) !important; }
+
+/* ── Schedule table ── */
+.schedule-table th {
+  background: rgba(204,32,32,0.2) !important;
+  color: #ffffff !important;
+}
+.schedule-table td {
+  border-color: rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.8) !important;
+}
+.schedule-table tr:nth-child(even) td {
+  background: rgba(255,255,255,0.02) !important;
+}
+
+/* ── Bracket slots ── */
+.bracket-slot {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: rgba(255,255,255,0.7) !important;
+}
+.bracket-slot.champion {
+  background: rgba(204,32,32,0.15) !important;
+  border-color: var(--red) !important;
+  color: #ffffff !important;
+}
+
+/* ── Gallery ── */
+.gallery-item figcaption {
+  background: rgba(0,0,0,0.8) !important;
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* ── Sponsors ── */
+.sponsor-logo { filter: brightness(0) invert(1); opacity: 0.65; }
+.sponsor-logo:hover { opacity: 0.95; }
+
+/* ── Footer ── */
+.footer {
+  background: #000000 !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+}
+.footer-logo span { color: var(--red) !important; }
+.footer-col-title { color: rgba(255,255,255,0.45) !important; }
+.footer-copy { color: rgba(255,255,255,0.3) !important; }
+.footer-links a { color: rgba(255,255,255,0.6) !important; }
+.footer-links a:hover { color: #ffffff !important; }
+.footer-contact-item a { color: var(--red) !important; }
+
+/* ── Social links — always use dark-bg style ── */
+.social-link {
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.55) !important;
+}
+.social-link:hover {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+  background: rgba(204,32,32,0.1) !important;
+}
+/* Remove the old light-section override */
+.section-light .social-link,
+.contact-grid .social-link {
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.55) !important;
+}
+.section-light .social-link:hover,
+.contact-grid .social-link:hover {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+/* ── Contact info labels ── */
+.contact-grid [style*="color:var(--green)"],
+.contact-grid [style*="color: var(--green)"] {
+  color: var(--red) !important;
+}
+
+/* ── Sponsor tier ── */
+.tier-name    { color: #ffffff !important; }
+.tier-features li { color: rgba(255,255,255,0.7) !important; }
+.tier-note    { color: rgba(255,255,255,0.4) !important; }
+
+/* ── Oromo Week event timeline items ── */
+.oromo-event-item { color: rgba(255,255,255,0.8) !important; }
+.oromo-event-date { color: var(--red) !important; }
+
+/* ── Landing CTA cards ── */
+.landing-cta-card h3 { color: #ffffff !important; }
+.landing-cta-card p  { color: rgba(255,255,255,0.7) !important; }
