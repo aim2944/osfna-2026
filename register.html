@@ -3,10 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register Your Team — OSFNA 2026</title>
-  <meta name="description" content="Register your team for OSFNA 2026 — Soccer, Basketball, Golf. July 25–Aug 1, 2026." />
+  <title>Register — OSFNA 2026</title>
+  <meta name="description" content="Register for OSFNA 2026 — Teams, Volunteers, Vendors, Sponsors, Events, Hotels." />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Tab navigation ── */
+    .reg-tabs-wrap {
+      background: #000;
+      position: sticky;
+      top: 70px;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .reg-tabs {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .reg-tabs::-webkit-scrollbar { display: none; }
+    .reg-tab {
+      flex-shrink: 0;
+      padding: 1rem 1.25rem;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      white-space: nowrap;
+    }
+    .reg-tab:hover { color: rgba(255,255,255,0.85); }
+    .reg-tab.active {
+      color: #ffffff;
+      border-bottom-color: var(--red);
+    }
+
+    /* ── Form panels ── */
+    .reg-panel { display: none; }
+    .reg-panel.active { display: block; }
+
+    /* ── Form layout ── */
+    .reg-form-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .reg-form-header {
+      margin-bottom: 2.5rem;
+    }
+    .reg-form-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .reg-form-header p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .reg-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .field label {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .field label span { color: var(--red); }
+    .field input,
+    .field select,
+    .field textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      background: rgba(255,255,255,0.07);
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .field select option { background: #111; color: #fff; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field.checkbox-field {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .field.checkbox-field input { width: auto; margin-top: 2px; }
+    .field.checkbox-field label {
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 0.5rem 0;
+    }
+    .form-section-label {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: -0.25rem;
+    }
+    .submit-btn {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+    }
+    .form-note {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .form-note a { color: var(--red); }
+
+    @media (max-width: 640px) {
+      .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -38,198 +213,469 @@
   <li><a href="index.html#contact">Contact</a></li>
 </ul>
 
-<section class="page-hero" style="border-bottom:4px solid var(--red);">
+<!-- PAGE HERO -->
+<section class="page-hero" style="border-bottom:none;padding-bottom:0;">
   <div class="page-hero-content">
-    <h1>Register Your Team</h1>
+    <h1>Register</h1>
     <p>OSFNA 2026 — July 25 – August 1, 2026</p>
   </div>
 </section>
 
-<!-- WHY REGISTER -->
-<section class="section section-dark">
-  <div class="section-inner">
-    <div class="quick-stats">
-      <div class="stat-box reveal">
-        <div class="stat-number" style="color:var(--red);">30+</div>
-        <div class="stat-label">Teams Competing</div>
-      </div>
-      <div class="stat-box reveal reveal-delay-1">
-        <div class="stat-number" style="color:var(--red);">5</div>
-        <div class="stat-label">Divisions Across 3 Sports</div>
-      </div>
-      <div class="stat-box reveal reveal-delay-2">
-        <div class="stat-number" style="color:var(--red);">7</div>
-        <div class="stat-label">Days of Competition</div>
-      </div>
-    </div>
-    <p class="reveal" style="text-align:center;color:rgba(255,255,255,0.82);margin-top:2rem;max-width:650px;margin-left:auto;margin-right:auto;line-height:1.8;">
-      Representing your city at OSFNA is more than a tournament — it's a homecoming. Join clubs from across North America for the most competitive and celebrated Oromo sports event of the year.
-    </p>
+<!-- TAB BAR -->
+<div class="reg-tabs-wrap">
+  <div class="reg-tabs" role="tablist">
+    <button class="reg-tab active" role="tab" aria-selected="true"  data-tab="soccer">Soccer Team</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="basketball">Basketball Team</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="volunteers">Volunteers</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="vendor">Vendor</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="sponsorship">Sponsorship</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="event">Event Registration</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="venue">Venue</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="hotels">Hotels Deal</button>
   </div>
-</section>
+</div>
 
-<!-- REGISTRATION FORM -->
-<section class="section section-light">
+<!-- PANELS -->
+<div class="section section-dark" style="padding-top:3rem;padding-bottom:5rem;">
   <div class="section-inner">
-    <div class="register-container">
 
-      <div class="register-sidebar">
-        <h2>Registration Info</h2>
-
-        <div class="fee-card">
-          <div class="fee-title">Team Entry Fees</div>
-          <ul class="fee-list">
-            <li><span class="fee-sport">Soccer Div A/B</span><span class="fee-amount">$400</span></li>
-            <li><span class="fee-sport">Soccer Div C</span><span class="fee-amount">$300</span></li>
-            <li><span class="fee-sport">Basketball</span><span class="fee-amount">$300</span></li>
-            <li><span class="fee-sport">Golf</span><span class="fee-amount">$250</span></li>
-          </ul>
+    <!-- ══════ SOCCER TEAM REGISTRATION ══════ -->
+    <div class="reg-panel active" id="panel-soccer" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Soccer Team Registration</h2>
+          <p>Register your soccer club for OSFNA 2026. Divisions A (Elite), B (Competitive), and C (Recreational) available. Confirmation and payment info sent to coach email after submission.</p>
         </div>
-
-        <div class="info-box">
-          <div class="info-title">What's Included?</div>
-          <ul class="info-list">
-            <li>Team roster verification</li>
-            <li>Bracket placement</li>
-            <li>Official OSFNA 2026 materials</li>
-            <li>Player badges + event access</li>
-            <li>Cultural event access</li>
-          </ul>
-        </div>
-
-        <div class="info-box">
-          <div class="info-title">Important Dates</div>
-          <p style="font-size:.9rem;color:#444;line-height:1.8;">
-            <strong>Early Registration:</strong> By May 31 — $50 discount<br>
-            <strong>Regular Registration:</strong> June 1 – July 10<br>
-            <strong>Late Registration:</strong> July 11–20 (+$50 fee)<br>
-            <strong>Tournament Begins:</strong> July 25
-          </p>
-        </div>
-
-        <div class="contact-box">
-          <div class="contact-title">Questions?</div>
-          <p style="font-size:.9rem;color:#444;">
-            Email <a href="mailto:myosfna@gmail.com" style="color:var(--red);font-weight:600;">myosfna@gmail.com</a><br>
-            or call <a href="tel:7632188700" style="color:var(--red);font-weight:600;">763-218-8700</a>
-          </p>
-        </div>
-      </div>
-
-      <form class="register-form" id="team-register-form" novalidate>
-
-        <fieldset>
-          <legend>Team Information</legend>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="team-name">Team Name <span aria-label="required">*</span></label>
-              <input type="text" id="team-name" name="team_name" placeholder="Your team name" required />
-            </div>
-            <div class="form-field">
-              <label for="team-city">City / State <span aria-label="required">*</span></label>
-              <input type="text" id="team-city" name="team_city" placeholder="e.g., Minneapolis, MN" required />
-            </div>
+        <form class="reg-form" id="form-soccer" novalidate>
+          <p class="form-section-label">Team Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., Dire Dawa FC" required /></div>
+            <div class="field"><label>City / State <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Minneapolis, MN" required /></div>
           </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="club-affiliation">Club Affiliation (if any)</label>
-              <input type="text" id="club-affiliation" name="club_affiliation" placeholder="e.g., Dire Dawa FC" />
-            </div>
-            <div class="form-field">
-              <label><input type="checkbox" id="returning-team" name="returning_team" /> Returning team (OSFNA 2025)</label>
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Sport &amp; Division</legend>
-          <div class="form-field">
-            <label for="sport">Select Sport <span aria-label="required">*</span></label>
-            <select id="sport" name="sport" required onchange="updateDivisions(this)">
-              <option value="">— Choose a sport —</option>
-              <option value="Soccer">Soccer</option>
-              <option value="Basketball">Basketball</option>
-              <option value="Golf">Golf</option>
-            </select>
-          </div>
-          <div class="form-field" id="division-field" style="display:none;">
-            <label for="division">Division <span aria-label="required">*</span></label>
-            <select id="division" name="division">
-              <option value="">— Select division —</option>
-              <option value="Div A">Division A (Elite)</option>
-              <option value="Div B">Division B (Competitive)</option>
-              <option value="Div C">Division C (Recreational)</option>
-            </select>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Head Coach</legend>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="coach-name">Coach Name <span aria-label="required">*</span></label>
-              <input type="text" id="coach-name" name="coach_name" placeholder="Full name" required />
-            </div>
-            <div class="form-field">
-              <label for="coach-email">Coach Email <span aria-label="required">*</span></label>
-              <input type="email" id="coach-email" name="coach_email" placeholder="email@example.com" required />
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="coach-phone">Coach Phone <span aria-label="required">*</span></label>
-            <input type="tel" id="coach-phone" name="coach_phone" placeholder="(555) 123-4567" required />
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Team Details</legend>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="roster-count">Roster Size <span aria-label="required">*</span></label>
-              <select id="roster-count" name="roster_count" required>
-                <option value="">— Choose size —</option>
-                <option value="15-18">15–18 players</option>
-                <option value="19-22">19–22 players</option>
-                <option value="23-25">23–25 players</option>
+          <div class="form-row-2">
+            <div class="field"><label>Club Affiliation</label><input type="text" name="club_affiliation" placeholder="Parent club if applicable" /></div>
+            <div class="field"><label>Division <span>*</span></label>
+              <select name="division" required>
+                <option value="">— Select division —</option>
+                <option>Division A — Elite</option>
+                <option>Division B — Competitive</option>
+                <option>Division C — Recreational</option>
               </select>
             </div>
-            <div class="form-field">
-              <label for="shirt-color">Jersey Color <span aria-label="required">*</span></label>
-              <input type="text" id="shirt-color" name="shirt_color" placeholder="e.g., Green and White" required />
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Head Coach</p>
+          <div class="form-row-2">
+            <div class="field"><label>Coach Full Name <span>*</span></label><input type="text" name="coach_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Coach Email <span>*</span></label><input type="email" name="coach_email" placeholder="coach@email.com" required /></div>
+          </div>
+          <div class="field"><label>Coach Phone <span>*</span></label><input type="tel" name="coach_phone" placeholder="(555) 123-4567" required /></div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Team Details</p>
+          <div class="form-row-2">
+            <div class="field"><label>Roster Size <span>*</span></label>
+              <select name="roster_count" required>
+                <option value="">— Choose —</option>
+                <option>15–18 players</option>
+                <option>19–22 players</option>
+                <option>23–25 players</option>
+              </select>
+            </div>
+            <div class="field"><label>Jersey Color <span>*</span></label><input type="text" name="jersey_color" placeholder="e.g., Green and White" required /></div>
+          </div>
+          <div class="field"><label>Notes / Special Requests</label><textarea name="notes" placeholder="Scheduling conflicts, accommodations, etc."></textarea></div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="soccer-agree" name="agree" required />
+            <label for="soccer-agree">I confirm this team will comply with all OSFNA 2026 bylaws and competition standards. I understand OSFNA may adjust division placement.</label>
+          </div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="soccer-returning" name="returning" />
+            <label for="soccer-returning">This is a returning team from OSFNA 2025.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit Soccer Registration →</button>
+          <p class="form-note">Payment information will be sent to the coach email after review.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ BASKETBALL TEAM REGISTRATION ══════ -->
+    <div class="reg-panel" id="panel-basketball" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Basketball Team Registration</h2>
+          <p>Register your basketball team for the OSFNA 2026 tournament. Open division for all skill levels. Minimum 8 players, maximum 12 on roster.</p>
+        </div>
+        <form class="reg-form" id="form-basketball" novalidate>
+          <p class="form-section-label">Team Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., Dallas Ballers" required /></div>
+            <div class="field"><label>City / State <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Dallas, TX" required /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Team Captain</p>
+          <div class="form-row-2">
+            <div class="field"><label>Captain Name <span>*</span></label><input type="text" name="captain_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Captain Email <span>*</span></label><input type="email" name="captain_email" placeholder="email@example.com" required /></div>
+          </div>
+          <div class="field"><label>Captain Phone <span>*</span></label><input type="tel" name="captain_phone" placeholder="(555) 123-4567" required /></div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Roster</p>
+          <div class="form-row-2">
+            <div class="field"><label>Number of Players <span>*</span></label>
+              <select name="roster_count" required>
+                <option value="">— Choose —</option>
+                <option>8 players</option>
+                <option>9 players</option>
+                <option>10 players</option>
+                <option>11 players</option>
+                <option>12 players</option>
+              </select>
+            </div>
+            <div class="field"><label>Jersey Color <span>*</span></label><input type="text" name="jersey_color" placeholder="e.g., Red and Black" required /></div>
+          </div>
+          <div class="field"><label>Notes</label><textarea name="notes" placeholder="Any additional information"></textarea></div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="bball-agree" name="agree" required />
+            <label for="bball-agree">I confirm this team will comply with all OSFNA 2026 bylaws and basketball tournament rules.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit Basketball Registration →</button>
+          <p class="form-note">Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ VOLUNTEERS ══════ -->
+    <div class="reg-panel" id="panel-volunteers" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Volunteer Registration</h2>
+          <p>Help make OSFNA 2026 the best event yet. Volunteers are needed for tournament operations, cultural events, setup/teardown, hospitality, and more.</p>
+        </div>
+        <form class="reg-form" id="form-volunteers" novalidate>
+          <p class="form-section-label">Personal Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>First Name <span>*</span></label><input type="text" name="first_name" placeholder="First name" required /></div>
+            <div class="field"><label>Last Name <span>*</span></label><input type="text" name="last_name" placeholder="Last name" required /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
+            <div class="field"><label>Phone <span>*</span></label><input type="tel" name="phone" placeholder="(555) 123-4567" required /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="e.g., Minneapolis, MN" /></div>
+            <div class="field"><label>Age Group</label>
+              <select name="age_group">
+                <option value="">— Select —</option>
+                <option>16–20</option>
+                <option>21–30</option>
+                <option>31–45</option>
+                <option>46+</option>
+              </select>
             </div>
           </div>
-          <div class="form-field">
-            <label for="special-notes">Special Requests or Notes</label>
-            <textarea id="special-notes" name="special_notes" placeholder="Any accommodations or info we should know?" style="min-height:80px;"></textarea>
+          <hr class="form-divider" />
+          <p class="form-section-label">Availability &amp; Roles</p>
+          <div class="field"><label>Days Available <span>*</span></label>
+            <select name="days_available" required>
+              <option value="">— Select —</option>
+              <option>Full week (July 25 – Aug 1)</option>
+              <option>Weekend only (July 25–26)</option>
+              <option>Weekdays only</option>
+              <option>Specific days (specify in notes)</option>
+            </select>
           </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Agreement</legend>
-          <div class="form-field">
-            <label><input type="checkbox" id="bylaw-agree" name="bylaw_agree" required /> I confirm that my team will follow all OSFNA 2026 bylaws, rules, and competition standards. I understand that OSFNA reserves the right to adjust division placement if necessary.</label>
+          <div class="field"><label>Preferred Role <span>*</span></label>
+            <select name="preferred_role" required>
+              <option value="">— Choose a role —</option>
+              <option>Tournament Operations (field marshaling, scorekeeping)</option>
+              <option>Hospitality (welcome, information desk)</option>
+              <option>Cultural Events (stage setup, crowd management)</option>
+              <option>Registration Desk</option>
+              <option>Vendor Area Management</option>
+              <option>Setup &amp; Teardown Crew</option>
+              <option>Media &amp; Photography</option>
+              <option>Translation / Interpretation (Afaan Oromo)</option>
+              <option>General Support — Wherever Needed</option>
+            </select>
           </div>
-        </fieldset>
-
-        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;font-size:1.05rem;padding:1rem;">
-          Submit Registration →
-        </button>
-
-        <p style="font-size:0.8rem;color:#888;text-align:center;margin-top:1rem;">
-          Payment instructions will be sent to your coach email after submission. Questions? <a href="mailto:myosfna@gmail.com" style="color:var(--red);">myosfna@gmail.com</a>
-        </p>
-
-      </form>
+          <div class="field"><label>Languages Spoken</label><input type="text" name="languages" placeholder="e.g., Afaan Oromo, Amharic, English" /></div>
+          <div class="field"><label>Prior Volunteer / Event Experience</label><textarea name="experience" placeholder="Tell us about any relevant experience"></textarea></div>
+          <div class="field"><label>Special Skills or Notes</label><textarea name="skills" placeholder="First aid, photography, logistics, etc."></textarea></div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="vol-agree" name="agree" required />
+            <label for="vol-agree">I confirm I am available for my selected dates and agree to follow OSFNA volunteer guidelines.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit Volunteer Application →</button>
+          <p class="form-note">Volunteer confirmation and orientation details sent by email.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
+        </form>
+      </div>
     </div>
-  </div>
-</section>
+
+    <!-- ══════ VENDOR ══════ -->
+    <div class="reg-panel" id="panel-vendor" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Vendor Application</h2>
+          <p>Apply for a booth at OSFNA 2026. 3,000+ attendees over 7 days. Standard (10×10) and Large (10×20) spaces available. Full details and booth assignments sent after review.</p>
+        </div>
+        <form class="reg-form" id="form-vendor" novalidate>
+          <p class="form-section-label">Business Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>Business Name <span>*</span></label><input type="text" name="business_name" placeholder="Your business name" required /></div>
+            <div class="field"><label>Business Type</label>
+              <select name="business_type">
+                <option value="">— Select —</option>
+                <option>Food &amp; Beverage</option>
+                <option>Clothing &amp; Apparel</option>
+                <option>Cultural Goods &amp; Art</option>
+                <option>Health &amp; Beauty</option>
+                <option>Technology &amp; Electronics</option>
+                <option>Financial Services</option>
+                <option>Community Organization</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Contact</p>
+          <div class="form-row-2">
+            <div class="field"><label>Owner / Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Phone <span>*</span></label><input type="tel" name="phone" placeholder="(555) 123-4567" required /></div>
+            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="e.g., Atlanta, GA" /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Booth Requirements</p>
+          <div class="form-row-2">
+            <div class="field"><label>Booth Size <span>*</span></label>
+              <select name="booth_size" required>
+                <option value="">— Select —</option>
+                <option value="10x10">10 × 10 — Standard</option>
+                <option value="10x20">10 × 20 — Large</option>
+                <option value="custom">Custom / Inquire</option>
+              </select>
+            </div>
+            <div class="field"><label>Electrical Power Needed?</label>
+              <select name="power">
+                <option value="">— Select —</option>
+                <option>No power needed</option>
+                <option>Standard outlet (110V)</option>
+                <option>Heavy power (220V / multiple outlets)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Products / Services Description <span>*</span></label><textarea name="products_desc" placeholder="Briefly describe what you will be selling or offering" required></textarea></div>
+          <div class="field"><label>Setup Preference</label>
+            <select name="setup_pref">
+              <option value="">— Select —</option>
+              <option>Standard setup day (day before event)</option>
+              <option>Early setup (2 days before)</option>
+              <option>No preference</option>
+            </select>
+          </div>
+          <div class="field"><label>Additional Notes</label><textarea name="notes" placeholder="Any other requirements or questions"></textarea></div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="vendor-agree" name="agree" required />
+            <label for="vendor-agree">I agree to comply with all OSFNA vendor guidelines and health/safety regulations. I understand booth assignments are subject to approval.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit Vendor Application →</button>
+          <p class="form-note">Booth details and payment instructions sent after approval.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ SPONSORSHIP ══════ -->
+    <div class="reg-panel" id="panel-sponsorship" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Sponsorship Inquiry</h2>
+          <p>Partner with OSFNA 2026 to reach the most engaged Oromo diaspora community in North America. Sponsorship packages include logo placement, stage presence, social media features, and more. Custom packages available.</p>
+        </div>
+        <form class="reg-form" id="form-sponsorship" novalidate>
+          <p class="form-section-label">Organization Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>Organization / Company Name <span>*</span></label><input type="text" name="org_name" placeholder="Your organization" required /></div>
+            <div class="field"><label>Industry / Sector</label><input type="text" name="industry" placeholder="e.g., Finance, Healthcare, Media" /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Contact</p>
+          <div class="form-row-2">
+            <div class="field"><label>Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Title / Role</label><input type="text" name="title" placeholder="e.g., Marketing Director" /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@company.com" required /></div>
+            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Sponsorship Details</p>
+          <div class="field"><label>Sponsorship Tier Interest</label>
+            <select name="tier">
+              <option value="">— Select preferred tier —</option>
+              <option>Title Sponsor — Premier visibility, exclusive naming rights for one event</option>
+              <option>Gold Sponsor — Stage banners, all print materials, social features</option>
+              <option>Silver Sponsor — Signage, event program, social mention</option>
+              <option>Community Partner — Table presence, listing on site and materials</option>
+              <option>Custom — I have a specific idea / budget</option>
+            </select>
+          </div>
+          <div class="field"><label>Goals / What You Hope to Achieve</label><textarea name="goals" placeholder="Tell us what you're looking to accomplish through sponsorship"></textarea></div>
+          <div class="field"><label>Additional Notes or Questions</label><textarea name="notes" placeholder="Any specific requirements or ideas?"></textarea></div>
+          <button type="submit" class="submit-btn">Submit Sponsorship Inquiry →</button>
+          <p class="form-note">Our partnerships team will respond within 3 business days.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ EVENT REGISTRATION ══════ -->
+    <div class="reg-panel" id="panel-event" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Event Registration</h2>
+          <p>Register to attend specific OSFNA 2026 cultural events — including Miss Oromo NA, nightly concerts, community forums, and more. General tournament access is open to all attendees.</p>
+        </div>
+        <form class="reg-form" id="form-event" novalidate>
+          <p class="form-section-label">Attendee Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>First Name <span>*</span></label><input type="text" name="first_name" placeholder="First name" required /></div>
+            <div class="field"><label>Last Name <span>*</span></label><input type="text" name="last_name" placeholder="Last name" required /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
+            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="Traveling from" /></div>
+            <div class="field"><label>Number of Attendees <span>*</span></label>
+              <select name="party_size" required>
+                <option value="">— Select —</option>
+                <option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5–10</option><option>10+</option>
+              </select>
+            </div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Event Interests</p>
+          <div class="field"><label>Which events are you interested in attending?</label><textarea name="events_interest" placeholder="e.g., Miss Oromo NA pageant, nightly concerts, cultural forum, all events..."></textarea></div>
+          <div class="field"><label>Dietary Restrictions / Accessibility Needs</label><textarea name="accessibility" placeholder="Any accommodations we should be aware of"></textarea></div>
+          <button type="submit" class="submit-btn">Submit Event Registration →</button>
+          <p class="form-note">Event schedule and details will be emailed closer to the event.<br><a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ VENUE ══════ -->
+    <div class="reg-panel" id="panel-venue" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Venue Inquiry</h2>
+          <p>Interested in hosting an OSFNA 2026 event, practice session, or satellite activity at your venue? Submit your inquiry and our events team will be in touch.</p>
+        </div>
+        <form class="reg-form" id="form-venue" novalidate>
+          <p class="form-section-label">Venue Details</p>
+          <div class="form-row-2">
+            <div class="field"><label>Venue Name <span>*</span></label><input type="text" name="venue_name" placeholder="Venue or facility name" required /></div>
+            <div class="field"><label>Venue Type</label>
+              <select name="venue_type">
+                <option value="">— Select —</option>
+                <option>Soccer / Multi-sport Field</option>
+                <option>Indoor Sports Facility</option>
+                <option>Hotel / Conference Center</option>
+                <option>Community Center</option>
+                <option>Outdoor Park</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Address <span>*</span></label><input type="text" name="address" placeholder="Full address" required /></div>
+          <div class="form-row-2">
+            <div class="field"><label>City <span>*</span></label><input type="text" name="city" placeholder="City" required /></div>
+            <div class="field"><label>State</label><input type="text" name="state" placeholder="State" /></div>
+          </div>
+          <div class="form-row-3">
+            <div class="field"><label>Capacity (max)</label><input type="number" name="capacity" placeholder="e.g., 500" /></div>
+            <div class="field"><label>Fields / Courts</label><input type="text" name="fields" placeholder="e.g., 4 soccer fields" /></div>
+            <div class="field"><label>Parking Spaces</label><input type="number" name="parking" placeholder="Approx. count" /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Contact</p>
+          <div class="form-row-2">
+            <div class="field"><label>Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
+          </div>
+          <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
+          <div class="field"><label>Availability / Dates</label><textarea name="availability" placeholder="Available dates during July 25 – Aug 1, 2026 or for pre-event use"></textarea></div>
+          <div class="field"><label>Additional Info</label><textarea name="notes" placeholder="Amenities, restrictions, rental terms, etc."></textarea></div>
+          <button type="submit" class="submit-btn">Submit Venue Inquiry →</button>
+          <p class="form-note">Our events team will follow up within 5 business days.<br><a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ══════ HOTELS DEAL ══════ -->
+    <div class="reg-panel" id="panel-hotels" role="tabpanel">
+      <div class="reg-form-wrap">
+        <div class="reg-form-header">
+          <h2>Hotels Deal</h2>
+          <p>Traveling to OSFNA 2026? Register your hotel interest and we'll connect you with our negotiated group rate partners. Rooms are limited — submit early to secure your rate.</p>
+        </div>
+        <form class="reg-form" id="form-hotels" novalidate>
+          <p class="form-section-label">Your Info</p>
+          <div class="form-row-2">
+            <div class="field"><label>Full Name <span>*</span></label><input type="text" name="full_name" placeholder="Full name" required /></div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
+            <div class="field"><label>Traveling From</label><input type="text" name="city" placeholder="e.g., Houston, TX" /></div>
+          </div>
+          <hr class="form-divider" />
+          <p class="form-section-label">Stay Details</p>
+          <div class="form-row-2">
+            <div class="field"><label>Check-in Date</label><input type="date" name="checkin" min="2026-07-23" max="2026-08-01" /></div>
+            <div class="field"><label>Check-out Date</label><input type="date" name="checkout" min="2026-07-25" max="2026-08-03" /></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Room Type Preference</label>
+              <select name="room_type">
+                <option value="">— Select —</option>
+                <option>Single / 1 bed</option>
+                <option>Double / 2 beds</option>
+                <option>Suite</option>
+                <option>No preference</option>
+              </select>
+            </div>
+            <div class="field"><label>Number of Rooms</label>
+              <select name="rooms_count">
+                <option value="">— Select —</option>
+                <option>1</option><option>2</option><option>3</option>
+                <option>4</option><option>5+</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Number of Guests</label><input type="number" name="guests" placeholder="Total number of guests across all rooms" /></div>
+          <div class="field"><label>Special Requests</label><textarea name="notes" placeholder="Accessibility needs, room preferences, group booking notes, etc."></textarea></div>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="hotel-interest" name="interest_confirmed" required />
+            <label for="hotel-interest">I'm interested in the OSFNA group hotel rate and would like to be contacted with details.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit Hotel Interest →</button>
+          <p class="form-note">Group rate details and partner hotel list sent by email.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
+        </form>
+      </div>
+    </div>
+
+  </div><!-- /section-inner -->
+</div><!-- /section-dark -->
 
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">OSFNA<span> 2026</span></div>
-        <p>The Oromo Sports Federation in North America is a nonprofit organization registered in Minnesota.</p>
+        <p>The Oromo Sports Federation in North America.</p>
       </div>
       <div>
         <p class="footer-col-title">Quick Links</p>
@@ -237,16 +683,47 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="vendor.html">Vendors</a></li>
           <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="media.html">Media</a></li>
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Oromo Sports Federation in North America. Nonprofit 501(c) registered in Minnesota.</p>
+      <p class="footer-copy">© 2026 Oromo Sports Federation in North America.</p>
     </div>
   </div>
 </footer>
 
 <script src="script.js"></script>
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.reg-tab');
+  const panels = document.querySelectorAll('.reg-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      // scroll to top of form area
+      document.querySelector('.reg-tabs-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Open tab from URL hash e.g. register.html#vendor
+  const hash = location.hash.replace('#','');
+  if (hash) {
+    const t = document.querySelector(`[data-tab="${hash}"]`);
+    if (t) t.click();
+  }
+
+  // Show division field only for soccer
+  function updateDivisions(sel) {
+    const df = document.getElementById('division-field');
+    if (df) df.style.display = sel.value === 'Soccer' ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>
