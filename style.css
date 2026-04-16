@@ -1344,3 +1344,537 @@ a { color: inherit; text-decoration: none; }
   .hero-ctas { flex-direction: column; }
   .btn { width: 100%; justify-content: center; }
 }
+
+/* =============================================
+   PORTAL PAGES (register.html, schedule.html, vendor.html)
+   ============================================= */
+.page-hero {
+  margin-top: 80px;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  text-align: center;
+}
+.page-hero-content h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.5rem, 7vw, 3.5rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+.page-hero-content p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ---- REGISTER PAGE ---- */
+.register-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.register-sidebar {
+  position: sticky;
+  top: 100px;
+}
+.register-sidebar h2 {
+  font-size: 1.25rem;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-head);
+}
+.register-form {
+  background: white;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.register-form h2 {
+  font-size: 1.25rem;
+  color: var(--dark);
+  margin-bottom: 2rem;
+  font-family: var(--font-head);
+}
+.register-form fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+.register-form legend {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  display: block;
+}
+.form-field {
+  margin-bottom: 1.25rem;
+}
+.form-field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #E0DDD5;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color 0.3s;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(27,94,53,0.1);
+}
+.form-field input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+/* ---- FEE CARD ---- */
+.fee-card {
+  background: white;
+  border: 1px solid #E0DDD5;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.fee-title {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.fee-list {
+  list-style: none;
+}
+.fee-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #F0EBE3;
+  font-size: 0.9rem;
+}
+.fee-list li:last-child {
+  border-bottom: none;
+}
+.fee-sport {
+  color: var(--text);
+  font-weight: 500;
+}
+.fee-amount {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ---- INFO BOX ---- */
+.info-box {
+  background: white;
+  border: 1px solid #E0DDD5;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.info-title {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+.info-list {
+  list-style: none;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.8;
+}
+.info-list li {
+  padding: 0.25rem 0;
+}
+.info-list li::before {
+  content: '✓ ';
+  color: var(--green);
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.contact-box {
+  background: white;
+  border: 1px solid #E0DDD5;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.contact-title {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+/* ---- SCHEDULE PAGE ---- */
+.schedule-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.schedule-table thead {
+  background: var(--green);
+  color: white;
+}
+.schedule-table th {
+  padding: 1.25rem;
+  text-align: left;
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+.schedule-table th:last-child {
+  border-right: none;
+}
+.schedule-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #F0EBE3;
+}
+.schedule-table tr:last-child td {
+  border-bottom: none;
+}
+.day-name {
+  font-weight: 600;
+  color: var(--green);
+  font-family: var(--font-head);
+}
+.day-date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---- BRACKET ---- */
+.bracket-section {
+  margin-bottom: 3rem;
+}
+.bracket-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.bracket-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.bracket-title {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.bracket-slot {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(240,192,64,0.2);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bracket-slot.champion {
+  background: linear-gradient(135deg, rgba(240,192,64,0.2), rgba(240,192,64,0.1));
+  border-color: rgba(240,192,64,0.3);
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ---- EVENTS TIMELINE ---- */
+.events-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.event-item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(240,192,64,0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.event-day {
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.event-title {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.event-time {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ---- OTHER SPORTS ---- */
+.other-sports-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+.other-sport-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid #E0DDD5;
+  text-align: center;
+}
+.sport-icon-large {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.other-sport-card h3 {
+  font-family: var(--font-head);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+.other-sport-card p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+.other-sport-card p strong {
+  color: var(--text);
+}
+
+/* ---- VENDOR PAGE ---- */
+.vendor-intro {
+  margin-bottom: 3rem;
+}
+.booth-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.booth-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid #E0DDD5;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.booth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+.booth-card.highlight {
+  background: linear-gradient(135deg, rgba(27,94,53,0.08), rgba(240,192,64,0.08));
+  border-color: var(--gold);
+}
+.booth-size {
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+.booth-price {
+  font-family: var(--font-head);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.booth-desc {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.booth-features {
+  list-style: none;
+  font-size: 0.85rem;
+  color: #666;
+}
+.booth-features li {
+  padding: 0.5rem 0;
+}
+.booth-features li::before {
+  content: '✓ ';
+  color: var(--green);
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.vendor-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.category-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid #E0DDD5;
+  text-align: center;
+}
+.category-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.category-name {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.75rem;
+}
+.category-desc {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ---- VENDOR FORM ---- */
+.vendor-form-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.vendor-sidebar {
+  position: sticky;
+  top: 100px;
+}
+.vendor-sidebar h2 {
+  font-size: 1.25rem;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-head);
+}
+.sponsor-tier {
+  background: white;
+  border: 1px solid #E0DDD5;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.tier-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+.tier-name {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.75rem;
+}
+.tier-features {
+  list-style: none;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.tier-features li {
+  padding: 0.25rem 0;
+}
+.tier-features li::before {
+  content: '• ';
+  color: var(--green);
+  margin-right: 0.5rem;
+}
+.tier-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.vendor-form {
+  background: white;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.vendor-form fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+.vendor-form legend {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* ---- RESPONSIVE PORTALS ---- */
+@media (max-width: 1024px) {
+  .register-container { grid-template-columns: 1fr; }
+  .register-sidebar { position: relative; top: 0; }
+  .vendor-form-container { grid-template-columns: 1fr; }
+  .vendor-sidebar { position: relative; top: 0; }
+  .booth-pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  .vendor-categories { grid-template-columns: repeat(2, 1fr); }
+  .bracket-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .page-hero { padding: 4rem 1.5rem 3rem; margin-top: 70px; }
+  .page-hero-content h1 { font-size: 2rem; }
+  .register-form { padding: 1.5rem; }
+  .vendor-form { padding: 1.5rem; }
+  .booth-pricing-grid { grid-template-columns: 1fr; }
+  .vendor-categories { grid-template-columns: 1fr; }
+  .other-sports-grid { grid-template-columns: 1fr; }
+  .bracket-grid { grid-template-columns: repeat(2, 1fr); }
+  .events-timeline { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { padding: 3rem 1rem 2rem; }
+  .register-form { padding: 1.25rem; }
+  .vendor-form { padding: 1.25rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
