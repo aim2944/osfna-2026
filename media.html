@@ -3,10 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media & Gallery — OSFNA 2026</title>
-  <meta name="description" content="OSFNA 2026 Media Gallery — photos and highlights from OSFNA 2025 in Seattle." />
+  <title>Media — OSFNA 2026</title>
+  <meta name="description" content="OSFNA 2026 Media — photos, TikTok videos, Instagram posts, and Facebook updates." />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Media page layout ── */
+    .media-section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+    .media-section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    /* TikTok grid */
+    .tiktok-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      justify-items: center;
+    }
+    .tiktok-grid blockquote.tiktok-embed {
+      margin: 0 !important;
+      min-width: unset !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    /* Instagram grid */
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      justify-items: center;
+    }
+    .instagram-grid blockquote.instagram-media {
+      margin: 0 !important;
+      min-width: unset !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    /* Facebook section */
+    .facebook-embed-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Photo gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .tiktok-grid,
+      .instagram-grid { grid-template-columns: 1fr; }
+      .gallery-grid    { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid    { grid-template-columns: 1fr; }
+    }
+
+    /* Social follow bar */
+    .social-follow-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .social-follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+    .social-follow-btn:hover {
+      background: rgba(204,32,32,0.15);
+      border-color: var(--red);
+      color: white;
+    }
+  </style>
 </head>
 <body>
 
@@ -21,7 +123,7 @@
     <li><a href="vendor.html">Vendors</a></li>
     <li><a href="schedule.html">Schedule</a></li>
     <li><a href="media.html" class="active">Media</a></li>
-    <li><a href="index.html#register">Register</a></li>
+    <li><a href="register.html">Register</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
   <button class="hamburger" aria-label="Open menu" aria-expanded="false">
@@ -34,36 +136,175 @@
   <li><a href="vendor.html">Vendors</a></li>
   <li><a href="schedule.html">Schedule</a></li>
   <li><a href="media.html">Media</a></li>
-  <li><a href="index.html#register">Register</a></li>
+  <li><a href="register.html">Register</a></li>
   <li><a href="index.html#contact">Contact</a></li>
 </ul>
 
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-content">
-    <h1>Media &amp; Gallery</h1>
-    <p>OSFNA 2025 — Federal Way, Seattle, Washington</p>
+    <h1>Media</h1>
+    <p>TikTok · Instagram · Facebook · 2025 Gallery</p>
   </div>
 </section>
 
+<!-- FOLLOW BAR -->
+<section class="section section-dark" style="padding:2rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+  <div class="section-inner" style="text-align:center;">
+    <div class="social-follow-bar">
+      <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="social-follow-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.16 8.16 0 0 0 4.78 1.52V7.12a4.85 4.85 0 0 1-1.01-.43z"/></svg>
+        TikTok @myosfna
+      </a>
+      <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener" class="social-follow-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        Instagram @myosfna
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="social-follow-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook OSFNA
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TIKTOK ===== -->
 <section class="section section-light">
   <div class="section-inner">
-    <p class="section-label reveal">2025 Highlights</p>
-    <h2 class="section-title reveal reveal-delay-1">Tournament &amp; Event Photos</h2>
-    <p class="reveal reveal-delay-2" style="color:#666;max-width:650px;margin:0 auto 2.5rem;text-align:center;line-height:1.7;">
-      July 26 – August 2, 2025 · Tournament highlights, champions, and cultural moments from OSFNA 2025 in Federal Way, Seattle, Washington.
-    </p>
+    <p class="media-section-label">Latest Videos</p>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">TikTok</h2>
 
-    <div class="gallery-grid reveal reveal-delay-2">
+    <div class="tiktok-grid">
+
+      <blockquote class="tiktok-embed"
+        cite="https://www.tiktok.com/@myosfna/video/7598698985221557518"
+        data-video-id="7598698985221557518"
+        style="max-width:605px;min-width:325px;">
+        <section><a target="_blank" href="https://www.tiktok.com/@myosfna">@myosfna</a></section>
+      </blockquote>
+
+      <blockquote class="tiktok-embed"
+        cite="https://www.tiktok.com/@myosfna/video/7598325276359019790"
+        data-video-id="7598325276359019790"
+        style="max-width:605px;min-width:325px;">
+        <section><a target="_blank" href="https://www.tiktok.com/@myosfna">@myosfna</a></section>
+      </blockquote>
+
+      <blockquote class="tiktok-embed"
+        cite="https://www.tiktok.com/@myosfna/video/7598249600381685006"
+        data-video-id="7598249600381685006"
+        style="max-width:605px;min-width:325px;">
+        <section><a target="_blank" href="https://www.tiktok.com/@myosfna">@myosfna</a></section>
+      </blockquote>
+
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="btn btn-gold">
+        View All on TikTok →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTAGRAM ===== -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <p class="media-section-label">Latest Posts</p>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Instagram</h2>
+
+    <div class="instagram-grid">
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DUJmJLbEoV9/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DSN2G2hkdA6/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DRVJJHgkSi8/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DT3s6uYka_n/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DT1LEudEXKV/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DT0nhdOEcZ8/"
+        data-instgrm-version="14"
+        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin:0;max-width:100%;width:100%;">
+      </blockquote>
+
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener" class="btn btn-gold">
+        Follow on Instagram →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FACEBOOK ===== -->
+<section class="section section-light">
+  <div class="section-inner">
+    <p class="media-section-label">Community Page</p>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Facebook</h2>
+
+    <div class="facebook-embed-wrap">
+      <iframe
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090295848290&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+        width="500"
+        height="600"
+        style="border:none;overflow:hidden;border-radius:12px;max-width:100%;"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="btn btn-gold">
+        Follow on Facebook →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2025 PHOTO GALLERY ===== -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <p class="media-section-label">OSFNA 2025 — Seattle</p>
+    <h2 class="section-title" style="margin-bottom:2.5rem;">Photo Gallery</h2>
+
+    <div class="gallery-grid">
       <figure class="gallery-item">
         <img src="assets/champion-div-a.jpeg" alt="Division A Champions — Dire Dawa FC" class="gallery-photo" />
         <figcaption>Division A Champions — Dire Dawa FC</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/event-1.jpeg" alt="OSFNA 2025 Tournament Action" class="gallery-photo" />
+        <img src="assets/event-1.jpeg" alt="OSFNA 2025 Tournament" class="gallery-photo" />
         <figcaption>Tournament Action — OSFNA 2025</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/promo-2025.jpeg" alt="OSFNA 2025 Promotion" class="gallery-photo" />
+        <img src="assets/promo-2025.jpeg" alt="OSFNA 2025" class="gallery-photo" />
         <figcaption>OSFNA 2025 — 28 Years Strong</figcaption>
       </figure>
       <figure class="gallery-item">
@@ -71,40 +312,26 @@
         <figcaption>Community Celebration</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/miss-oromo.jpeg" alt="Miss Oromo North America 2025" class="gallery-photo" />
-        <figcaption>Miss Oromo North America 2025 — Ofifan Dabala</figcaption>
+        <img src="assets/miss-oromo.jpeg" alt="Miss Oromo NA 2025" class="gallery-photo" />
+        <figcaption>Miss Oromo NA 2025 — Ofifan Dabala</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/champion-div-b.jpeg" alt="Division B Champions — WBO FC DC" class="gallery-photo" />
+        <img src="assets/champion-div-b.jpeg" alt="Division B Champions" class="gallery-photo" />
         <figcaption>Division B Champions — WBO FC DC</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/champion-basketball.jpeg" alt="Basketball Champions — New Dallas" class="gallery-photo" />
+        <img src="assets/champion-basketball.jpeg" alt="Basketball Champions" class="gallery-photo" />
         <figcaption>Basketball Champions — New Dallas</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="assets/champion-golf.jpeg" alt="Golf Champions — Team Portland" class="gallery-photo" />
-        <figcaption>Golf Champions — Team Portland (Inaugural)</figcaption>
+        <img src="assets/champion-golf.jpeg" alt="Golf Champions" class="gallery-photo" />
+        <figcaption>Golf Champions — Team Portland</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<section class="section section-dark">
-  <div class="section-inner" style="text-align:center;">
-    <p class="section-label reveal" style="color:var(--red);">Follow Along</p>
-    <h2 class="section-title reveal reveal-delay-1" style="color:white;">More on Social Media</h2>
-    <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,.75);max-width:550px;margin:0 auto 2rem;line-height:1.7;">
-      Follow OSFNA on TikTok, Instagram, and Facebook for real-time updates, highlight reels, and behind-the-scenes content from Oromo Week 2026.
-    </p>
-    <div class="reveal reveal-delay-3" style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
-      <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="btn btn-gold">TikTok @myosfna →</a>
-      <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener" class="btn btn-outline">Instagram @myosfna →</a>
-      <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="btn btn-outline">Facebook →</a>
-    </div>
-  </div>
-</section>
-
+<!-- Lightbox -->
 <div id="gallery-lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
   <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
   <img class="lightbox-image" src="" alt="" />
@@ -116,7 +343,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">OSFNA<span> 2026</span></div>
-        <p>The Oromo Sports Federation in North America is a nonprofit organization registered in Minnesota.</p>
+        <p>The Oromo Sports Federation in North America.</p>
         <div class="social-links" style="margin-top:1.5rem;">
           <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">f</a>
           <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">ig</a>
@@ -130,17 +357,20 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="vendor.html">Vendors</a></li>
           <li><a href="schedule.html">Schedule</a></li>
-          <li><a href="index.html#register">Register</a></li>
+          <li><a href="register.html">Register</a></li>
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Oromo Sports Federation in North America. Nonprofit 501(c) registered in Minnesota.</p>
+      <p class="footer-copy">© 2026 Oromo Sports Federation in North America.</p>
     </div>
   </div>
 </footer>
 
+<!-- Embed scripts — load after page content -->
+<script async src="https://www.tiktok.com/embed.js"></script>
+<script async src="https://www.instagram.com/embed.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
