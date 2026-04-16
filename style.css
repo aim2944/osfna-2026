@@ -465,6 +465,66 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* =============================================
+   LEADERSHIP
+   ============================================= */
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.leadership-card {
+  background: #fff;
+  border: 1px solid rgba(27,94,53,0.1);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all var(--dur-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.leadership-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--green);
+  transition: width var(--dur-normal) var(--ease-out);
+  z-index: 0;
+}
+.leadership-card:hover {
+  border-color: var(--green);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(27,94,53,0.12);
+}
+.leadership-card:hover::before { width: 4px; }
+.leadership-role {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+.leadership-name {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.leadership-desc {
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* =============================================
    TOURNAMENT
    ============================================= */
 .sport-cards {
@@ -834,6 +894,91 @@ a { color: inherit; text-decoration: none; }
 .tier-dot.community { background: var(--green-light); }
 
 /* =============================================
+   GROWTH & EXPANSION
+   ============================================= */
+.growth-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.growth-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(240,192,64,0.15);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  transition: all var(--dur-normal) var(--ease-out);
+}
+.growth-card:hover {
+  border-color: rgba(240,192,64,0.4);
+  transform: translateY(-6px);
+  background: rgba(240,192,64,0.05);
+}
+.growth-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.growth-title {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.growth-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.testimonial-card {
+  background: #fff;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition: all var(--dur-normal) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+.testimonial-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(27,94,53,0.12);
+}
+.testimonial-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  flex: 1;
+  font-style: italic;
+}
+.testimonial-author {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+.testimonial-context {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* =============================================
    MEDIA / TIKTOK
    ============================================= */
 .media-intro {
@@ -1032,6 +1177,9 @@ a { color: inherit; text-decoration: none; }
   .form-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .week-cards { grid-template-columns: 1fr; }
+  .leadership-grid { grid-template-columns: 1fr 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .growth-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
