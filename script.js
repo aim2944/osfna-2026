@@ -73,6 +73,44 @@ const revealObserver = new IntersectionObserver(
 );
 revealEls.forEach(el => revealObserver.observe(el));
 
+// ---- GALLERY LIGHTBOX ----
+const galleryLightbox = document.getElementById('gallery-lightbox');
+if (galleryLightbox) {
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxImage = document.querySelector('.lightbox-image');
+  const lightboxCaption = document.querySelector('.lightbox-caption');
+  const galleryPhotos = document.querySelectorAll('.gallery-photo');
+
+  galleryPhotos.forEach(photo => {
+    photo.addEventListener('click', () => {
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxCaption.textContent = photo.parentElement.querySelector('figcaption').textContent;
+      galleryLightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    galleryLightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  galleryLightbox.addEventListener('click', (e) => {
+    if (e.target === galleryLightbox) {
+      galleryLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && galleryLightbox.classList.contains('open')) {
+      galleryLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+}
+
 // ---- TIKTOK EMBED LAZY LOAD ----
 // Only load TikTok embed script after page is fully loaded
 // Replace data-video-id values with real TikTok video IDs when available

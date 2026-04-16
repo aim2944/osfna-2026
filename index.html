@@ -8,6 +8,7 @@
   <meta property="og:title" content="OSFNA 2026 — Oromo Week" />
   <meta property="og:description" content="The premier Oromo cultural and sports festival in North America. Soccer · Basketball · Golf · Miss Oromo NA · Nightly Concerts." />
   <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,7 +17,10 @@
      NAVBAR
      ============================================= -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="#hero" class="nav-logo">OSFNA<span> 2026</span></a>
+  <a href="#hero" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#tournament">Tournament</a></li>
@@ -44,7 +48,7 @@
 <!-- =============================================
      HERO
      ============================================= -->
-<section id="hero" class="hero">
+<section id="hero" class="hero" style="background-image: linear-gradient(135deg, rgba(12,20,15,0.85) 0%, rgba(12,20,15,0.75) 100%), url(assets/event-1.jpeg); background-size: cover; background-position: center;">
   <div class="hero-pattern" aria-hidden="true"></div>
   <div class="hero-green-bar" aria-hidden="true"></div>
 
@@ -235,21 +239,25 @@
       <div class="champions-label">2025 Champions — Seattle, WA</div>
       <div class="champions-grid">
         <div class="champion-item">
+          <img src="assets/champion-div-a.jpeg" alt="Dire Dawa FC - Division A Champions" class="champion-photo" />
           <div class="champion-event">Division A</div>
           <div class="champion-team">Dire Dawa FC</div>
           <div class="champion-sub">Minnesota · MVP: Hamza Abduljalil</div>
         </div>
         <div class="champion-item">
+          <img src="assets/champion-div-b.jpeg" alt="WBO FC DC - Division B Champions" class="champion-photo" />
           <div class="champion-event">Division B</div>
           <div class="champion-team">WBO FC DC</div>
           <div class="champion-sub">Washington, D.C.</div>
         </div>
         <div class="champion-item">
+          <img src="assets/champion-basketball.jpeg" alt="New Dallas - Basketball Champions" class="champion-photo" />
           <div class="champion-event">Basketball</div>
           <div class="champion-team">New Dallas</div>
           <div class="champion-sub">OSFNA 2025 Champions</div>
         </div>
         <div class="champion-item">
+          <img src="assets/champion-golf.jpeg" alt="Team Portland - Golf Champions" class="champion-photo" />
           <div class="champion-event">Golf (Inaugural)</div>
           <div class="champion-team">Team Portland</div>
           <div class="champion-sub">First-Ever Golf Title</div>
@@ -327,6 +335,52 @@
 </section>
 
 <!-- =============================================
+     2025 PHOTO GALLERY
+     ============================================= -->
+<section class="section section-light">
+  <div class="section-inner">
+    <p class="section-label reveal">OSFNA 2025</p>
+    <h2 class="section-title reveal reveal-delay-1">Seattle Tournament Gallery</h2>
+    <p class="reveal reveal-delay-2" style="max-width: 640px; font-size: 1rem; color: #666; line-height: 1.7; margin-bottom: 2.5rem;">
+      July 26 – August 2, 2025. Tournament highlights, champions, and cultural moments from the OSFNA event in Federal Way, Seattle, Washington.
+    </p>
+
+    <div class="gallery-grid reveal reveal-delay-2">
+      <figure class="gallery-item">
+        <img src="assets/champion-div-a.jpeg" alt="Division A Champions - Dire Dawa FC trophy celebration" class="gallery-photo" />
+        <figcaption>Division A Champions</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="assets/event-1.jpeg" alt="Tournament event action shot" class="gallery-photo" />
+        <figcaption>Tournament Action</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="assets/promo-2025.jpeg" alt="OSFNA 2025 promotional graphic" class="gallery-photo" />
+        <figcaption>OSFNA 2025 Promotion</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="assets/champion-basketball.jpeg" alt="New Dallas Basketball Champions" class="gallery-photo" />
+        <figcaption>Basketball Champions</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="assets/miss-oromo.jpeg" alt="Miss Oromo North America 2025 - Ofifan Dabala" class="gallery-photo" />
+        <figcaption>Miss Oromo NA 2025</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="assets/event-2.jpeg" alt="Community gathering and celebration" class="gallery-photo" />
+        <figcaption>Community Celebration</figcaption>
+      </figure>
+    </div>
+
+    <div class="gallery-lightbox" id="gallery-lightbox">
+      <span class="lightbox-close">&times;</span>
+      <img src="" alt="" class="lightbox-image" />
+      <p class="lightbox-caption"></p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
      OROMO WEEK
      ============================================= -->
 <section id="oromo-week" class="section section-green">
@@ -396,12 +450,28 @@
 
     <div class="past-guests reveal">
       <p class="past-guests-label">Past Featured Artists &amp; Guests of Honor</p>
-      <div class="guest-list">
-        <span class="guest-tag">Gutu Abera</span>
-        <span class="guest-tag">Kemer Yusuf</span>
-        <span class="guest-tag">Wako Getacho</span>
-        <span class="guest-tag">Dr. Gudata Hinika</span>
-        <span class="guest-tag">Mergitu Argo</span>
+      <div class="guest-grid">
+        <figure class="guest-figure">
+          <img src="assets/guest-gudata.png" alt="Dr. Gudata Hinika" class="guest-photo" />
+          <figcaption>
+            <div class="guest-name">Dr. Gudata Hinika</div>
+            <div class="guest-role">Dignitary</div>
+          </figcaption>
+        </figure>
+        <figure class="guest-figure">
+          <img src="assets/guest-kemer.png" alt="Kemer Yusuf" class="guest-photo" />
+          <figcaption>
+            <div class="guest-name">Kemer Yusuf</div>
+            <div class="guest-role">Artist &amp; Performer</div>
+          </figcaption>
+        </figure>
+        <figure class="guest-figure">
+          <img src="assets/guest-wako.jpeg" alt="Wako Getacho" class="guest-photo" />
+          <figcaption>
+            <div class="guest-name">Wako Getacho</div>
+            <div class="guest-role">Guest of Honor</div>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </div>
@@ -466,12 +536,12 @@
         <p class="sponsors-label">2025 Partners &amp; Sponsors</p>
 
         <div class="sponsor-card">
-          <div class="sponsor-name">Amibara Properties</div>
+          <img src="assets/sponsor-amibara.png" alt="Amibara Properties" class="sponsor-logo" />
           <div class="sponsor-tagline">Empowering communities through quality and innovation.</div>
         </div>
 
         <div class="sponsor-card">
-          <div class="sponsor-name">Teamsters Local 117</div>
+          <img src="assets/sponsor-teamsters.jpeg" alt="Teamsters Local 117" class="sponsor-logo" />
           <div class="sponsor-tagline">We build unity and power for all working people to improve lives and lift up our communities.</div>
         </div>
 

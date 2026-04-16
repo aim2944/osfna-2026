@@ -85,15 +85,25 @@ a { color: inherit; text-decoration: none; }
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(240,192,64,0.15);
 }
-.nav-logo {
+.nav-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: opacity 0.3s;
+}
+.nav-logo-link:hover { opacity: 0.8; }
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+}
+.nav-year {
   font-family: var(--font-head);
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--gold);
   text-transform: uppercase;
 }
-.nav-logo span { color: #fff; }
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -463,6 +473,150 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
   color: var(--green);
 }
+
+/* =============================================
+   GALLERY
+   ============================================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform var(--dur-normal) var(--ease-out), box-shadow var(--dur-normal);
+  margin: 0;
+}
+.gallery-item:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px rgba(27,94,53,0.2);
+}
+.gallery-photo {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+.gallery-item figcaption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  padding: 1.5rem 1rem 1rem;
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--dur-normal);
+}
+.gallery-item:hover figcaption { opacity: 1; }
+
+.gallery-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.gallery-lightbox.open { display: flex; }
+.lightbox-close {
+  position: absolute;
+  top: 2rem; right: 2rem;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--dur-fast);
+}
+.lightbox-close:hover { opacity: 1; }
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+}
+.lightbox-caption {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* =============================================
+   CHAMPION PHOTOS
+   ============================================= */
+.champion-photo {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+/* =============================================
+   GUEST FIGURES
+   ============================================= */
+.guest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.guest-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.guest-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--green);
+  margin-bottom: 1rem;
+  display: block;
+}
+.guest-figure figcaption {
+  width: 100%;
+}
+.guest-name {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+.guest-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   SPONSOR LOGOS
+   ============================================= */
+.sponsor-logo {
+  display: block;
+  max-width: 160px;
+  height: auto;
+  margin-bottom: 1rem;
+  filter: brightness(0.95);
+  transition: filter var(--dur-fast);
+}
+.sponsor-card:hover .sponsor-logo { filter: brightness(1); }
 
 /* =============================================
    LEADERSHIP
@@ -1180,6 +1334,8 @@ a { color: inherit; text-decoration: none; }
   .leadership-grid { grid-template-columns: 1fr 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .growth-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .guest-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
