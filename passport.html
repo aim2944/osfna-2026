@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oromo Passport — OSFNA 2026</title>
+  <meta name="description" content="Create your free Oromo Passport to unlock the official OSFNA 2026 nightlife guide, city itinerary, and exclusive attendee content." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #060a07; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Split layout ── */
+    .pp-wrap {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      min-height: calc(100vh - 72px);
+    }
+    @media (max-width: 860px) {
+      .pp-wrap { grid-template-columns: 1fr; }
+      .pp-left  { display: none; }
+    }
+
+    /* ── Left — brand panel ── */
+    .pp-left {
+      position: relative;
+      background: linear-gradient(160deg, #0a0418 0%, #120818 40%, #0a1408 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem;
+      overflow: hidden;
+    }
+    .pp-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(255,180,0,.14) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(109,40,217,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(34,197,94,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pp-brand { position: relative; z-index: 1; }
+    .pp-brand-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #e6a800, #ffcc33);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .pp-brand h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .pp-brand h1 span { color: #fbbf24; }
+    .pp-brand p {
+      font-size: 1rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.7;
+      max-width: 380px;
+      margin-bottom: 2rem;
+    }
+    .pp-perks { display: flex; flex-direction: column; gap: .75rem; }
+    .pp-perk {
+      display: flex; align-items: center; gap: .75rem;
+      font-size: .88rem; color: rgba(255,255,255,.65);
+    }
+    .pp-perk-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* ── Right — form panel ── */
+    .pp-right {
+      background: #080c09;
+      border-left: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      overflow-y: auto;
+    }
+    .pp-form-header { margin-bottom: 2rem; }
+    .pp-form-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem; font-weight: 800; color: #fff;
+      margin-bottom: .25rem;
+    }
+    .pp-form-header p { font-size: .88rem; color: rgba(255,255,255,.4); }
+
+    /* ── Mode toggle ── */
+    .mode-toggle {
+      display: flex;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 3px;
+      margin-bottom: 2rem;
+    }
+    .mode-btn {
+      flex: 1; padding: .6rem; border: none; background: none;
+      border-radius: 8px; font-family: var(--font-head);
+      font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); cursor: pointer; transition: all .15s;
+    }
+    .mode-btn.active {
+      background: rgba(255,255,255,.08);
+      color: #fff;
+    }
+
+    /* ── Form ── */
+    .pp-form { display: flex; flex-direction: column; gap: 1rem; }
+    .pp-field { display: flex; flex-direction: column; gap: .35rem; }
+    .pp-field label {
+      font-family: var(--font-head); font-size: .68rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+    }
+    .pp-field label span { color: #fbbf24; }
+    .pp-field input, .pp-field select {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; color: #fff;
+      font-family: var(--font-body); font-size: .95rem;
+      padding: .75rem 1rem; width: 100%;
+      transition: border-color .2s;
+    }
+    .pp-field input:focus, .pp-field select:focus {
+      outline: none; border-color: #fbbf24;
+      background: rgba(255,180,0,.04);
+    }
+    .pp-field input::placeholder { color: rgba(255,255,255,.18); }
+    .pp-field select option { background: #111; }
+    .pp-check {
+      display: flex; align-items: flex-start; gap: .65rem;
+      margin-top: .25rem;
+    }
+    .pp-check input { width: auto; margin-top: 3px; flex-shrink: 0; }
+    .pp-check label {
+      font-size: .83rem; color: rgba(255,255,255,.55);
+      text-transform: none; letter-spacing: 0; line-height: 1.5;
+    }
+    .pp-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #e6a800, #ffcc33);
+      color: #0a0a0a; border: none; border-radius: 10px;
+      padding: .9rem; font-family: var(--font-head);
+      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; font-weight: 700;
+      transition: opacity .15s, transform .15s;
+      margin-top: .25rem;
+    }
+    .pp-submit:hover { opacity: .88; transform: translateY(-1px); }
+    .pp-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .pp-divider {
+      display: flex; align-items: center; gap: .75rem;
+      font-size: .75rem; color: rgba(255,255,255,.2);
+      margin: .5rem 0;
+    }
+    .pp-divider::before, .pp-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,.07);
+    }
+    .pp-msg {
+      border-radius: 8px; padding: .85rem 1rem;
+      font-size: .85rem; line-height: 1.5; display: none;
+    }
+    .pp-msg.error   { background: rgba(204,32,32,.12); border: 1px solid rgba(204,32,32,.35); color: #ff9090; display: block; }
+    .pp-msg.success { background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.35); color: #86efac; display: block; }
+    .pp-footer-note {
+      font-size: .75rem; color: rgba(255,255,255,.25);
+      text-align: center; line-height: 1.5; margin-top: .5rem;
+    }
+    .pp-footer-note a { color: rgba(255,180,0,.6); text-decoration: none; }
+
+    /* ── Email confirm state ── */
+    .confirm-screen {
+      text-align: center; padding: 2rem 0;
+      display: none; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .confirm-screen.show { display: flex; }
+    .confirm-icon { font-size: 3.5rem; }
+    .confirm-screen h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .confirm-screen p  { font-size: .88rem; color: rgba(255,255,255,.5); max-width: 320px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="parties.html">Parties</a></li>
+    <li><a href="itinerary.html">Itinerary</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="passport.html" class="active" style="color:#fbbf24">Passport</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="pp-wrap">
+
+  <!-- Left brand panel -->
+  <div class="pp-left">
+    <div class="pp-brand">
+      <div class="pp-brand-icon">🛂</div>
+      <h1>Oromo<br><span>Passport</span></h1>
+      <p>Your digital key to Oromo Week 2026. One account unlocks the official nightlife guide, city itinerary, exclusive venues, and more.</p>
+      <div class="pp-perks">
+        <div class="pp-perk"><div class="pp-perk-icon">🎉</div>Official party venues + secret DJs</div>
+        <div class="pp-perk"><div class="pp-perk-icon">🗺</div>City guide: Houston, LA, Atlanta, NYC metro</div>
+        <div class="pp-perk"><div class="pp-perk-icon">🍽</div>Oromo & Horn restaurant directory</div>
+        <div class="pp-perk"><div class="pp-perk-icon">📲</div>Early ticket access + exclusive pricing</div>
+        <div class="pp-perk"><div class="pp-perk-icon">🏆</div>Live tournament bracket updates</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="pp-right">
+    <div class="pp-form-header">
+      <h2 id="form-title">Create Your Passport</h2>
+      <p id="form-sub">Free. Takes 30 seconds. Unlocks everything.</p>
+    </div>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-join"   onclick="setMode('join')">Join Free</button>
+      <button class="mode-btn"        id="btn-signin" onclick="setMode('signin')">Sign In</button>
+    </div>
+
+    <!-- Email confirm state -->
+    <div class="confirm-screen" id="confirm-screen">
+      <div class="confirm-icon">📬</div>
+      <h3>Check your email</h3>
+      <p>We sent a confirmation link to <strong id="confirm-email"></strong>. Click it to activate your Passport.</p>
+      <p style="color:rgba(255,255,255,.3);font-size:.8rem">Already confirmed? <button onclick="setMode('signin')" style="background:none;border:none;color:#fbbf24;cursor:pointer;font-size:.8rem">Sign in here.</button></p>
+    </div>
+
+    <!-- Form -->
+    <form class="pp-form" id="pp-form" novalidate>
+      <!-- Join-only fields -->
+      <div class="pp-field" id="field-name">
+        <label>Full Name <span>*</span></label>
+        <input type="text" name="full_name" placeholder="Your full name" autocomplete="name" />
+      </div>
+
+      <div class="pp-field">
+        <label>Email <span>*</span></label>
+        <input type="email" name="email" placeholder="you@email.com" autocomplete="email" />
+      </div>
+
+      <div class="pp-field">
+        <label>Password <span>*</span></label>
+        <input type="password" name="password" placeholder="Min 8 characters" autocomplete="new-password" />
+      </div>
+
+      <!-- Join-only fields -->
+      <div id="join-extras">
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div class="pp-field">
+            <label>City / State <span style="color:rgba(255,255,255,.2)">optional</span></label>
+            <input type="text" name="city" placeholder="e.g. Houston, TX" autocomplete="off" />
+          </div>
+          <div class="pp-field">
+            <label>How did you hear about OSFNA?</label>
+            <select name="source">
+              <option value="">— Select —</option>
+              <option value="instagram">Instagram (@myosfna)</option>
+              <option value="tiktok">TikTok (@myosfna)</option>
+              <option value="facebook">Facebook</option>
+              <option value="friend">Friend / Family</option>
+              <option value="soccer_team">Through my soccer team</option>
+              <option value="community">Community organization</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="pp-check">
+            <input type="checkbox" id="heritage-check" name="heritage_community" />
+            <label for="heritage-check">I am Oromo or part of the Oromo/Horn of Africa community</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pp-msg" id="pp-msg"></div>
+
+      <button type="submit" class="pp-submit" id="pp-submit">Create My Passport →</button>
+
+      <p class="pp-footer-note">
+        By creating an account you agree to OSFNA's <a href="#">Terms of Use</a>.
+        Your data is never sold.
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  // ── Redirect if already logged in ──
+  const existing = localStorage.getItem('osfna_token');
+  if (existing) {
+    const next = new URLSearchParams(location.search).get('next');
+    window.location.href = next === 'parties' ? 'parties.html' : 'itinerary.html';
+  }
+
+  let mode = 'join';
+  const nextPage = new URLSearchParams(location.search).get('next');
+
+  function setMode(m) {
+    mode = m;
+    const isJoin = m === 'join';
+    document.getElementById('btn-join').classList.toggle('active', isJoin);
+    document.getElementById('btn-signin').classList.toggle('active', !isJoin);
+    document.getElementById('field-name').style.display   = isJoin ? '' : 'none';
+    document.getElementById('join-extras').style.display  = isJoin ? '' : 'none';
+    document.getElementById('form-title').textContent     = isJoin ? 'Create Your Passport' : 'Welcome Back';
+    document.getElementById('form-sub').textContent       = isJoin ? 'Free. Takes 30 seconds. Unlocks everything.' : 'Sign in to access your Oromo Week guide.';
+    document.getElementById('pp-submit').textContent      = isJoin ? 'Create My Passport →' : 'Sign In →';
+    document.querySelector('[name=password]').autocomplete = isJoin ? 'new-password' : 'current-password';
+    document.getElementById('confirm-screen').classList.remove('show');
+    document.getElementById('pp-form').style.display = '';
+    document.getElementById('pp-msg').className = 'pp-msg';
+  }
+
+  // ── Open to sign-in if hash or param says so ──
+  if (location.hash === '#signin' || new URLSearchParams(location.search).get('mode') === 'signin') {
+    setMode('signin');
+  }
+
+  // ── Form submit ──
+  document.getElementById('pp-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form   = e.target;
+    const msg    = document.getElementById('pp-msg');
+    const btn    = document.getElementById('pp-submit');
+    const fd     = new FormData(form);
+    const data   = Object.fromEntries(fd);
+    data.heritage_community = form.querySelector('[name=heritage_community]')?.checked || false;
+
+    msg.className = 'pp-msg';
+    btn.disabled  = true;
+    btn.textContent = mode === 'join' ? 'Creating…' : 'Signing in…';
+
+    const endpoint = mode === 'join' ? '/api/auth-signup' : '/api/auth-login';
+
+    try {
+      const res  = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+
+      if (!res.ok) {
+        const errText = json.errors ? json.errors.join('\n') : (json.error || 'Something went wrong.');
+        msg.className = 'pp-msg error';
+        msg.textContent = errText;
+        btn.disabled = false;
+        btn.textContent = mode === 'join' ? 'Create My Passport →' : 'Sign In →';
+        return;
+      }
+
+      if (json.email_confirm) {
+        // Supabase email confirmation required
+        document.getElementById('confirm-email').textContent = data.email;
+        document.getElementById('pp-form').style.display    = 'none';
+        document.getElementById('confirm-screen').classList.add('show');
+        return;
+      }
+
+      if (json.token) {
+        localStorage.setItem('osfna_token',        json.token);
+        localStorage.setItem('osfna_refresh',      json.refresh_token || '');
+        localStorage.setItem('osfna_name',         json.full_name || '');
+        localStorage.setItem('osfna_user_id',      json.user_id || '');
+
+        const dest = nextPage === 'parties' ? 'parties.html' : 'itinerary.html';
+        window.location.href = dest;
+        return;
+      }
+
+      // Stub / no Supabase
+      if (json.stub) {
+        localStorage.setItem('osfna_token',   'stub-token-dev');
+        localStorage.setItem('osfna_name',    json.full_name || 'Demo User');
+        localStorage.setItem('osfna_user_id', 'stub');
+        window.location.href = nextPage === 'parties' ? 'parties.html' : 'itinerary.html';
+      }
+
+    } catch {
+      msg.className = 'pp-msg error';
+      msg.textContent = 'Network error — please try again.';
+      btn.disabled = false;
+      btn.textContent = mode === 'join' ? 'Create My Passport →' : 'Sign In →';
+    }
+  });
+</script>
+</body>
+</html>

@@ -22,8 +22,11 @@
     <li><a href="vendor.html">Vendors</a></li>
     <li><a href="schedule.html">Schedule</a></li>
     <li><a href="media.html">Media</a></li>
+    <li><a href="parties.html">Parties</a></li>
     <li><a href="register.html">Register</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="passport.html" id="nav-passport-link" style="color:#fbbf24;font-weight:700">Get Passport</a></li>
+    <li><a href="dashboard.html" style="color:var(--red)">Board Portal</a></li>
   </ul>
   <button class="hamburger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -51,8 +54,8 @@
       <span class="hero-meta-item">July 25 – Aug 1, 2026</span>
     </div>
     <div class="hero-ctas reveal reveal-delay-3">
+      <a href="passport.html" class="btn btn-gold" id="passport-hero-cta">Get Your Passport →</a>
       <a href="register.html" class="btn btn-outline">Register Your Team</a>
-      <a href="vendor.html" class="btn btn-gold">Become a Vendor</a>
     </div>
     <div class="countdown reveal reveal-delay-4">
       <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">Days</span></div>
@@ -441,5 +444,22 @@
 
 <script async src="https://www.tiktok.com/embed.js"></script>
 <script src="script.js"></script>
+<script>
+// Passport nav auth state
+(function() {
+  const token = localStorage.getItem('osfna_token');
+  const name  = localStorage.getItem('osfna_name');
+  const navLink = document.getElementById('nav-passport-link');
+  const heroCta = document.getElementById('passport-hero-cta');
+  if (token && navLink) {
+    navLink.textContent = '✓ My Passport';
+    navLink.href = 'itinerary.html';
+  }
+  if (token && heroCta) {
+    heroCta.textContent = name ? `Welcome back, ${name.split(' ')[0]} →` : '✓ My Passport';
+    heroCta.href = 'itinerary.html';
+  }
+})();
+</script>
 </body>
 </html>

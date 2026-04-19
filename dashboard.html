@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board Portal — OSFNA 2026</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Layout ── */
+    body { background: #060a07; }
+    .db-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 6rem; }
+
+    /* ── Login screen ── */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .login-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 2.5rem 2.5rem 2rem;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-card h1 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
+    .login-card p  { color: rgba(255,255,255,0.45); font-size: 0.85rem; margin-bottom: 1.75rem; }
+    .login-card input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      padding: 0.85rem 1rem;
+      text-align: center;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      font-family: var(--font-head);
+    }
+    .login-card input:focus { outline: none; border-color: var(--red); }
+    .login-card button {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .login-err { color: #ff9090; font-size: 0.8rem; margin-top: 0.75rem; min-height: 1.2em; }
+
+    /* ── Portal header ── */
+    .db-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 2rem;
+    }
+    .db-header-left h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .db-header-left span { font-size: 0.78rem; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; }
+    .db-header-right { display: flex; align-items: center; gap: 1rem; }
+    .data-badge { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); letter-spacing: 0.08em; }
+    .data-badge.stub { background: rgba(251,191,36,0.12); color: #fde68a; border-color: rgba(251,191,36,0.3); }
+    .logout-btn { background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); border-radius: 8px; padding: 0.4rem 0.75rem; font-size: 0.75rem; cursor: pointer; font-family: var(--font-head); letter-spacing: 0.08em; text-transform: uppercase; }
+    .logout-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+    /* ── Role tabs ── */
+    .db-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .db-tab {
+      padding: 0.6rem 1rem;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      background: none;
+      transition: all 0.15s;
+    }
+    .db-tab:hover  { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.18); }
+    .db-tab.active { color: #fff; border-color: var(--red); background: rgba(204,32,32,0.1); }
+    .db-panel { display: none; }
+    .db-panel.active { display: block; }
+
+    /* ── Stat cards ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1rem;
+    }
+    .stat-card .s-val { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
+    .stat-card .s-label { font-family: var(--font-head); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-top: 0.4rem; }
+    .stat-card .s-sub { font-size: 0.78rem; color: rgba(255,255,255,0.25); margin-top: 0.2rem; }
+    .stat-card.accent { border-color: rgba(204,32,32,0.35); }
+    .stat-card.accent .s-val { color: var(--red-light, #ff6060); }
+
+    /* ── Section title ── */
+    .db-section-title {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Data table ── */
+    .db-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,0.07); margin-bottom: 2.5rem; }
+    .db-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .db-table th { background: rgba(255,255,255,0.04); padding: 0.75rem 1rem; font-family: var(--font-head); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.07); white-space: nowrap; }
+    .db-table td { padding: 0.75rem 1rem; color: rgba(255,255,255,0.75); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+    .db-table tr:last-child td { border-bottom: none; }
+    .db-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Status chips ── */
+    .chip { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-family: var(--font-head); letter-spacing: 0.07em; text-transform: uppercase; }
+    .chip-paid     { background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+    .chip-pending  { background: rgba(251,191,36,0.12); color: #fde68a; border: 1px solid rgba(251,191,36,0.3); }
+    .chip-flagged  { background: rgba(204,32,32,0.15); color: #fca5a5; border: 1px solid rgba(204,32,32,0.3); }
+    .chip-approved { background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+    .chip-soccer   { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+    .chip-basket   { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+    .chip-team     { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+    .chip-vendor   { background: rgba(251,191,36,0.12); color: #fde68a; border: 1px solid rgba(251,191,36,0.3); }
+
+    /* ── Action buttons ── */
+    .action-btn { padding: 0.3rem 0.65rem; border-radius: 6px; font-size: 0.72rem; font-family: var(--font-head); letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; border: none; transition: opacity 0.15s; }
+    .action-approve { background: rgba(34,197,94,0.2); color: #86efac; }
+    .action-flag    { background: rgba(251,191,36,0.15); color: #fde68a; }
+    .action-reject  { background: rgba(204,32,32,0.2); color: #fca5a5; }
+    .action-btn:hover { opacity: 0.75; }
+
+    /* ── Revenue bar ── */
+    .rev-bar-wrap { margin-bottom: 2.5rem; }
+    .rev-bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
+    .rev-bar-track { background: rgba(255,255,255,0.06); border-radius: 99px; height: 8px; overflow: hidden; }
+    .rev-bar-fill  { background: linear-gradient(90deg, var(--red), #ff6040); height: 100%; border-radius: 99px; transition: width 1s cubic-bezier(0.22,1,0.36,1); }
+
+    /* ── Volunteer shift grid ── */
+    .shift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .shift-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.1rem 1.25rem; }
+    .shift-card h4 { font-family: var(--font-head); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .shift-card p  { font-size: 0.83rem; color: rgba(255,255,255,0.4); margin: 0; }
+    .shift-count   { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: #fff; }
+
+    /* ── Email composer ── */
+    .email-composer { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+    .email-composer h4 { font-family: var(--font-head); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+    .email-composer textarea {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; color: #fff; font-size: 0.88rem; padding: 0.75rem; min-height: 100px;
+      resize: vertical; margin-bottom: 0.75rem; font-family: var(--font-body);
+    }
+    .email-composer textarea:focus { outline: none; border-color: var(--red); }
+    .send-btn { background: var(--red); color: #fff; border: none; border-radius: 8px; padding: 0.65rem 1.5rem; font-family: var(--font-head); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+    .send-btn:hover { opacity: 0.85; }
+
+    /* ── Vendor grid ── */
+    .vendor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .vendor-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1.25rem; }
+    .vendor-card h4 { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
+    .vendor-card p  { font-size: 0.8rem; color: rgba(255,255,255,0.38); margin: 0 0 0.75rem; }
+    .vendor-card-foot { display: flex; align-items: center; justify-content: space-between; }
+
+    /* ── Hidden ── */
+    .db-hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="vendor.html">Vendors</a></li>
+    <li><a href="dashboard.html" class="active">Board Portal</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <h1>Board Portal</h1>
+    <p>OSFNA 2026 · Authorized access only</p>
+    <input type="password" id="pin-input" placeholder="Enter access code" autocomplete="off" maxlength="20" />
+    <button id="pin-btn">Access Dashboard</button>
+    <p class="login-err" id="login-err"></p>
+  </div>
+</div>
+
+<!-- ── PORTAL ── -->
+<div id="portal" class="db-hidden">
+  <div class="db-wrap">
+
+    <!-- Header -->
+    <div class="db-header">
+      <div class="db-header-left">
+        <span>OSFNA 2026 Board Portal</span>
+        <h2 id="role-name">Dashboard</h2>
+      </div>
+      <div class="db-header-right">
+        <span class="data-badge" id="data-source-badge">Live Data</span>
+        <button class="logout-btn" id="logout-btn">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Role tabs -->
+    <div class="db-tabs" id="db-tabs">
+      <button class="db-tab" data-panel="overview"   data-roles="admin,abdi">Executive Overview</button>
+      <button class="db-tab" data-panel="vetting"    data-roles="admin,abdo">Player Vetting</button>
+      <button class="db-tab" data-panel="ledger"     data-roles="admin,geleta">Transparency Ledger</button>
+      <button class="db-tab" data-panel="vendors"    data-roles="admin,mukhtar">Vendor &amp; Sponsor Map</button>
+      <button class="db-tab" data-panel="volunteers" data-roles="admin,fauzia">Volunteer Hub</button>
+      <button class="db-tab" data-panel="parties"    data-roles="admin,geleta,amina,jelani">Parties &amp; Revenue</button>
+    </div>
+
+    <!-- ══ PANEL: Executive Overview ══ -->
+    <div class="db-panel" id="panel-overview">
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card accent"><div class="s-val" id="s-revenue">—</div><div class="s-label">Revenue Collected</div><div class="s-sub">Confirmed payments</div></div>
+        <div class="stat-card"><div class="s-val" id="s-soccer">—</div><div class="s-label">Soccer Teams</div></div>
+        <div class="stat-card"><div class="s-val" id="s-basketball">—</div><div class="s-label">Basketball Teams</div></div>
+        <div class="stat-card"><div class="s-val" id="s-vendors">—</div><div class="s-label">Vendor Apps</div></div>
+        <div class="stat-card"><div class="s-val" id="s-volunteers">—</div><div class="s-label">Volunteers</div></div>
+        <div class="stat-card"><div class="s-val" id="s-attendees">—</div><div class="s-label">Event Registrations</div></div>
+        <div class="stat-card" style="border-color:rgba(251,191,36,.3)"><div class="s-val" id="s-passport-signups" style="color:#fbbf24">—</div><div class="s-label">Passport Signups</div></div>
+        <div class="stat-card" style="border-color:rgba(251,191,36,.2)"><div class="s-val" id="s-cities" style="color:#fbbf24">—</div><div class="s-label">Cities Represented</div></div>
+      </div>
+
+      <p class="db-section-title">Revenue Toward Goal ($30,000)</p>
+      <div class="rev-bar-wrap">
+        <div class="rev-bar-label">
+          <span id="rev-label-left">$0 collected</span>
+          <span>Goal: $30,000</span>
+        </div>
+        <div class="rev-bar-track"><div class="rev-bar-fill" id="rev-bar" style="width:0%"></div></div>
+      </div>
+
+      <p class="db-section-title" style="margin-top:2rem">Passport Signup Sources</p>
+      <div class="db-table-wrap" style="margin-bottom:2rem">
+        <table class="db-table">
+          <thead><tr><th>Source</th><th style="text-align:right">Signups</th></tr></thead>
+          <tbody id="passport-sources-table"><tr><td colspan="2" style="color:rgba(255,255,255,.3);text-align:center">No data yet</td></tr></tbody>
+        </table>
+      </div>
+
+      <p class="db-section-title">Recent Registrations</p>
+      <div class="db-table-wrap">
+        <table class="db-table">
+          <thead><tr><th>Sport</th><th>Team / Business</th><th>Location</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="recent-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: Player Vetting ══ -->
+    <div class="db-panel" id="panel-vetting">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+        <div class="stat-card"><div class="s-val" id="v-total">—</div><div class="s-label">Total Teams</div></div>
+        <div class="stat-card"><div class="s-val" id="v-paid">—</div><div class="s-label">Paid</div></div>
+        <div class="stat-card"><div class="s-val" id="v-pending">—</div><div class="s-label">Pending Payment</div></div>
+        <div class="stat-card"><div class="s-val" id="v-flagged">—</div><div class="s-label">Flagged</div></div>
+      </div>
+      <p class="db-section-title">Team Roster — Heritage &amp; Eligibility Review</p>
+      <div class="db-table-wrap">
+        <table class="db-table">
+          <thead><tr><th>Sport</th><th>Team Name</th><th>City</th><th>Division</th><th>Roster</th><th>Heritage</th><th>Returning</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="vetting-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: Transparency Ledger ══ -->
+    <div class="db-panel" id="panel-ledger">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+        <div class="stat-card accent"><div class="s-val" id="l-total">—</div><div class="s-label">Total Collected</div></div>
+        <div class="stat-card"><div class="s-val" id="l-txns">—</div><div class="s-label">Transactions</div></div>
+        <div class="stat-card"><div class="s-val" id="l-pending-amt">—</div><div class="s-label">Pending Payments</div></div>
+      </div>
+      <p class="db-section-title">Transaction Log</p>
+      <div class="db-table-wrap">
+        <table class="db-table">
+          <thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="ledger-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: Vendor & Sponsor Map ══ -->
+    <div class="db-panel" id="panel-vendors">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+        <div class="stat-card"><div class="s-val" id="vd-total">—</div><div class="s-label">Applications</div></div>
+        <div class="stat-card"><div class="s-val" id="vd-paid">—</div><div class="s-label">Paid / Confirmed</div></div>
+        <div class="stat-card accent"><div class="s-val" id="vd-revenue">—</div><div class="s-label">Vendor Revenue</div></div>
+      </div>
+      <p class="db-section-title">Vendor Applications</p>
+      <div class="vendor-grid" id="vendor-grid"></div>
+    </div>
+
+    <!-- ══ PANEL: Volunteer Hub ══ -->
+    <div class="db-panel" id="panel-volunteers">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+        <div class="stat-card"><div class="s-val" id="vol-total">—</div><div class="s-label">Volunteers</div></div>
+        <div class="stat-card"><div class="s-val" id="vol-confirmed">—</div><div class="s-label">Confirmed</div></div>
+        <div class="stat-card"><div class="s-val" id="vol-pending">—</div><div class="s-label">Pending Review</div></div>
+      </div>
+      <p class="db-section-title">Role Breakdown</p>
+      <div class="shift-grid" id="shift-grid"></div>
+      <p class="db-section-title">All Volunteers</p>
+      <div class="db-table-wrap">
+        <table class="db-table">
+          <thead><tr><th>Name</th><th>Role</th><th>Availability</th><th>Contact</th><th>Status</th></tr></thead>
+          <tbody id="vol-tbody"></tbody>
+        </table>
+      </div>
+      <div class="email-composer">
+        <h4>Blast Email to All Volunteers</h4>
+        <textarea id="email-body" placeholder="Write your message to all confirmed volunteers…"></textarea>
+        <button class="send-btn" id="send-email-btn">Open in Mail Client →</button>
+      </div>
+    </div>
+
+    <!-- ══ PANEL: Parties & Revenue ══ -->
+    <div class="db-panel" id="panel-parties">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+        <div class="stat-card accent"><div class="s-val" id="p-revenue">—</div><div class="s-label">Party Revenue</div></div>
+        <div class="stat-card"><div class="s-val" id="p-tickets">—</div><div class="s-label">Tickets Sold</div></div>
+        <div class="stat-card"><div class="s-val" id="p-tables">—</div><div class="s-label">Tables Booked</div></div>
+        <div class="stat-card"><div class="s-val" id="p-bundles">—</div><div class="s-label">All-Access Passes</div></div>
+        <div class="stat-card"><div class="s-val" id="p-stipend">—</div><div class="s-label">Board Stipend Pool (5%)</div><div class="s-sub">Earmarked from party sales</div></div>
+        <div class="stat-card"><div class="s-val" id="p-platform">—</div><div class="s-label">Platform Fee (10%)</div></div>
+      </div>
+
+      <p class="db-section-title" style="margin-top:.5rem">Revenue Split Breakdown</p>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.25rem;margin-bottom:2rem">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem" id="split-grid">
+          <div><div style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem;font-family:var(--font-head)">Venue / Artist (60%)</div><div id="split-venue" style="font-size:1.3rem;font-weight:700;color:#fff">—</div></div>
+          <div><div style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem;font-family:var(--font-head)">OSFNA Treasury (25%)</div><div id="split-treasury" style="font-size:1.3rem;font-weight:700;color:#fff">—</div></div>
+          <div><div style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem;font-family:var(--font-head)">Platform Fee (10%)</div><div id="split-platform2" style="font-size:1.3rem;font-weight:700;color:#fff">—</div></div>
+          <div><div style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem;font-family:var(--font-head)">Board Stipend Pool (5%)</div><div id="split-stipend2" style="font-size:1.3rem;font-weight:700;color:var(--red-light,#ff6060)">—</div></div>
+        </div>
+      </div>
+
+      <p class="db-section-title">Guest List Manager</p>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.25rem;margin-bottom:2rem">
+        <p style="font-size:.85rem;color:rgba(255,255,255,.45);margin-bottom:1.25rem">Each coordinator has a limited invite quota. Once the quota is exhausted, no further comps are issued automatically.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem" id="guest-quota-grid">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem">
+            <div style="font-size:.78rem;font-weight:600;color:#fff;margin-bottom:.25rem">Amina (PR)</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-bottom:.75rem">Guest list quota</div>
+            <div class="rev-bar-track" style="margin-bottom:.5rem"><div class="rev-bar-fill" id="amina-bar" style="width:40%;background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+            <div style="font-size:.8rem;color:rgba(255,255,255,.5)"><span id="amina-used">4</span> / <span>10</span> invites used</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem">
+            <div style="font-size:.78rem;font-weight:600;color:#fff;margin-bottom:.25rem">Jelani (Events)</div>
+            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-bottom:.75rem">Guest list quota</div>
+            <div class="rev-bar-track" style="margin-bottom:.5rem"><div class="rev-bar-fill" id="jelani-bar" style="width:20%;background:linear-gradient(90deg,#1d4ed8,#3b82f6)"></div></div>
+            <div style="font-size:.8rem;color:rgba(255,255,255,.5)"><span id="jelani-used">2</span> / <span>10</span> invites used</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="db-section-title">Party Ticket Log</p>
+      <div class="db-table-wrap">
+        <table class="db-table">
+          <thead><tr><th>Ref</th><th>Type</th><th>Night</th><th>Qty</th><th>Amount</th><th>Split: Treasury</th><th>Split: Stipend</th><th>Status</th></tr></thead>
+          <tbody id="party-tbody"></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:1rem;text-align:center">
+        <a href="scanner.html" target="_blank" style="display:inline-block;background:var(--red);color:#fff;text-decoration:none;border-radius:10px;padding:.75rem 1.75rem;font-family:var(--font-head);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase">Open Door Scanner →</a>
+      </div>
+    </div>
+
+  </div><!-- /db-wrap -->
+</div><!-- /portal -->
+
+<script src="script.js"></script>
+<script>
+// ── Access codes ──
+const ACCESS_CODES = {
+  'OSFNA26':  { role: 'admin',   name: 'Admin — All Dashboards',            panels: ['overview','vetting','ledger','vendors','volunteers','parties'] },
+  'ABDI26':   { role: 'abdi',    name: 'Abdi Roba — Executive Overview',    panels: ['overview'] },
+  'ABDO26':   { role: 'abdo',    name: 'Abdo Ibrahim — Player Vetting',     panels: ['vetting'] },
+  'GEL26':    { role: 'geleta',  name: 'Geleta Urgessa — Transparency',     panels: ['ledger','parties'] },
+  'MUK26':    { role: 'mukhtar', name: 'Mukhtar Musa — Vendor Map',         panels: ['vendors'] },
+  'FAU26':    { role: 'fauzia',  name: 'Fauzia Ibrahim — Volunteer Hub',    panels: ['volunteers'] },
+  'AMINA26':  { role: 'amina',   name: 'Amina — PR Guest List',             panels: ['parties'] },
+  'JELANI26': { role: 'jelani',  name: 'Jelani — Event Coordinator',        panels: ['parties'] },
+};
+
+let currentRole = null;
+let dashData    = null;
+
+// ── Login ──
+const loginScreen = document.getElementById('login-screen');
+const portal      = document.getElementById('portal');
+const pinInput    = document.getElementById('pin-input');
+const pinBtn      = document.getElementById('pin-btn');
+const loginErr    = document.getElementById('login-err');
+
+function tryLogin(code) {
+  const match = ACCESS_CODES[code.toUpperCase()];
+  if (!match) { loginErr.textContent = 'Invalid access code.'; return; }
+  currentRole = match;
+  sessionStorage.setItem('osfna_role', code.toUpperCase());
+  showPortal(match);
+}
+
+pinBtn.addEventListener('click', () => tryLogin(pinInput.value.trim()));
+pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(pinInput.value.trim()); });
+
+const saved = sessionStorage.getItem('osfna_role');
+if (saved && ACCESS_CODES[saved]) { tryLogin(saved); }
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('osfna_role');
+  portal.classList.add('db-hidden');
+  loginScreen.style.display = 'flex';
+  pinInput.value = '';
+});
+
+function showPortal(match) {
+  loginScreen.style.display = 'none';
+  portal.classList.remove('db-hidden');
+  document.getElementById('role-name').textContent = match.name;
+
+  // Show only allowed tabs
+  document.querySelectorAll('.db-tab').forEach(tab => {
+    const allowed = tab.dataset.roles.split(',');
+    if (allowed.includes(match.role)) {
+      tab.style.display = '';
+    } else {
+      tab.style.display = 'none';
+    }
+  });
+
+  // Activate first allowed panel
+  const firstTab = document.querySelector(`.db-tab[data-roles*="${match.role}"]`);
+  if (firstTab) activatePanel(firstTab.dataset.panel);
+
+  loadDashData();
+}
+
+// ── Tab switching ──
+document.querySelectorAll('.db-tab').forEach(tab => {
+  tab.addEventListener('click', () => activatePanel(tab.dataset.panel));
+});
+
+function activatePanel(name) {
+  document.querySelectorAll('.db-tab').forEach(t => t.classList.toggle('active', t.dataset.panel === name));
+  document.querySelectorAll('.db-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+}
+
+// ── Load data ──
+async function loadDashData() {
+  try {
+    const res = await fetch('/api/dashboard-data');
+    dashData  = await res.json();
+  } catch {
+    dashData = { source: 'error', stats: {}, teams: [], vendors: [], volunteers: [], transactions: [] };
+  }
+  renderAll();
+}
+
+function fmt$(cents) {
+  return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function chipStatus(s) {
+  const map = { paid: 'chip-paid', pending_payment: 'chip-pending', pending: 'chip-pending', pending_review: 'chip-pending', flagged: 'chip-flagged', confirmed: 'chip-paid', completed: 'chip-paid' };
+  return `<span class="chip ${map[s] || 'chip-pending'}">${s.replace(/_/g,' ')}</span>`;
+}
+
+function renderAll() {
+  if (!dashData) return;
+  renderParties();
+  const { stats = {}, teams = [], vendors = [], volunteers = [], transactions = [], source } = dashData;
+
+  // Data source badge
+  const badge = document.getElementById('data-source-badge');
+  badge.textContent = source === 'live' ? 'Live Data' : 'Demo Data';
+  badge.className   = source === 'live' ? 'data-badge' : 'data-badge stub';
+
+  // ── Overview ──
+  const rev = stats.revenue_cents || 0;
+  document.getElementById('s-revenue').textContent    = fmt$(rev);
+  document.getElementById('s-soccer').textContent     = stats.soccer_teams || 0;
+  document.getElementById('s-basketball').textContent = stats.basketball_teams || 0;
+  document.getElementById('s-vendors').textContent    = stats.vendors || 0;
+  document.getElementById('s-volunteers').textContent = stats.volunteers || 0;
+  document.getElementById('s-attendees').textContent        = stats.attendees || 0;
+  document.getElementById('s-passport-signups').textContent = stats.passport_signups || 0;
+  document.getElementById('s-cities').textContent           = stats.cities_represented || 0;
+
+  // Passport source breakdown
+  const srcEl = document.getElementById('passport-sources-table');
+  if (srcEl && dashData.passport_sources?.length) {
+    srcEl.innerHTML = dashData.passport_sources.map(s =>
+      `<tr><td>${s.source}</td><td style="text-align:right;color:#fbbf24;font-weight:700">${s.count}</td></tr>`
+    ).join('');
+  }
+
+  const goal = 3000000;
+  const pct  = Math.min(100, (rev / goal) * 100).toFixed(1);
+  document.getElementById('rev-bar').style.width        = pct + '%';
+  document.getElementById('rev-label-left').textContent = `${fmt$(rev)} collected (${pct}%)`;
+
+  const recentItems = [
+    ...teams.slice(0,6).map(t => ({ sport: t.sport, name: t.team_name, loc: t.city, status: t.status, date: t.submitted_at })),
+    ...vendors.slice(0,4).map(v => ({ sport: 'vendor', name: v.business_name, loc: v.city || '—', status: v.status, date: v.submitted_at })),
+  ].sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,10);
+
+  document.getElementById('recent-tbody').innerHTML = recentItems.map(r => `
+    <tr>
+      <td><span class="chip ${r.sport === 'soccer' ? 'chip-soccer' : r.sport === 'basketball' ? 'chip-basket' : 'chip-vendor'}">${r.sport}</span></td>
+      <td style="color:#fff;font-weight:500">${r.name}</td>
+      <td>${r.loc || '—'}</td>
+      <td>${chipStatus(r.status)}</td>
+      <td style="color:rgba(255,255,255,0.35)">${fmtDate(r.date)}</td>
+    </tr>`).join('');
+
+  // ── Vetting ──
+  document.getElementById('v-total').textContent   = teams.length;
+  document.getElementById('v-paid').textContent    = teams.filter(t=>t.status==='paid').length;
+  document.getElementById('v-pending').textContent = teams.filter(t=>t.status==='pending_payment').length;
+  document.getElementById('v-flagged').textContent = teams.filter(t=>t.status==='flagged').length;
+
+  document.getElementById('vetting-tbody').innerHTML = teams.map(t => `
+    <tr>
+      <td><span class="chip ${t.sport==='soccer'?'chip-soccer':'chip-basket'}">${t.sport}</span></td>
+      <td style="color:#fff;font-weight:500">${t.team_name}</td>
+      <td>${t.city}</td>
+      <td style="color:rgba(255,255,255,0.55);font-size:0.8rem">${t.division || 'Open'}</td>
+      <td style="font-size:0.8rem">${t.roster_count || '—'}</td>
+      <td>${t.heritage_confirmed ? '<span style="color:#86efac">✓ Confirmed</span>' : '<span style="color:#fca5a5">✗ Unverified</span>'}</td>
+      <td>${t.returning ? '<span style="color:#93c5fd">Returning</span>' : '<span style="color:rgba(255,255,255,0.3)">New</span>'}</td>
+      <td>${chipStatus(t.status)}</td>
+      <td style="display:flex;gap:0.4rem">
+        <button class="action-btn action-approve" onclick="vetAction(${t.id},'approve')">Approve</button>
+        <button class="action-btn action-flag"    onclick="vetAction(${t.id},'flag')">Flag</button>
+        <button class="action-btn action-reject"  onclick="vetAction(${t.id},'reject')">Reject</button>
+      </td>
+    </tr>`).join('');
+
+  // ── Ledger ──
+  const completedTxns = transactions.filter(tx => tx.status === 'completed');
+  const pendingTxns   = transactions.filter(tx => tx.status !== 'completed');
+  const totalAmt   = completedTxns.reduce((a,tx) => a + (tx.amount_cents||0), 0);
+  const pendingAmt = pendingTxns.reduce((a,tx)   => a + (tx.amount_cents||0), 0);
+
+  document.getElementById('l-total').textContent       = fmt$(totalAmt);
+  document.getElementById('l-txns').textContent        = completedTxns.length;
+  document.getElementById('l-pending-amt').textContent = fmt$(pendingAmt);
+
+  document.getElementById('ledger-tbody').innerHTML = transactions.map(tx => `
+    <tr>
+      <td style="color:rgba(255,255,255,0.35);font-size:0.8rem">${fmtDate(tx.created_at)}</td>
+      <td><span class="chip ${tx.type==='team'?'chip-team':'chip-vendor'}">${tx.type}</span></td>
+      <td style="color:#fff">${tx.description}</td>
+      <td style="color:#fff;font-weight:600">${fmt$(tx.amount_cents||0)}</td>
+      <td>${chipStatus(tx.status)}</td>
+    </tr>`).join('');
+
+  // ── Vendors ──
+  const paidVendors = vendors.filter(v=>v.status==='paid');
+  const vRev = paidVendors.reduce((a,v) => a + (v.fee_cents||0), 0);
+  document.getElementById('vd-total').textContent   = vendors.length;
+  document.getElementById('vd-paid').textContent    = paidVendors.length;
+  document.getElementById('vd-revenue').textContent = fmt$(vRev);
+
+  document.getElementById('vendor-grid').innerHTML = vendors.map(v => `
+    <div class="vendor-card">
+      <h4>${v.business_name}</h4>
+      <p>${v.business_type || '—'} · ${v.booth_size || '—'} booth</p>
+      <p style="margin-bottom:0.75rem">${v.contact_name} · ${v.city || '—'}</p>
+      <div class="vendor-card-foot">
+        ${chipStatus(v.status)}
+        <span style="font-size:0.85rem;color:rgba(255,255,255,0.55)">${v.fee_cents ? fmt$(v.fee_cents) : 'Custom'}</span>
+      </div>
+    </div>`).join('');
+
+  // ── Volunteers ──
+  const confirmed = volunteers.filter(v=>v.status==='confirmed');
+  const pending   = volunteers.filter(v=>v.status!=='confirmed');
+  document.getElementById('vol-total').textContent     = volunteers.length;
+  document.getElementById('vol-confirmed').textContent = confirmed.length;
+  document.getElementById('vol-pending').textContent   = pending.length;
+
+  // Role breakdown
+  const roleCounts = {};
+  volunteers.forEach(v => {
+    const r = v.preferred_role || 'General';
+    roleCounts[r] = (roleCounts[r] || 0) + 1;
+  });
+  document.getElementById('shift-grid').innerHTML = Object.entries(roleCounts).map(([role, count]) => `
+    <div class="shift-card">
+      <h4>${role}</h4>
+      <p><span class="shift-count">${count}</span> volunteer${count !== 1 ? 's' : ''}</p>
+    </div>`).join('');
+
+  document.getElementById('vol-tbody').innerHTML = volunteers.map(v => `
+    <tr>
+      <td style="color:#fff;font-weight:500">${v.first_name} ${v.last_name}</td>
+      <td style="font-size:0.8rem;color:rgba(255,255,255,0.55)">${v.preferred_role || '—'}</td>
+      <td style="font-size:0.8rem;color:rgba(255,255,255,0.45)">${v.days_available || '—'}</td>
+      <td style="font-size:0.8rem"><a href="mailto:${v.email}" style="color:var(--red);text-decoration:none">${v.email}</a></td>
+      <td>${chipStatus(v.status || 'pending')}</td>
+    </tr>`).join('');
+}
+
+// ── Parties panel ──
+function renderParties() {
+  // Use stub party data (real data comes from /api/dashboard-data when Supabase is wired)
+  const partyTickets = dashData?.party_tickets || STUB_PARTY_TICKETS;
+
+  const paid   = partyTickets.filter(t => t.status === 'paid' || t.status === 'completed');
+  const totalRev  = paid.reduce((a,t) => a + (t.total_cents||0), 0);
+  const ticketCnt = paid.reduce((a,t) => a + (t.quantity||1), 0);
+  const tableCnt  = paid.filter(t => t.ticket_type === 'table').length;
+  const bundleCnt = paid.filter(t => t.ticket_type === 'bundle').reduce((a,t) => a + (t.quantity||1), 0);
+
+  const stipend  = Math.round(totalRev * 0.05);
+  const platform = Math.round(totalRev * 0.10);
+  const venue    = Math.round(totalRev * 0.60);
+  const treasury = Math.round(totalRev * 0.25);
+
+  document.getElementById('p-revenue').textContent  = fmt$(totalRev);
+  document.getElementById('p-tickets').textContent  = ticketCnt;
+  document.getElementById('p-tables').textContent   = tableCnt;
+  document.getElementById('p-bundles').textContent  = bundleCnt;
+  document.getElementById('p-stipend').textContent  = fmt$(stipend);
+  document.getElementById('p-platform').textContent = fmt$(platform);
+
+  document.getElementById('split-venue').textContent    = fmt$(venue);
+  document.getElementById('split-treasury').textContent = fmt$(treasury);
+  document.getElementById('split-platform2').textContent= fmt$(platform);
+  document.getElementById('split-stipend2').textContent = fmt$(stipend);
+
+  document.getElementById('party-tbody').innerHTML = partyTickets.map(t => `
+    <tr>
+      <td style="font-family:monospace;font-size:.8rem;color:rgba(255,255,255,.45)">${(t.ticket_id||'—').slice(0,10)}</td>
+      <td><span class="chip chip-${t.ticket_type==='table'?'pending':t.ticket_type==='bundle'?'approved':'paid'}">${t.ticket_type||'—'}</span></td>
+      <td style="font-size:.8rem;color:rgba(255,255,255,.45)">${t.night||'all'}</td>
+      <td style="text-align:center">${t.quantity||1}</td>
+      <td style="color:#fff;font-weight:500">${fmt$(t.total_cents||0)}</td>
+      <td style="color:#86efac">${fmt$(Math.round((t.total_cents||0)*.25))}</td>
+      <td style="color:rgba(255,255,255,.55)">${fmt$(Math.round((t.total_cents||0)*.05))}</td>
+      <td>${chipStatus(t.status||'pending_payment')}</td>
+    </tr>`).join('');
+}
+
+const STUB_PARTY_TICKETS = [
+  { ticket_id:'A1B2C3D4', ticket_type:'bundle', quantity:2, total_cents:59800, night:null,    status:'paid',            price_tier:'Early Bird' },
+  { ticket_id:'E5F6G7H8', ticket_type:'vip',    quantity:4, total_cents:30000, night:'jul29', status:'paid',            price_tier:'Standard'   },
+  { ticket_id:'I9J0K1L2', ticket_type:'table',  quantity:1, total_cents:50000, night:'jul29', status:'paid',            price_tier:'Standard'   },
+  { ticket_id:'M3N4O5P6', ticket_type:'ga',     quantity:6, total_cents:21000, night:'jul25', status:'paid',            price_tier:'Early Bird' },
+  { ticket_id:'Q7R8S9T0', ticket_type:'vip',    quantity:2, total_cents:15000, night:'aug01', status:'pending_payment', price_tier:'Regular'    },
+  { ticket_id:'U1V2W3X4', ticket_type:'table',  quantity:1, total_cents:55000, night:'aug01', status:'pending_payment', price_tier:'Regular'    },
+];
+
+// ── Vet action (client-side visual only until backend endpoint is added) ──
+function vetAction(id, action) {
+  if (!dashData) return;
+  const team = dashData.teams.find(t => t.id === id);
+  if (!team) return;
+  const map = { approve: 'paid', flag: 'flagged', reject: 'flagged' };
+  team.status = map[action] || team.status;
+  renderAll();
+}
+
+// ── Blast email composer ──
+document.getElementById('send-email-btn')?.addEventListener('click', () => {
+  if (!dashData?.volunteers) return;
+  const confirmed = dashData.volunteers.filter(v => v.status === 'confirmed');
+  const emails    = confirmed.map(v => v.email).join(',');
+  const body      = document.getElementById('email-body').value;
+  const subject   = encodeURIComponent('OSFNA 2026 Volunteer Update');
+  const bodyEnc   = encodeURIComponent(body);
+  window.location.href = `mailto:${emails}?subject=${subject}&body=${bodyEnc}`;
+});
+</script>
+</body>
+</html>

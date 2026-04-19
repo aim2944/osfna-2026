@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>OSFNA 2026 — Door Scanner</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #22c55e;
+      --red:   #ef4444;
+      --gold:  #fbbf24;
+    }
+    body {
+      background: #050505;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .scan-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .scan-logo { font-size: 1rem; font-weight: 800; letter-spacing: 0.1em; color: #fff; }
+    .scan-logo span { color: rgba(255,255,255,.35); font-weight: 400; font-size: .85rem; }
+    .night-select {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      color: #fff; border-radius: 8px; padding: .4rem .7rem;
+      font-size: .82rem;
+    }
+    .night-select option { background: #111; }
+
+    /* ── Main ── */
+    .scan-body { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem 2rem; gap: 1.5rem; }
+
+    /* ── Camera view ── */
+    .camera-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #111;
+      border: 2px solid rgba(255,255,255,.1);
+    }
+    #camera-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    #camera-canvas { display: none; }
+    .scan-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .scan-frame {
+      width: 65%;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,.4);
+      position: relative;
+    }
+    .scan-frame::before, .scan-frame::after,
+    .scan-frame-b::before, .scan-frame-b::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--gold);
+      border-style: solid;
+    }
+    .scan-frame::before  { top:-2px; left:-2px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+    .scan-frame::after   { top:-2px; right:-2px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+    .scan-frame-b::before{ bottom:-2px; left:-2px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+    .scan-frame-b::after { bottom:-2px; right:-2px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+    .scan-line {
+      position: absolute;
+      left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: scan-sweep 2s linear infinite;
+      top: 10%;
+    }
+    @keyframes scan-sweep { 0%{top:10%} 100%{top:88%} }
+
+    /* ── Status display ── */
+    .scan-result {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all .25s;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .scan-result.idle    { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+    .scan-result.success { background: rgba(34,197,94,.12); border: 2px solid var(--green); }
+    .scan-result.fail    { background: rgba(239,68,68,.12); border: 2px solid var(--red); }
+    .scan-result.dupe    { background: rgba(251,191,36,.12); border: 2px solid var(--gold); }
+    .result-icon { font-size: 2.5rem; line-height: 1; }
+    .result-title { font-size: 1.2rem; font-weight: 700; }
+    .result-title.green { color: var(--green); }
+    .result-title.red   { color: var(--red); }
+    .result-title.gold  { color: var(--gold); }
+    .result-body { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.5; }
+    .result-chip {
+      display: inline-block;
+      padding: .25rem .7rem;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-top: .25rem;
+    }
+    .chip-vip    { background: rgba(204,32,32,.2); color: #fca5a5; border: 1px solid rgba(204,32,32,.4); }
+    .chip-ga     { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.2); }
+    .chip-bundle { background: rgba(251,191,36,.15); color: #fde68a; border: 1px solid rgba(251,191,36,.3); }
+    .chip-table  { background: rgba(109,40,217,.2); color: #c4b5fd; border: 1px solid rgba(109,40,217,.4); }
+
+    /* ── Manual entry ── */
+    .manual-wrap {
+      width: 100%;
+      max-width: 380px;
+    }
+    .manual-wrap label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); display: block; margin-bottom: .4rem; }
+    .manual-row { display: flex; gap: .5rem; }
+    .manual-input {
+      flex: 1;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; color: #fff;
+      padding: .7rem 1rem; font-size: 1rem;
+      font-family: monospace; letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .manual-input:focus { outline: none; border-color: var(--gold); }
+    .manual-btn {
+      background: var(--gold); color: #000;
+      border: none; border-radius: 10px;
+      padding: .7rem 1.1rem; font-weight: 700;
+      font-size: .85rem; cursor: pointer;
+    }
+    .manual-btn:hover { opacity: .85; }
+
+    /* ── Stats bar ── */
+    .scan-stats {
+      width: 100%;
+      max-width: 380px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+    }
+    .scan-stat {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px;
+      padding: .85rem .5rem;
+      text-align: center;
+    }
+    .scan-stat .val { font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .scan-stat .lbl { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: .15rem; }
+
+    /* ── Camera toggle ── */
+    .cam-toggle {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.6); border-radius: 10px;
+      padding: .65rem 1.25rem; font-size: .8rem;
+      cursor: pointer; letter-spacing: .05em;
+    }
+    .cam-toggle:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+  </style>
+</head>
+<body>
+
+<div class="scan-header">
+  <div class="scan-logo">OSFNA 2026 <span>Door Scanner</span></div>
+  <select class="night-select" id="night-select">
+    <option value="jul25">Jul 25 — Opening</option>
+    <option value="jul26">Jul 26 — Diaspora</option>
+    <option value="jul27">Jul 27 — Heritage</option>
+    <option value="jul28">Jul 28 — Tournament</option>
+    <option value="jul29" selected>Jul 29 — All-Star</option>
+    <option value="jul31">Jul 31 — Champ Eve</option>
+    <option value="aug01">Aug 1 — Closing</option>
+  </select>
+</div>
+
+<div class="scan-body">
+
+  <!-- Camera -->
+  <div class="camera-container" id="camera-wrap">
+    <video id="camera-video" autoplay playsinline muted></video>
+    <canvas id="camera-canvas"></canvas>
+    <div class="scan-overlay">
+      <div class="scan-frame">
+        <div class="scan-frame-b"></div>
+        <div class="scan-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="cam-toggle" id="cam-toggle">Start Camera Scanner</button>
+
+  <!-- Result -->
+  <div class="scan-result idle" id="scan-result">
+    <div class="result-icon">📷</div>
+    <div class="result-body">Point camera at QR code or enter ticket ID manually</div>
+  </div>
+
+  <!-- Manual entry -->
+  <div class="manual-wrap">
+    <label for="manual-id">Manual Ticket ID</label>
+    <div class="manual-row">
+      <input type="text" class="manual-input" id="manual-id" placeholder="ABC12345" maxlength="20" autocomplete="off" autocorrect="off" />
+      <button class="manual-btn" id="manual-btn">Check</button>
+    </div>
+  </div>
+
+  <!-- Session stats -->
+  <div class="scan-stats">
+    <div class="scan-stat"><div class="val" id="stat-total">0</div><div class="lbl">Scanned</div></div>
+    <div class="scan-stat"><div class="val" id="stat-ok" style="color:var(--green)">0</div><div class="lbl">Valid</div></div>
+    <div class="scan-stat"><div class="val" id="stat-fail" style="color:var(--red)">0</div><div class="lbl">Rejected</div></div>
+  </div>
+
+</div>
+
+<!-- jsQR for QR decoding -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+const video   = document.getElementById('camera-video');
+const canvas  = document.getElementById('camera-canvas');
+const ctx     = canvas.getContext('2d', { willReadFrequently: true });
+const result  = document.getElementById('scan-result');
+const toggle  = document.getElementById('cam-toggle');
+const manualIn= document.getElementById('manual-id');
+const manualBtn=document.getElementById('manual-btn');
+const statTotal=document.getElementById('stat-total');
+const statOk  = document.getElementById('stat-ok');
+const statFail= document.getElementById('stat-fail');
+
+let scanning  = false;
+let lastId    = '';
+let cooldown  = false;
+let stats     = { total: 0, ok: 0, fail: 0 };
+let rafId     = null;
+
+// ── Session stats ──
+function updateStats() {
+  statTotal.textContent = stats.total;
+  statOk.textContent    = stats.ok;
+  statFail.textContent  = stats.fail;
+}
+
+// ── Camera ──
+toggle.addEventListener('click', async () => {
+  if (scanning) {
+    stopCamera(); return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 1280 } }
+    });
+    video.srcObject = stream;
+    scanning = true;
+    toggle.textContent = 'Stop Camera';
+    scanLoop();
+  } catch {
+    showResult({ valid: false, reason: 'Camera access denied. Use manual entry.' }, 'dupe');
+  }
+});
+
+function stopCamera() {
+  if (video.srcObject) {
+    video.srcObject.getTracks().forEach(t => t.stop());
+    video.srcObject = null;
+  }
+  scanning = false;
+  toggle.textContent = 'Start Camera Scanner';
+  cancelAnimationFrame(rafId);
+}
+
+function scanLoop() {
+  if (!scanning) return;
+  rafId = requestAnimationFrame(scanLoop);
+
+  if (video.readyState < 2) return;
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const qr = jsQR(imageData.data, canvas.width, canvas.height, { inversionAttempts: 'dontInvert' });
+
+  if (qr && qr.data && !cooldown) {
+    const id = qr.data.trim().toUpperCase();
+    if (id !== lastId) {
+      lastId = id;
+      validate(id);
+    }
+  }
+}
+
+// ── Validate ticket ──
+async function validate(ticketId) {
+  if (cooldown) return;
+  cooldown = true;
+
+  const night = document.getElementById('night-select').value;
+
+  try {
+    const res  = await fetch('/api/scan-qr', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ticket_id: ticketId, night, scanner_id: 'door-scanner' }),
+    });
+    const data = await res.json();
+    showResult(data, data.valid ? 'success' : data.duplicate ? 'dupe' : 'fail');
+    stats.total++;
+    if (data.valid) stats.ok++; else stats.fail++;
+    updateStats();
+  } catch {
+    showResult({ valid: false, reason: 'Network error' }, 'fail');
+    stats.total++;
+    stats.fail++;
+    updateStats();
+  }
+
+  setTimeout(() => { cooldown = false; lastId = ''; }, 2500);
+}
+
+function showResult(data, type) {
+  result.className = `scan-result ${type}`;
+
+  const typeLabel = {
+    ga:     'General Admission',
+    vip:    'VIP',
+    bundle: 'All-Access Pass',
+    table:  'VIP Table',
+  };
+
+  if (type === 'success') {
+    const chipClass = `chip-${data.ticket_type || 'ga'}`;
+    const tableInfo = data.table_id ? ` · Table ${data.table_id}` : '';
+    result.innerHTML = `
+      <div class="result-icon">✅</div>
+      <div class="result-title green">VALID — ADMIT</div>
+      <span class="result-chip ${chipClass}">${typeLabel[data.ticket_type] || data.ticket_type}</span>
+      <div class="result-body">${data.holder_name ? data.holder_name + ' · ' : ''}${data.night === 'all-access' ? 'All-Access' : data.night || ''}${tableInfo}</div>`;
+    vibrate([100, 50, 100]);
+  } else if (type === 'dupe') {
+    result.innerHTML = `
+      <div class="result-icon">⚠️</div>
+      <div class="result-title gold">DUPLICATE</div>
+      <div class="result-body">${data.reason || 'Already scanned'}</div>`;
+    vibrate([200, 100, 200]);
+  } else {
+    result.innerHTML = `
+      <div class="result-icon">🚫</div>
+      <div class="result-title red">DENIED</div>
+      <div class="result-body">${data.reason || 'Invalid ticket'}</div>`;
+    vibrate([300]);
+  }
+
+  setTimeout(() => {
+    result.className = 'scan-result idle';
+    result.innerHTML = '<div class="result-icon">📷</div><div class="result-body">Ready to scan</div>';
+  }, 3000);
+}
+
+function vibrate(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+// ── Manual entry ──
+manualBtn.addEventListener('click', () => {
+  const id = manualIn.value.trim().toUpperCase();
+  if (!id) return;
+  validate(id);
+  manualIn.value = '';
+});
+manualIn.addEventListener('keydown', e => { if (e.key === 'Enter') manualBtn.click(); });
+</script>
+</body>
+</html>

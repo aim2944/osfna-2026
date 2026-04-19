@@ -181,6 +181,31 @@
     @media (max-width: 640px) {
       .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
     }
+
+    /* ── Form feedback ── */
+    .form-msg {
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .form-msg.error   { background: rgba(204,32,32,0.12); border: 1px solid rgba(204,32,32,0.4); color: #ff9090; display: block; }
+    .form-msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: #86efac; display: block; }
+    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    /* ── Top-level success banner ── */
+    .success-banner {
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.35);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 0 auto 2rem;
+      max-width: 820px;
+      text-align: center;
+      color: #86efac;
+    }
+    .success-banner strong { display: block; font-size: 1.1rem; margin-bottom: 0.4rem; }
   </style>
 </head>
 <body>
@@ -285,15 +310,21 @@
           </div>
           <div class="field"><label>Notes / Special Requests</label><textarea name="notes" placeholder="Scheduling conflicts, accommodations, etc."></textarea></div>
           <div class="field checkbox-field">
+            <input type="checkbox" id="soccer-heritage" name="heritage_confirmed" required />
+            <label for="soccer-heritage">I confirm that all players on this roster are of Oromo heritage and meet OSFNA 2026 eligibility requirements. <span style="color:var(--red)">*</span></label>
+          </div>
+          <div class="field checkbox-field">
             <input type="checkbox" id="soccer-agree" name="agree" required />
-            <label for="soccer-agree">I confirm this team will comply with all OSFNA 2026 bylaws and competition standards. I understand OSFNA may adjust division placement.</label>
+            <label for="soccer-agree">I confirm this team will comply with all OSFNA 2026 bylaws and competition standards. I understand OSFNA may adjust division placement. <span style="color:var(--red)">*</span></label>
           </div>
           <div class="field checkbox-field">
             <input type="checkbox" id="soccer-returning" name="returning" />
             <label for="soccer-returning">This is a returning team from OSFNA 2025.</label>
           </div>
-          <button type="submit" class="submit-btn">Submit Soccer Registration →</button>
-          <p class="form-note">Payment information will be sent to the coach email after review.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <input type="hidden" name="sport" value="soccer" />
+          <div class="form-msg" id="soccer-msg"></div>
+          <button type="submit" class="submit-btn" id="soccer-submit-btn">Submit Soccer Registration →</button>
+          <p class="form-note">Registration fee collected at checkout — Div A $750 · Div B $500 · Div C $350<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -335,11 +366,17 @@
           </div>
           <div class="field"><label>Notes</label><textarea name="notes" placeholder="Any additional information"></textarea></div>
           <div class="field checkbox-field">
-            <input type="checkbox" id="bball-agree" name="agree" required />
-            <label for="bball-agree">I confirm this team will comply with all OSFNA 2026 bylaws and basketball tournament rules.</label>
+            <input type="checkbox" id="bball-heritage" name="heritage_confirmed" required />
+            <label for="bball-heritage">I confirm that all players on this roster are of Oromo heritage and meet OSFNA 2026 eligibility requirements. <span style="color:var(--red)">*</span></label>
           </div>
-          <button type="submit" class="submit-btn">Submit Basketball Registration →</button>
-          <p class="form-note">Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <div class="field checkbox-field">
+            <input type="checkbox" id="bball-agree" name="agree" required />
+            <label for="bball-agree">I confirm this team will comply with all OSFNA 2026 bylaws and basketball tournament rules. <span style="color:var(--red)">*</span></label>
+          </div>
+          <input type="hidden" name="sport" value="basketball" />
+          <div class="form-msg" id="basketball-msg"></div>
+          <button type="submit" class="submit-btn" id="basketball-submit-btn">Submit Basketball Registration →</button>
+          <p class="form-note">Registration fee: $300 per team — collected at checkout<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -478,10 +515,11 @@
           <div class="field"><label>Additional Notes</label><textarea name="notes" placeholder="Any other requirements or questions"></textarea></div>
           <div class="field checkbox-field">
             <input type="checkbox" id="vendor-agree" name="agree" required />
-            <label for="vendor-agree">I agree to comply with all OSFNA vendor guidelines and health/safety regulations. I understand booth assignments are subject to approval.</label>
+            <label for="vendor-agree">I agree to comply with all OSFNA vendor guidelines and health/safety regulations. I understand booth assignments are subject to approval. <span style="color:var(--red)">*</span></label>
           </div>
-          <button type="submit" class="submit-btn">Submit Vendor Application →</button>
-          <p class="form-note">Booth details and payment instructions sent after approval.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <div class="form-msg" id="vendor-msg"></div>
+          <button type="submit" class="submit-btn" id="vendor-submit-btn">Submit &amp; Pay Booth Fee →</button>
+          <p class="form-note">10×10 Standard $400 · 10×20 Large $700 · Payment via Stripe checkout<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -696,8 +734,8 @@
 
 <script src="script.js"></script>
 <script>
-  // Tab switching
-  const tabs = document.querySelectorAll('.reg-tab');
+  // ---- Tab switching ----
+  const tabs   = document.querySelectorAll('.reg-tab');
   const panels = document.querySelectorAll('.reg-panel');
 
   tabs.forEach(tab => {
@@ -707,23 +745,85 @@
       tab.classList.add('active');
       tab.setAttribute('aria-selected','true');
       document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-      // scroll to top of form area
       document.querySelector('.reg-tabs-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  // Open tab from URL hash e.g. register.html#vendor
   const hash = location.hash.replace('#','');
-  if (hash) {
-    const t = document.querySelector(`[data-tab="${hash}"]`);
-    if (t) t.click();
+  if (hash) { const t = document.querySelector(`[data-tab="${hash}"]`); if (t) t.click(); }
+
+  // ---- Success banner from redirect ----
+  const sp = new URLSearchParams(location.search);
+  if (sp.get('success') === 'team') {
+    const teamName = sp.get('team') || 'Your team';
+    const banner = document.createElement('div');
+    banner.className = 'success-banner';
+    banner.innerHTML = `<strong>Registration complete — ${teamName}</strong>You're officially registered for OSFNA 2026. Check your email for confirmation and next steps.`;
+    document.querySelector('.section-inner').prepend(banner);
   }
 
-  // Show division field only for soccer
-  function updateDivisions(sel) {
-    const df = document.getElementById('division-field');
-    if (df) df.style.display = sel.value === 'Soccer' ? 'block' : 'none';
+  // ---- Generic form submit handler ----
+  async function wireForm(formId, endpoint, btnId, msgId) {
+    const form = document.getElementById(formId);
+    const btn  = document.getElementById(btnId);
+    const msg  = document.getElementById(msgId);
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      const data = Object.fromEntries(new FormData(form));
+      // Convert checkboxes — FormData omits unchecked boxes
+      form.querySelectorAll('input[type=checkbox]').forEach(cb => {
+        if (!data[cb.name]) data[cb.name] = null;
+      });
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      msg.className = 'form-msg';
+      msg.textContent = '';
+
+      try {
+        const res  = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+
+        if (!res.ok) {
+          const errText = json.errors ? json.errors.join('\n') : (json.error || 'Submission failed.');
+          msg.className = 'form-msg error';
+          msg.textContent = errText;
+          btn.disabled = false;
+          btn.textContent = btn.dataset.label;
+          return;
+        }
+
+        if (json.checkoutUrl) {
+          window.location.href = json.checkoutUrl;
+          return;
+        }
+
+        msg.className = 'form-msg success';
+        msg.textContent = json.message || 'Registration received!';
+        form.reset();
+        btn.textContent = 'Submitted ✓';
+      } catch (err) {
+        msg.className = 'form-msg error';
+        msg.textContent = 'Network error — please try again or email myosfna@gmail.com.';
+        btn.disabled = false;
+        btn.textContent = btn.dataset.label;
+      }
+    });
+
+    if (btn) btn.dataset.label = btn.textContent;
   }
+
+  wireForm('form-soccer',     '/api/register-team',   'soccer-submit-btn',     'soccer-msg');
+  wireForm('form-basketball', '/api/register-team',   'basketball-submit-btn', 'basketball-msg');
+  wireForm('form-vendor',     '/api/register-vendor', 'vendor-submit-btn',     'vendor-msg');
 </script>
 </body>
 </html>

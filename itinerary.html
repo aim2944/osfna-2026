@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oromo Week City Guide 2026 — OSFNA</title>
+  <meta name="description" content="The official OSFNA 2026 city guide. Restaurants, attractions, and late-night spots curated for Oromo Week attendees. Members only." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #060a07; }
+
+    /* ── Auth gate (shown before token verified) ── */
+    .auth-gate {
+      min-height: 80vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1.5rem; text-align: center;
+      padding: 3rem 1.5rem;
+    }
+    .auth-gate-icon { font-size: 3rem; }
+    .auth-gate h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: #fff; }
+    .auth-gate p  { color: rgba(255,255,255,.45); max-width: 400px; line-height: 1.7; }
+
+    /* ── Page hero ── */
+    .itin-hero {
+      background: linear-gradient(160deg, #080c06 0%, #0c100a 100%);
+      padding: 4rem 2rem 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .itin-hero-inner { max-width: var(--max-w); margin: 0 auto; }
+    .itin-eyebrow {
+      font-family: var(--font-head); font-size: .72rem;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(255,180,0,.7); margin-bottom: .75rem;
+    }
+    .itin-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; color: #fff; margin-bottom: .75rem; line-height: 1.05;
+    }
+    .itin-title span { color: #fbbf24; }
+    .itin-sub { color: rgba(255,255,255,.45); font-size: .95rem; max-width: 560px; line-height: 1.6; }
+    .itin-user-greeting {
+      display: inline-block;
+      background: rgba(255,180,0,.1); border: 1px solid rgba(255,180,0,.25);
+      border-radius: 20px; padding: .3rem .85rem;
+      font-family: var(--font-head); font-size: .72rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: #fbbf24; margin-bottom: 1.25rem;
+    }
+
+    /* ── City tabs ── */
+    .city-tabs-wrap {
+      background: #060a07;
+      position: sticky; top: 70px; z-index: 50;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .city-tabs {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    .city-tabs::-webkit-scrollbar { display: none; }
+    .city-tab {
+      flex-shrink: 0; padding: 1rem 1.5rem;
+      font-family: var(--font-head); font-size: .78rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      border-left: none; border-right: none; border-top: none;
+      background: none; white-space: nowrap;
+      transition: color .2s, border-color .2s;
+    }
+    .city-tab:hover  { color: rgba(255,255,255,.75); }
+    .city-tab.active { color: #fff; border-bottom-color: #fbbf24; }
+
+    /* ── City panels ── */
+    .city-panel { display: none; }
+    .city-panel.active { display: block; }
+
+    /* ── Category heading ── */
+    .cat-heading {
+      font-family: var(--font-head); font-size: .7rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin: 2.5rem 0 1.25rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .cat-heading::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.06); }
+
+    /* ── Listing cards ── */
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .listing-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      padding: 1.25rem 1.25rem 1rem;
+      transition: border-color .2s;
+      position: relative;
+    }
+    .listing-card:hover { border-color: rgba(255,255,255,.14); }
+    .listing-card.partner {
+      border-color: rgba(255,180,0,.25);
+      background: linear-gradient(160deg, rgba(255,180,0,.04), rgba(255,255,255,.02));
+    }
+    .partner-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(255,180,0,.12); border: 1px solid rgba(255,180,0,.3);
+      border-radius: 20px; padding: .2rem .6rem;
+      font-family: var(--font-head); font-size: .62rem;
+      letter-spacing: .1em; text-transform: uppercase; color: #fbbf24;
+    }
+    .listing-emoji { font-size: 1.5rem; margin-bottom: .65rem; }
+    .listing-name {
+      font-size: .95rem; font-weight: 600; color: #fff;
+      margin-bottom: .2rem;
+    }
+    .listing-type {
+      font-family: var(--font-head); font-size: .65rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: .5rem;
+    }
+    .listing-desc { font-size: .82rem; color: rgba(255,255,255,.45); line-height: 1.5; margin-bottom: .85rem; }
+    .listing-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+    .listing-hood { font-size: .75rem; color: rgba(255,255,255,.3); }
+    .listing-link {
+      font-family: var(--font-head); font-size: .68rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: #fbbf24; text-decoration: none;
+      opacity: .8; transition: opacity .15s;
+    }
+    .listing-link:hover { opacity: 1; }
+
+    /* ── Coming soon placeholder ── */
+    .coming-soon {
+      background: rgba(255,255,255,.02); border: 1px dashed rgba(255,255,255,.08);
+      border-radius: 12px; padding: 2.5rem; text-align: center;
+      color: rgba(255,255,255,.25); font-size: .9rem;
+    }
+    .coming-soon strong { display: block; color: rgba(255,255,255,.45); font-size: 1rem; margin-bottom: .4rem; }
+
+    /* ── Sign-out link ── */
+    .signout-wrap { text-align: right; padding-top: 1rem; }
+    .signout-btn {
+      background: none; border: none; color: rgba(255,255,255,.25);
+      font-size: .75rem; cursor: pointer; font-family: var(--font-head);
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .signout-btn:hover { color: rgba(255,255,255,.55); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="parties.html">Parties</a></li>
+    <li><a href="itinerary.html" class="active">Itinerary</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li id="nav-passport-link"><a href="passport.html" style="color:#fbbf24">Passport</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Auth gate — shown until JS verifies token -->
+<div id="auth-gate" class="auth-gate">
+  <div class="auth-gate-icon">🛂</div>
+  <h2>Members Only</h2>
+  <p>Create your free Oromo Passport to unlock the official city guide, restaurant directory, and nightlife venues.</p>
+  <a href="passport.html?next=itinerary" class="btn btn-gold" style="text-decoration:none;display:inline-block">Get Your Passport →</a>
+  <p style="font-size:.8rem;color:rgba(255,255,255,.25)">Already have one? <a href="passport.html?next=itinerary&mode=signin" style="color:#fbbf24">Sign in</a></p>
+</div>
+
+<!-- Main content — hidden until auth passes -->
+<div id="main-content" style="display:none">
+
+  <!-- Hero -->
+  <div class="itin-hero">
+    <div class="itin-hero-inner">
+      <div class="itin-user-greeting" id="user-greeting">Passport Holder</div>
+      <p class="itin-eyebrow">Official 2026 City Guide</p>
+      <h1 class="itin-title">Oromo Week<br><span>Itinerary</span></h1>
+      <p class="itin-sub">Curated restaurants, attractions, and late-night spots across all four Oromo Week cities. Updated weekly.</p>
+    </div>
+  </div>
+
+  <!-- City tab bar -->
+  <div class="city-tabs-wrap">
+    <div class="city-tabs" role="tablist">
+      <button class="city-tab active" data-city="houston"    role="tab">Houston</button>
+      <button class="city-tab"        data-city="inglewood"  role="tab">Inglewood / LA</button>
+      <button class="city-tab"        data-city="atlanta"    role="tab">Atlanta</button>
+      <button class="city-tab"        data-city="bergen"     role="tab">North Bergen</button>
+    </div>
+  </div>
+
+  <div class="section section-dark" style="padding-top:2.5rem;padding-bottom:5rem">
+    <div class="section-inner">
+
+      <div class="signout-wrap">
+        <button class="signout-btn" id="signout-btn">Sign Out</button>
+      </div>
+
+      <!-- ══ HOUSTON ══ -->
+      <div class="city-panel active" id="panel-houston">
+
+        <div class="cat-heading">Attractions &amp; Daytime</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🚀</div>
+            <div class="listing-name">Space Center Houston</div>
+            <div class="listing-type">Museum · NASA</div>
+            <div class="listing-desc">Official visitor center for NASA's Johnson Space Center. Group discount available for OSFNA attendees — use code OSFNA26 at booking.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Clear Lake</span>
+              <a class="listing-link" href="https://spacecenter.org" target="_blank" rel="noopener">Book →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🎨</div>
+            <div class="listing-name">Houston Museum of Fine Arts</div>
+            <div class="listing-type">Museum · Culture</div>
+            <div class="listing-desc">One of the largest art museums in the US. African and diaspora art collections are a highlight.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Museum District</span>
+              <a class="listing-link" href="https://mfah.org" target="_blank" rel="noopener">Plan visit →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🛥</div>
+            <div class="listing-name">Houston Boat Tours</div>
+            <div class="listing-type">Experience · Outdoors</div>
+            <div class="listing-desc">Daytime boat tours on Galveston Bay. Popular group activity for teams arriving early in the week.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Galveston</span>
+              <a class="listing-link" href="#" onclick="return false">Affiliate link coming</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Oromo &amp; Horn Restaurants</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🍲</div>
+            <div class="listing-name">Cafe Lalibela Houston</div>
+            <div class="listing-type">Ethiopian · East African</div>
+            <div class="listing-desc">Authentic East African cuisine with injera, tibs, and vegetarian spreads. Community favorite for pre-game meals.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Westheimer</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🍽</div>
+            <div class="listing-name">Awash Ethiopian Restaurant</div>
+            <div class="listing-type">Ethiopian · Family-style</div>
+            <div class="listing-desc">Large communal dining experience. Great for team dinners — call ahead for group reservations.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Southwest Houston</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">☕</div>
+            <div class="listing-name">Buna Ethiopian Coffee</div>
+            <div class="listing-type">Café · Coffee ceremony</div>
+            <div class="listing-desc">Traditional Ethiopian coffee ceremonies. A must for the diaspora. Opens at 7am — perfect for early morning before matches.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Hillcroft area</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Late Night</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🎵</div>
+            <div class="listing-name">Warehouse Live</div>
+            <div class="listing-type">Live music · Nightlife</div>
+            <div class="listing-desc">Houston's top live music venue. Watch for OSFNA-affiliated late-night events during Oromo Week.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">EaDo</span>
+              <a class="listing-link" href="https://warehouselive.com" target="_blank" rel="noopener">Calendar →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🌙</div>
+            <div class="listing-name">Late night bites: Whataburger</div>
+            <div class="listing-type">Fast food · 24hr</div>
+            <div class="listing-desc">A Texas institution. Multiple 24-hour locations near tournament venues. Post-party essential.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Multiple locations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ INGLEWOOD / LA ══ -->
+      <div class="city-panel" id="panel-inglewood">
+
+        <div class="cat-heading">Attractions &amp; Daytime</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🏟</div>
+            <div class="listing-name">SoFi Stadium Tour</div>
+            <div class="listing-type">Sports · Architecture</div>
+            <div class="listing-desc">Tour the $5.5B stadium in Inglewood. Walking distance from several OSFNA 2026 venues. Group tours available.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Inglewood</span>
+              <a class="listing-link" href="https://sofistadium.com" target="_blank" rel="noopener">Book tour →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🎬</div>
+            <div class="listing-name">Hollywood Walk of Fame</div>
+            <div class="listing-type">Sightseeing</div>
+            <div class="listing-desc">30 minutes from Inglewood. Classic LA photo stop between matches.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Hollywood</span>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🏖</div>
+            <div class="listing-name">Santa Monica Beach</div>
+            <div class="listing-type">Outdoors · Beach</div>
+            <div class="listing-desc">20 minutes west. The pier, Pacific Park, and Muscle Beach. Popular team rest day destination.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Santa Monica</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Oromo &amp; Horn Restaurants</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🍲</div>
+            <div class="listing-name">Rosalind's Ethiopian Restaurant</div>
+            <div class="listing-type">Ethiopian · Longstanding</div>
+            <div class="listing-desc">One of LA's oldest and most beloved Ethiopian restaurants. Established Oromo community gathering spot.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Little Ethiopia, Fairfax</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🍽</div>
+            <div class="listing-name">Messob Ethiopian Restaurant</div>
+            <div class="listing-type">Ethiopian · Vegetarian-friendly</div>
+            <div class="listing-desc">Diverse menu with strong vegetarian options. Good for mixed groups with dietary preferences.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Little Ethiopia</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Late Night</div>
+        <div class="listing-grid">
+          <div class="listing-card">
+            <div class="listing-emoji">🎵</div>
+            <div class="listing-name">The Forum (Kia Forum)</div>
+            <div class="listing-type">Concert venue · Events</div>
+            <div class="listing-desc">Legendary Inglewood venue — check the calendar during Oromo Week for any shows running parallel to the event.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Inglewood</span>
+              <a class="listing-link" href="https://theforuminglewoodca.com" target="_blank" rel="noopener">Calendar →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🌮</div>
+            <div class="listing-name">Late Night: Tacos El Gordo</div>
+            <div class="listing-type">Mexican · Late night</div>
+            <div class="listing-desc">Legendary Tijuana-style tacos. Open past midnight. Community pilgrimage after every party night.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Chula Vista / Multiple</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ ATLANTA ══ -->
+      <div class="city-panel" id="panel-atlanta">
+
+        <div class="cat-heading">Attractions &amp; Daytime</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🌊</div>
+            <div class="listing-name">Georgia Aquarium</div>
+            <div class="listing-type">Aquarium · Family</div>
+            <div class="listing-desc">World's largest aquarium. OSFNA group discount negotiated — present your Passport QR at ticket counter.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Downtown Atlanta</span>
+              <a class="listing-link" href="https://georgiaaquarium.org" target="_blank" rel="noopener">Book →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🥤</div>
+            <div class="listing-name">World of Coca-Cola</div>
+            <div class="listing-type">Museum · Experience</div>
+            <div class="listing-desc">Interactive museum and tasting experience. Easy morning activity before afternoon games.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Downtown</span>
+              <a class="listing-link" href="https://worldofcocacola.com" target="_blank" rel="noopener">Plan visit →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">⛳</div>
+            <div class="listing-name">TopGolf Atlanta</div>
+            <div class="listing-type">Golf · Entertainment</div>
+            <div class="listing-desc">Especially relevant during OSFNA Golf weekend. Group bays available — great for team bonding.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Midtown</span>
+              <a class="listing-link" href="https://topgolf.com" target="_blank" rel="noopener">Reserve →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Oromo &amp; Horn Restaurants</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🍲</div>
+            <div class="listing-name">Queen of Sheba</div>
+            <div class="listing-type">Ethiopian · Upscale</div>
+            <div class="listing-desc">Atlanta's premier Ethiopian fine dining. Traditional recipes with elevated presentation. Ideal for team dinners and post-tournament celebrations.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Midtown</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🍽</div>
+            <div class="listing-name">Desta Ethiopian Kitchen</div>
+            <div class="listing-type">Ethiopian · Casual</div>
+            <div class="listing-desc">Neighborhood staple with a loyal Oromo community following. Large platters great for groups.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Virginia-Highland</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🥘</div>
+            <div class="listing-name">Addis Atlanta</div>
+            <div class="listing-type">Ethiopian · Halal</div>
+            <div class="listing-desc">Fully halal-certified Ethiopian restaurant. Important option for attendees observing halal dietary requirements.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Clarkston</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Late Night</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🎶</div>
+            <div class="listing-name">Opera Atlanta</div>
+            <div class="listing-type">Nightclub · Live music</div>
+            <div class="listing-desc">Atlanta's highest-capacity nightlife venue. OSFNA has a dedicated contact for group reservations and table holds.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Midtown</span>
+              <a class="listing-link" href="https://operaatlanta.com" target="_blank" rel="noopener">Reserve →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🍗</div>
+            <div class="listing-name">Late Night: Chick-fil-A (Midtown)</div>
+            <div class="listing-type">Fast food · 24hr (some locations)</div>
+            <div class="listing-desc">You're in Atlanta — it's only right. Several locations near Midtown open late Thu–Sat.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Multiple</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ NORTH BERGEN ══ -->
+      <div class="city-panel" id="panel-bergen">
+
+        <div class="cat-heading">Attractions &amp; Daytime</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🗽</div>
+            <div class="listing-name">NYC Day Trip — Manhattan</div>
+            <div class="listing-name">NYC Day Trip Package</div>
+            <div class="listing-type">Excursion · Sightseeing</div>
+            <div class="listing-desc">15 minutes by bus to Midtown Manhattan. OSFNA-recommended day trip: Times Square, Central Park, and the High Line. Affordable NJ Transit connection.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Port Authority → NJ Transit</span>
+              <a class="listing-link" href="https://njtransit.com" target="_blank" rel="noopener">Plan trip →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🌆</div>
+            <div class="listing-name">Palisades Park Waterfront</div>
+            <div class="listing-type">Views · Outdoors</div>
+            <div class="listing-desc">Stunning Hudson River views of the Manhattan skyline. Free, accessible, perfect for team photos with the NYC backdrop.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Palisades Park, NJ</span>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🛍</div>
+            <div class="listing-name">Westfield Garden State Plaza</div>
+            <div class="listing-type">Shopping · Retail</div>
+            <div class="listing-desc">One of the largest malls in the northeast. Jersey shopping without Manhattan prices. Great for team gear and souvenirs.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Paramus, NJ</span>
+              <a class="listing-link" href="https://westfield.com" target="_blank" rel="noopener">Info →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Oromo &amp; Horn Restaurants</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🍲</div>
+            <div class="listing-name">Bunna Cafe (Brooklyn)</div>
+            <div class="listing-name">Bunna Café Brooklyn</div>
+            <div class="listing-type">Ethiopian · Vegan-friendly</div>
+            <div class="listing-desc">NYC's most acclaimed Ethiopian restaurant. Entirely plant-based menu rooted in traditional Ethiopian flavors. Worth the 30-min drive from North Bergen.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Bushwick, Brooklyn</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🍽</div>
+            <div class="listing-name">Ghenet Restaurant (Manhattan)</div>
+            <div class="listing-type">Ethiopian · Harlem</div>
+            <div class="listing-desc">Long-running Harlem staple. Traditional injera and stews. Strong community ties to the NYC Oromo population.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Harlem, Manhattan</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🥣</div>
+            <div class="listing-name">Awash NYC</div>
+            <div class="listing-type">Ethiopian · Multiple locations</div>
+            <div class="listing-desc">Multiple NYC locations including the Upper West Side and the East Village. Reliable and community-trusted.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">Manhattan</span>
+              <a class="listing-link" href="https://maps.google.com" target="_blank" rel="noopener">Directions →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-heading">Late Night</div>
+        <div class="listing-grid">
+          <div class="listing-card partner">
+            <div class="partner-badge">★ Partner</div>
+            <div class="listing-emoji">🎶</div>
+            <div class="listing-name">S.O.B.'s NYC</div>
+            <div class="listing-type">Live music · World music</div>
+            <div class="listing-desc">New York's premier venue for world music and African artists. OSFNA community regularly hosts events here during diaspora gatherings.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">SoHo, Manhattan</span>
+              <a class="listing-link" href="https://sobs.com" target="_blank" rel="noopener">Calendar →</a>
+            </div>
+          </div>
+          <div class="listing-card">
+            <div class="listing-emoji">🌯</div>
+            <div class="listing-name">Late Night: Halal Guys</div>
+            <div class="listing-type">Halal · Fast casual · 24hr cart</div>
+            <div class="listing-desc">The original NYC halal cart. Available on every corner in Midtown and in NJ now. Essential late-night institution.</div>
+            <div class="listing-footer">
+              <span class="listing-hood">NYC + NJ locations</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /panel-bergen -->
+
+    </div><!-- /section-inner -->
+  </div><!-- /section -->
+
+</div><!-- /main-content -->
+
+<script src="script.js"></script>
+<script>
+// ── Auth guard ──
+const token = localStorage.getItem('osfna_token');
+const name  = localStorage.getItem('osfna_name');
+
+if (!token) {
+  // Show gate, hide content
+  document.getElementById('auth-gate').style.display = '';
+} else {
+  // Show content, hide gate
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('main-content').style.display = '';
+
+  if (name) {
+    document.getElementById('user-greeting').textContent = `Welcome, ${name.split(' ')[0]}`;
+  }
+
+  // Update nav
+  const passportLink = document.getElementById('nav-passport-link');
+  if (passportLink) {
+    passportLink.innerHTML = `<a href="itinerary.html" style="color:#fbbf24">${name ? name.split(' ')[0] + ' ✓' : 'My Passport ✓'}</a>`;
+  }
+
+  // Silently verify token in background
+  fetch('/api/auth-me', { headers: { Authorization: `Bearer ${token}` } })
+    .then(r => { if (!r.ok) signOut(); })
+    .catch(() => {});
+}
+
+// ── City tabs ──
+document.querySelectorAll('.city-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.city-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.city).classList.add('active');
+    document.querySelector('.city-tabs-wrap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+});
+
+// ── Sign out ──
+function signOut() {
+  localStorage.removeItem('osfna_token');
+  localStorage.removeItem('osfna_refresh');
+  localStorage.removeItem('osfna_name');
+  localStorage.removeItem('osfna_user_id');
+  window.location.href = 'passport.html';
+}
+document.getElementById('signout-btn')?.addEventListener('click', signOut);
+</script>
+</body>
+</html>

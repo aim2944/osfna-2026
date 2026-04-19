@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parties &amp; Events — OSFNA 2026 Oromo Week</title>
+  <meta name="description" content="Official OSFNA 2026 nightly parties. VIP tables, all-access passes, and dynamic pricing for Oromo Week — July 25–Aug 1, Dallas-Fort Worth." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Night hero ── */
+    .night-hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 5rem 2rem 4rem;
+      background: linear-gradient(160deg, rgba(10,4,20,.97) 0%, rgba(20,5,10,.93) 60%, rgba(12,0,18,1) 100%);
+      overflow: hidden;
+    }
+    .night-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 60%, rgba(120,30,200,.25) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 30%, rgba(204,32,32,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 50% 100%, rgba(255,180,0,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .night-hero-inner { position: relative; z-index: 1; max-width: var(--max-w); width: 100%; margin: 0 auto; }
+    .night-eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,180,0,.75);
+      margin-bottom: 1rem;
+    }
+    .night-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .night-title span { color: rgba(255,180,0,0.9); }
+    .night-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.5);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .night-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-gold {
+      background: linear-gradient(135deg, #e6a800, #ffcc33);
+      color: #0a0a0a;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.75rem;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn-gold:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,.07);
+      color: rgba(255,255,255,.85);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      padding: 0.85rem 1.75rem;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.4); color: #fff; }
+
+    /* ── Dynamic pricing banner ── */
+    .price-pulse {
+      background: linear-gradient(135deg, rgba(255,180,0,.1), rgba(204,32,32,.1));
+      border: 1px solid rgba(255,180,0,.25);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .price-pulse-left { display: flex; align-items: center; gap: 0.75rem; }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; animation: blink 1.2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .price-pulse-text { font-size: 0.88rem; color: rgba(255,255,255,.7); }
+    .price-pulse-text strong { color: #fbbf24; }
+    .price-tier-badge {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      background: rgba(255,180,0,.15);
+      color: #fbbf24;
+      border: 1px solid rgba(255,180,0,.3);
+    }
+
+    /* ── Ticket cards ── */
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .ticket-card {
+      position: relative;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .ticket-card:hover { border-color: rgba(255,255,255,.18); transform: translateY(-2px); }
+    .ticket-card.featured {
+      border-color: rgba(255,180,0,.4);
+      background: linear-gradient(160deg, rgba(255,180,0,.06), rgba(255,255,255,.03));
+    }
+    .ticket-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -10px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #e6a800, #ffcc33);
+      color: #0a0a0a;
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    .ticket-type {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 0.5rem;
+    }
+    .ticket-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .ticket-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .ticket-price .amount {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .ticket-price .amount.gold { color: #fbbf24; }
+    .ticket-price .period { font-size: 0.85rem; color: rgba(255,255,255,.35); }
+    .ticket-original {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,.25);
+      text-decoration: line-through;
+      margin-bottom: 1.25rem;
+    }
+    .ticket-perks {
+      list-style: none;
+      padding: 0; margin: 0 0 1.5rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .ticket-perks li {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,.6);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .ticket-perks li::before { content: '✓'; color: #4ade80; font-weight: 700; flex-shrink: 0; }
+    .ticket-perks li.no::before { content: '✗'; color: rgba(255,255,255,.2); }
+    .ticket-perks li.no { color: rgba(255,255,255,.25); }
+    .buy-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-head);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity .15s, transform .15s;
+    }
+    .buy-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .buy-btn-ga    { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.15); }
+    .buy-btn-vip   { background: var(--red); color: #fff; }
+    .buy-btn-gold  { background: linear-gradient(135deg, #e6a800, #ffcc33); color: #0a0a0a; font-weight: 700; }
+    .buy-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .qty-row {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .qty-row label { font-family: var(--font-head); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+    .qty-select {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; color: #fff; font-size: 0.9rem; padding: 0.4rem 0.6rem;
+      font-family: var(--font-body);
+    }
+    .qty-select option { background: #111; }
+
+    /* ── All-Access Bundle ── */
+    .bundle-card {
+      background: linear-gradient(135deg, rgba(120,30,200,.15), rgba(204,32,32,.12), rgba(255,180,0,.08));
+      border: 1px solid rgba(255,180,0,.35);
+      border-radius: 16px;
+      padding: 2.25rem 2rem;
+      margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+    .bundle-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .bundle-card h3 span { color: #fbbf24; }
+    .bundle-card p { color: rgba(255,255,255,.55); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+    .bundle-perks { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0; }
+    .bundle-perk {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,.65);
+      font-family: var(--font-head);
+      letter-spacing: 0.06em;
+    }
+    .bundle-right { text-align: center; flex-shrink: 0; }
+    .bundle-price {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .bundle-orig {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,.25);
+      text-decoration: line-through;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 640px) {
+      .bundle-card { grid-template-columns: 1fr; }
+      .bundle-right { text-align: left; }
+    }
+
+    /* ── Floor plan ── */
+    .floor-section { margin-bottom: 3rem; }
+    .floor-legend {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-head); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+    }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+    .floor-wrap {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      padding: 2rem;
+      overflow-x: auto;
+    }
+    .floor-svg { display: block; margin: 0 auto; max-width: 100%; }
+    .floor-table {
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .floor-table:hover { opacity: .8; }
+    .floor-table.selected rect, .floor-table.selected circle { stroke: #fbbf24 !important; stroke-width: 3 !important; }
+    .floor-table.sold { cursor: not-allowed; opacity: .5; }
+    .floor-selected-info {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,180,0,.08);
+      border: 1px solid rgba(255,180,0,.25);
+      border-radius: 12px;
+      display: none;
+    }
+    .floor-selected-info.show { display: block; }
+    .floor-selected-info p { color: rgba(255,255,255,.7); font-size: 0.9rem; margin: 0 0 1rem; }
+    .floor-selected-info strong { color: #fbbf24; }
+
+    /* ── Party schedule ── */
+    .party-schedule { margin-bottom: 3rem; }
+    .party-night {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 1.25rem;
+      align-items: center;
+    }
+    .party-night-date {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .party-night-date span { display: block; font-size: 0.7rem; font-family: var(--font-head); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,.3); font-weight: 400; }
+    .party-night-info h4 { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.25rem; }
+    .party-night-info p  { font-size: 0.82rem; color: rgba(255,255,255,.4); margin: 0; }
+    .party-avail { font-family: var(--font-head); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: #86efac; }
+    .party-avail.limited { color: #fbbf24; }
+    @media (max-width: 600px) {
+      .party-night { grid-template-columns: 60px 1fr; }
+      .party-avail { display: none; }
+    }
+
+    /* ── Form feedback ── */
+    .form-msg {
+      border-radius: 8px; padding: 0.9rem 1.1rem;
+      font-size: 0.88rem; line-height: 1.5; display: none;
+      margin-bottom: 1rem;
+    }
+    .form-msg.error   { background: rgba(204,32,32,.12); border: 1px solid rgba(204,32,32,.4); color: #ff9090; display: block; }
+    .form-msg.success { background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.4); color: #86efac; display: block; }
+
+    /* ── Passport gate ── */
+    .gated-wrap { position: relative; }
+    .gated-wrap.locked .gated-content {
+      filter: blur(6px);
+      pointer-events: none;
+      user-select: none;
+    }
+    .passport-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: linear-gradient(180deg, rgba(6,2,14,.5) 0%, rgba(6,2,14,.92) 40%, rgba(6,2,14,.98) 100%);
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+    .gated-wrap.locked .passport-overlay { display: flex; }
+    .passport-gate-card {
+      text-align: center;
+      max-width: 480px;
+    }
+    .passport-gate-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, rgba(251,191,36,.15), rgba(251,191,36,.05));
+      border: 1px solid rgba(251,191,36,.3);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem;
+      margin: 0 auto 1.5rem;
+    }
+    .passport-gate-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+    .passport-gate-card h3 span { color: #fbbf24; }
+    .passport-gate-card p {
+      color: rgba(255,255,255,.5);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .passport-gate-btns { display: flex; gap: 0.875rem; justify-content: center; flex-wrap: wrap; }
+    .passport-gate-perks {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 1.75rem;
+    }
+    .gate-perk {
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .gate-perk::before { content: '✓'; color: #4ade80; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#tournament">Tournament</a></li>
+    <li><a href="parties.html" class="active">Parties</a></li>
+    <li><a href="vendor.html">Vendors</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <li><a href="index.html#about">About</a></li>
+  <li><a href="parties.html">Parties</a></li>
+  <li><a href="register.html">Register</a></li>
+  <li><a href="vendor.html">Vendors</a></li>
+  <li><a href="index.html#contact">Contact</a></li>
+</ul>
+
+<!-- ══ NIGHT HERO ══ -->
+<section class="night-hero">
+  <div class="night-hero-inner">
+    <p class="night-eyebrow reveal">Oromo Week 2026 · Dallas–Fort Worth</p>
+    <h1 class="night-title reveal reveal-delay-1">Official<br><span>Nightlife</span></h1>
+    <p class="night-sub reveal reveal-delay-2">Seven nights of Oromo culture, music, and community. All-digital entry. QR access only.</p>
+    <div class="night-ctas reveal reveal-delay-3">
+      <a href="#tickets" class="btn-gold">Get Tickets</a>
+      <a href="#tables"  class="btn-ghost">Book a Table</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DYNAMIC PRICING NOTICE ══ -->
+<div class="section section-dark" style="padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.05);">
+  <div class="section-inner">
+    <div class="price-pulse">
+      <div class="price-pulse-left">
+        <div class="pulse-dot"></div>
+        <p class="price-pulse-text">
+          <strong id="price-tier-name">Early Bird pricing active</strong> —
+          Prices increase automatically as the event approaches.
+          <span id="price-countdown"></span>
+        </p>
+      </div>
+      <span class="price-tier-badge" id="price-tier-badge">Early Bird</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PASSPORT GATE WRAPPER ══ -->
+<div class="gated-wrap" id="party-gate-wrap">
+  <div class="passport-overlay" aria-live="polite">
+    <div class="passport-gate-card">
+      <div class="passport-gate-icon">🎟</div>
+      <h3>Members Only<br><span>Venue Access</span></h3>
+      <p>Create your free Oromo Passport to unlock all party venues, schedules, and ticket purchases for Oromo Week 2026.</p>
+      <div class="passport-gate-btns">
+        <a href="passport.html?next=parties" class="btn-gold">Create Your Passport →</a>
+        <a href="passport.html?next=parties&mode=login" class="btn-ghost">Sign In</a>
+      </div>
+      <div class="passport-gate-perks">
+        <span class="gate-perk">All 7 nights unlocked</span>
+        <span class="gate-perk">VIP table booking</span>
+        <span class="gate-perk">City itinerary</span>
+        <span class="gate-perk">Free to join</span>
+      </div>
+    </div>
+  </div>
+  <div class="gated-content">
+
+<!-- ══ PARTY SCHEDULE ══ -->
+<section class="section section-dark" id="schedule">
+  <div class="section-inner">
+    <p class="section-label">Event Calendar</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">7 Nights of Oromo Week</h2>
+    <div class="party-schedule">
+      <div class="party-night"><div class="party-night-date">25<span>Jul</span></div><div class="party-night-info"><h4>Opening Night — Welcome to Oromo Week</h4><p>Grand opening ceremony · Live DJ · Cultural performances</p></div><div class="party-avail">Tickets available</div></div>
+      <div class="party-night"><div class="party-night-date">26<span>Jul</span></div><div class="party-night-info"><h4>Diaspora Night — Representing the Cities</h4><p>Regional city challenges · Team rallies · Open floor</p></div><div class="party-avail">Tickets available</div></div>
+      <div class="party-night"><div class="party-night-date">27<span>Jul</span></div><div class="party-night-info"><h4>Heritage Night — Afaan Oromo Night</h4><p>Cultural dress · Traditional music · Spoken word</p></div><div class="party-avail">Tickets available</div></div>
+      <div class="party-night"><div class="party-night-date">28<span>Jul</span></div><div class="party-night-info"><h4>Tournament Night — Championship Build-Up</h4><p>Bracket reveals · Player spotlights · Live scoring</p></div><div class="party-avail">Tickets available</div></div>
+      <div class="party-night"><div class="party-night-date">29<span>Jul</span></div><div class="party-night-info"><h4>All-Star Night — Artist Showcase</h4><p>Live recording artists · VIP tables open · Premium bar</p></div><div class="party-avail limited">Limited availability</div></div>
+      <div class="party-night"><div class="party-night-date">31<span>Jul</span></div><div class="party-night-info"><h4>Championship Eve — Finals Celebration</h4><p>Semi-final watch party · Live commentary · After-party</p></div><div class="party-avail limited">Limited availability</div></div>
+      <div class="party-night"><div class="party-night-date">1<span>Aug</span></div><div class="party-night-info"><h4>Closing Night — Champions Gala</h4><p>Trophy ceremony · Black-tie optional · Closing concert</p></div><div class="party-avail limited">Selling fast</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ALL-ACCESS BUNDLE ══ -->
+<section class="section section-dark" style="border-top:1px solid rgba(255,255,255,.05)" id="bundle">
+  <div class="section-inner">
+    <div class="bundle-card">
+      <div>
+        <p style="font-family:var(--font-head);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,180,0,.7);margin-bottom:.5rem">Best Value</p>
+        <h3>All-Access <span>Oromo Week Pass</span></h3>
+        <p>One pass. All seven official parties. Express VIP entry every night. Plus a limited-edition OSFNA 2026 jersey mailed to your door before the event.</p>
+        <div class="bundle-perks">
+          <span class="bundle-perk">7-Night Access</span>
+          <span class="bundle-perk">VIP Express Entry</span>
+          <span class="bundle-perk">Limited Jersey</span>
+          <span class="bundle-perk">QR Digital Pass</span>
+          <span class="bundle-perk">Priority Table Upgrade</span>
+        </div>
+      </div>
+      <div class="bundle-right">
+        <div class="bundle-price" id="bundle-price">$299</div>
+        <div class="bundle-orig" id="bundle-orig">Value: $455+</div>
+        <div id="bundle-msg" class="form-msg"></div>
+        <div class="qty-row" style="justify-content:center">
+          <label>Qty</label>
+          <select class="qty-select" id="bundle-qty">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+        </div>
+        <button class="buy-btn btn-gold" id="bundle-btn">Get All-Access Pass →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SINGLE TICKETS ══ -->
+<section class="section section-dark" style="border-top:1px solid rgba(255,255,255,.05)" id="tickets">
+  <div class="section-inner">
+    <p class="section-label">Single Night</p>
+    <h2 class="section-title" style="margin-bottom:0.5rem">Choose Your Access</h2>
+    <p style="color:rgba(255,255,255,.4);margin-bottom:2rem;font-size:.9rem">Per-night tickets. Select your night at checkout.</p>
+
+    <div class="ticket-grid">
+
+      <!-- GA -->
+      <div class="ticket-card">
+        <p class="ticket-type">General Admission</p>
+        <h3 class="ticket-name">GA Pass</h3>
+        <div class="ticket-price">
+          <span class="amount" id="ga-price">$35</span>
+          <span class="period">/ night</span>
+        </div>
+        <p class="ticket-original" id="ga-orig"></p>
+        <ul class="ticket-perks">
+          <li>General floor access</li>
+          <li>Standard entry queue</li>
+          <li>QR digital ticket</li>
+          <li class="no">Express entry</li>
+          <li class="no">Reserved seating</li>
+        </ul>
+        <div class="qty-row"><label>Qty</label>
+          <select class="qty-select" id="ga-qty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+        </div>
+        <div id="ga-msg" class="form-msg"></div>
+        <button class="buy-btn buy-btn-ga" id="ga-btn">Buy GA Tickets →</button>
+      </div>
+
+      <!-- VIP -->
+      <div class="ticket-card featured">
+        <p class="ticket-type">VIP Access</p>
+        <h3 class="ticket-name">VIP Pass</h3>
+        <div class="ticket-price">
+          <span class="amount" id="vip-price">$75</span>
+          <span class="period">/ night</span>
+        </div>
+        <p class="ticket-original" id="vip-orig"></p>
+        <ul class="ticket-perks">
+          <li>VIP express entry lane</li>
+          <li>Priority floor positioning</li>
+          <li>QR digital ticket</li>
+          <li>Complimentary first drink</li>
+          <li class="no">Reserved table</li>
+        </ul>
+        <div class="qty-row"><label>Qty</label>
+          <select class="qty-select" id="vip-qty"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+        </div>
+        <div id="vip-msg" class="form-msg"></div>
+        <button class="buy-btn buy-btn-vip" id="vip-btn">Buy VIP Tickets →</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ TABLE BOOKING ══ -->
+<section class="section section-dark" style="border-top:1px solid rgba(255,255,255,.05)" id="tables">
+  <div class="section-inner">
+    <p class="section-label">Premium Experience</p>
+    <h2 class="section-title" style="margin-bottom:0.5rem">VIP Table Reservations</h2>
+    <p style="color:rgba(255,255,255,.4);margin-bottom:2rem;font-size:.9rem">Secure your table now. Deposits required at booking. Tables include VIP entry for all guests.</p>
+
+    <div class="floor-section">
+      <div class="floor-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Premium Table (seats 8)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1d4ed8"></div>Standard VIP (seats 6)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#166534"></div>Available</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#991b1b"></div>Sold Out</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#92400e"></div>Reserved</div>
+      </div>
+
+      <div class="floor-wrap">
+        <!-- SVG Floor Plan: 900×540 viewport -->
+        <svg class="floor-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-label="Venue floor plan">
+
+          <!-- Stage -->
+          <rect x="300" y="20" width="300" height="70" rx="8" fill="#1a0a2e" stroke="rgba(255,180,0,.5)" stroke-width="1.5"/>
+          <text x="450" y="52" text-anchor="middle" fill="rgba(255,180,0,.8)" font-family="Oswald,sans-serif" font-size="11" letter-spacing="3" text-transform="uppercase">STAGE</text>
+          <text x="450" y="70" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="DM Sans,sans-serif" font-size="9">Live Artist Performance</text>
+
+          <!-- Dance floor -->
+          <rect x="250" y="110" width="400" height="160" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="450" y="196" text-anchor="middle" fill="rgba(255,255,255,.12)" font-family="Oswald,sans-serif" font-size="10" letter-spacing="4">DANCE FLOOR</text>
+
+          <!-- === PREMIUM TABLES (purple, seats 8) === -->
+          <!-- P1 - Available -->
+          <g class="floor-table" data-id="P1" data-type="premium" data-seats="8" data-price="500" data-status="available" onclick="selectTable(this)">
+            <circle cx="90"  cy="190" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/>
+            <circle cx="90"  cy="190" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/>
+            <text x="90"  y="186" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P1</text>
+            <text x="90"  y="200" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">$500 · 8 seats</text>
+          </g>
+          <!-- P2 - Available -->
+          <g class="floor-table" data-id="P2" data-type="premium" data-seats="8" data-price="500" data-status="available" onclick="selectTable(this)">
+            <circle cx="810" cy="190" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/>
+            <circle cx="810" cy="190" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/>
+            <text x="810" y="186" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P2</text>
+            <text x="810" y="200" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">$500 · 8 seats</text>
+          </g>
+          <!-- P3 - SOLD -->
+          <g class="floor-table sold" data-id="P3" data-type="premium" data-seats="8" data-price="500" data-status="sold">
+            <circle cx="90"  cy="340" r="42" fill="rgba(127,29,29,.25)" stroke="#991b1b" stroke-width="1.5"/>
+            <circle cx="90"  cy="340" r="28" fill="rgba(127,29,29,.15)" stroke="rgba(153,27,27,.5)" stroke-width="1"/>
+            <text x="90"  y="336" text-anchor="middle" fill="rgba(252,165,165,.4)" font-family="Oswald,sans-serif" font-size="12">P3</text>
+            <text x="90"  y="350" text-anchor="middle" fill="rgba(252,165,165,.3)" font-family="DM Sans,sans-serif" font-size="9">SOLD OUT</text>
+          </g>
+          <!-- P4 - Available -->
+          <g class="floor-table" data-id="P4" data-type="premium" data-seats="8" data-price="500" data-status="available" onclick="selectTable(this)">
+            <circle cx="810" cy="340" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/>
+            <circle cx="810" cy="340" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/>
+            <text x="810" y="336" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P4</text>
+            <text x="810" y="350" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">$500 · 8 seats</text>
+          </g>
+
+          <!-- === STANDARD VIP TABLES (blue, seats 6) row 1 === -->
+          <!-- T1 -->
+          <g class="floor-table" data-id="T1" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="155" y="150" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="192" y="186" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T1</text>
+            <text x="192" y="200" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <!-- T2 -->
+          <g class="floor-table" data-id="T2" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="670" y="150" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="707" y="186" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T2</text>
+            <text x="707" y="200" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <!-- T3 RESERVED -->
+          <g class="floor-table" data-id="T3" data-type="standard" data-seats="6" data-price="350" data-status="reserved" onclick="selectTable(this)" style="cursor:default;opacity:.55">
+            <rect x="155" y="300" width="75" height="75" rx="8" fill="rgba(120,53,15,.25)" stroke="#92400e" stroke-width="1.5"/>
+            <text x="192" y="336" text-anchor="middle" fill="rgba(253,211,77,.5)" font-family="Oswald,sans-serif" font-size="12">T3</text>
+            <text x="192" y="350" text-anchor="middle" fill="rgba(253,211,77,.35)" font-family="DM Sans,sans-serif" font-size="9">RESERVED</text>
+          </g>
+          <!-- T4 -->
+          <g class="floor-table" data-id="T4" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="670" y="300" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="707" y="336" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T4</text>
+            <text x="707" y="350" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <!-- Back row T5–T8 -->
+          <g class="floor-table" data-id="T5" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="240" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="277" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T5</text>
+            <text x="277" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <g class="floor-table" data-id="T6" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="375" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="412" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T6</text>
+            <text x="412" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <g class="floor-table" data-id="T7" data-type="standard" data-seats="6" data-price="350" data-status="available" onclick="selectTable(this)">
+            <rect x="510" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="547" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T7</text>
+            <text x="547" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">$350·6</text>
+          </g>
+          <g class="floor-table sold" data-id="T8" data-type="standard" data-seats="6" data-price="350" data-status="sold">
+            <rect x="645" y="420" width="75" height="75" rx="8" fill="rgba(127,29,29,.2)" stroke="#991b1b" stroke-width="1.5"/>
+            <text x="682" y="456" text-anchor="middle" fill="rgba(252,165,165,.4)" font-family="Oswald,sans-serif" font-size="12">T8</text>
+            <text x="682" y="470" text-anchor="middle" fill="rgba(252,165,165,.3)" font-family="DM Sans,sans-serif" font-size="9">SOLD OUT</text>
+          </g>
+
+          <!-- Bar label -->
+          <rect x="360" y="510" width="180" height="24" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+          <text x="450" y="526" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="Oswald,sans-serif" font-size="9" letter-spacing="3">BAR / ENTRANCE</text>
+        </svg>
+
+        <!-- Selection info -->
+        <div class="floor-selected-info" id="table-info">
+          <p id="table-info-text">Selected: <strong id="table-name">—</strong> · <strong id="table-desc">—</strong> · Deposit: <strong id="table-price">—</strong></p>
+          <div id="table-msg" class="form-msg"></div>
+          <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+            <div class="qty-row" style="margin-bottom:0">
+              <label>Night</label>
+              <select class="qty-select" id="table-night">
+                <option value="jul25">Jul 25 — Opening Night</option>
+                <option value="jul26">Jul 26 — Diaspora Night</option>
+                <option value="jul27">Jul 27 — Heritage Night</option>
+                <option value="jul28">Jul 28 — Tournament Night</option>
+                <option value="jul29">Jul 29 — All-Star Night</option>
+                <option value="jul31">Jul 31 — Championship Eve</option>
+                <option value="aug01">Aug 1 — Closing Gala</option>
+              </select>
+            </div>
+            <button class="buy-btn btn-gold" id="table-book-btn" style="width:auto;padding:.75rem 1.5rem">Reserve Table →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </div><!-- /gated-content -->
+</div><!-- /gated-wrap -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">OSFNA<span> 2026</span></div>
+        <p>Official Nightlife · Digital Access Only</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Quick Links</p>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="vendor.html">Vendors</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Oromo Sports Federation in North America.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Passport gate — check auth immediately
+(function() {
+  const token = localStorage.getItem('osfna_token');
+  const wrap = document.getElementById('party-gate-wrap');
+  if (!token) {
+    wrap.classList.add('locked');
+  } else {
+    fetch('/api/auth-me', { headers: { Authorization: 'Bearer ' + token } })
+      .then(r => { if (!r.ok) { localStorage.removeItem('osfna_token'); wrap.classList.add('locked'); } })
+      .catch(() => {});
+  }
+})();
+</script>
+<script src="script.js"></script>
+<script>
+// ── Dynamic pricing engine ──
+const EVENT_DATE = new Date('2026-07-25T10:00:00');
+
+const PRICE_TIERS = [
+  { label: 'Early Bird',     minDays: 91, ga: 3500,  vip: 7500,  bundle: 29900, table_std: 35000, table_prem: 50000 },
+  { label: 'Standard',       minDays: 61, ga: 4500,  vip: 8500,  bundle: 33900, table_std: 37500, table_prem: 55000 },
+  { label: 'Regular',        minDays: 31, ga: 5000,  vip: 9500,  bundle: 37900, table_std: 40000, table_prem: 60000 },
+  { label: 'Late',           minDays: 15, ga: 5500,  vip: 10000, bundle: 41900, table_std: 42500, table_prem: 65000 },
+  { label: 'Last Minute',    minDays: 0,  ga: 6500,  vip: 12000, bundle: 44900, table_std: 45000, table_prem: 70000 },
+];
+
+const ORIG_PRICES = { ga: 5000, vip: 10000, bundle: 44900, table_std: 45000, table_prem: 70000 };
+
+function getPriceTier() {
+  const daysLeft = Math.ceil((EVENT_DATE - Date.now()) / 86400000);
+  return PRICE_TIERS.find(t => daysLeft >= t.minDays) || PRICE_TIERS[PRICE_TIERS.length - 1];
+}
+function fmt$(cents) { return '$' + (cents / 100).toFixed(0); }
+
+let currentTier = getPriceTier();
+
+function renderPrices() {
+  currentTier = getPriceTier();
+  const daysLeft = Math.ceil((EVENT_DATE - Date.now()) / 86400000);
+
+  document.getElementById('price-tier-name').textContent  = currentTier.label + ' pricing active';
+  document.getElementById('price-tier-badge').textContent = currentTier.label;
+  document.getElementById('price-countdown').textContent  = `${daysLeft} days until the event.`;
+
+  document.getElementById('ga-price').textContent  = fmt$(currentTier.ga);
+  document.getElementById('vip-price').textContent = fmt$(currentTier.vip);
+  document.getElementById('bundle-price').textContent = fmt$(currentTier.bundle);
+
+  if (currentTier.ga < ORIG_PRICES.ga) {
+    document.getElementById('ga-orig').textContent  = `Regular: ${fmt$(ORIG_PRICES.ga)}`;
+    document.getElementById('vip-orig').textContent = `Regular: ${fmt$(ORIG_PRICES.vip)}`;
+    document.getElementById('bundle-orig').textContent = `Regular: ${fmt$(ORIG_PRICES.bundle)}`;
+  }
+}
+renderPrices();
+
+// ── Table selection ──
+let selectedTable = null;
+
+function selectTable(el) {
+  if (el.dataset.status === 'sold' || el.dataset.status === 'reserved') return;
+  document.querySelectorAll('.floor-table').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTable = {
+    id:    el.dataset.id,
+    type:  el.dataset.type,
+    seats: el.dataset.seats,
+    price: parseInt(el.dataset.price, 10) * 100,
+  };
+
+  const dynamicPrice = el.dataset.type === 'premium' ? currentTier.table_prem : currentTier.table_std;
+  selectedTable.price = dynamicPrice;
+
+  document.getElementById('table-name').textContent  = `Table ${el.dataset.id}`;
+  document.getElementById('table-desc').textContent  = `${el.dataset.type === 'premium' ? 'Premium' : 'Standard VIP'} · ${el.dataset.seats} seats`;
+  document.getElementById('table-price').textContent = fmt$(dynamicPrice) + ' deposit';
+  document.getElementById('table-info').classList.add('show');
+}
+
+// ── Checkout helper ──
+async function checkout(type, qty, nightOrTable) {
+  const msgId = type === 'ga' ? 'ga-msg' : type === 'vip' ? 'vip-msg' : type === 'bundle' ? 'bundle-msg' : 'table-msg';
+  const btnId = type === 'ga' ? 'ga-btn' : type === 'vip' ? 'vip-btn' : type === 'bundle' ? 'bundle-btn' : 'table-book-btn';
+  const msg   = document.getElementById(msgId);
+  const btn   = document.getElementById(btnId);
+
+  const prices = {
+    ga:     currentTier.ga,
+    vip:    currentTier.vip,
+    bundle: currentTier.bundle,
+    table:  selectedTable?.price || currentTier.table_std,
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+  msg.className = 'form-msg';
+
+  try {
+    const res = await fetch('/api/create-party-ticket', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ticket_type:  type,
+        quantity:     qty,
+        unit_cents:   prices[type],
+        price_tier:   currentTier.label,
+        night:        nightOrTable || null,
+        table_id:     type === 'table' ? selectedTable?.id : null,
+        table_seats:  type === 'table' ? selectedTable?.seats : null,
+      }),
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      msg.className = 'form-msg error';
+      msg.textContent = json.error || 'Could not process. Please try again.';
+      btn.disabled = false;
+      btn.textContent = btn.dataset.label;
+      return;
+    }
+
+    if (json.checkoutUrl) { window.location.href = json.checkoutUrl; return; }
+
+    msg.className = 'form-msg success';
+    msg.textContent = json.message || 'Request received!';
+    btn.disabled = false;
+    btn.textContent = btn.dataset.label;
+  } catch {
+    msg.className = 'form-msg error';
+    msg.textContent = 'Network error — please try again.';
+    btn.disabled = false;
+    btn.textContent = btn.dataset.label;
+  }
+}
+
+// ── Wire buttons ──
+['ga-btn','vip-btn','bundle-btn','table-book-btn'].forEach(id => {
+  const btn = document.getElementById(id);
+  if (btn) btn.dataset.label = btn.textContent;
+});
+
+document.getElementById('ga-btn').addEventListener('click', () =>
+  checkout('ga', parseInt(document.getElementById('ga-qty').value, 10)));
+document.getElementById('vip-btn').addEventListener('click', () =>
+  checkout('vip', parseInt(document.getElementById('vip-qty').value, 10)));
+document.getElementById('bundle-btn').addEventListener('click', () =>
+  checkout('bundle', parseInt(document.getElementById('bundle-qty').value, 10)));
+document.getElementById('table-book-btn').addEventListener('click', () => {
+  if (!selectedTable) return;
+  checkout('table', 1, document.getElementById('table-night').value);
+});
+</script>
+</body>
+</html>

@@ -144,6 +144,22 @@ function loadTikTokEmbeds() {
 
 window.addEventListener('load', loadTikTokEmbeds);
 
+// ---- PASSPORT NAV AUTH STATE ----
+// Runs on every page that includes script.js
+(function() {
+  const token = localStorage.getItem('osfna_token');
+  const name  = localStorage.getItem('osfna_name');
+
+  // Update any .nav-passport-link elements (parties, register, vendor pages)
+  document.querySelectorAll('[data-passport-nav]').forEach(el => {
+    if (token) {
+      el.textContent = name ? `✓ ${name.split(' ')[0]}` : '✓ My Passport';
+      el.href = 'itinerary.html';
+      el.style.color = '#fbbf24';
+    }
+  });
+})();
+
 // ---- VENDOR FORM SUBMIT ----
 const vendorForm = document.getElementById('vendor-form');
 if (vendorForm) {
