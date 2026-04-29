@@ -283,7 +283,7 @@
         <div>
         <div class="reg-form-header">
           <h2>4v4 Basketball — Quick Register</h2>
-          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. Just the basics — captain handles the rest.</p>
+          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. Fill this in, hit send, and we'll DM @osfna2026 for you. No accounts, no payment forms — just a one-tap message.</p>
         </div>
         <form class="reg-form" id="form-basketball" novalidate>
           <div class="form-row-2">
@@ -302,8 +302,8 @@
           <input type="hidden" name="sport" value="basketball" />
           <input type="hidden" name="format" value="4v4" />
           <div class="form-msg" id="basketball-msg"></div>
-          <button type="submit" class="submit-btn" id="basketball-submit-btn">Lock In Our 4v4 Spot →</button>
-          <p class="form-note">Roster (up to 6) and jerseys collected later via the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <button type="submit" class="submit-btn" id="basketball-submit-btn">Send via Instagram DM →</button>
+          <p class="form-note">Tap submit and we'll open an Instagram DM to <strong style="color:#fff;">@osfna2026</strong> with your registration message ready to paste — one tap to send. Bracket + court drops in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">group chat</a>.</p>
         </form>
         </div>
       </div>
@@ -752,8 +752,51 @@
     if (btn) btn.dataset.label = btn.textContent;
   }
 
-  wireForm('form-basketball', '/api/register-team',   'basketball-submit-btn', 'basketball-msg');
   wireForm('form-vendor',     '/api/register-vendor', 'vendor-submit-btn',     'vendor-msg');
+
+  // 4v4 Basketball: bypass backend, prefill IG DM to @osfna2026
+  (() => {
+    const form = document.getElementById('form-basketball');
+    const btn  = document.getElementById('basketball-submit-btn');
+    const msg  = document.getElementById('basketball-msg');
+    if (!form || !btn) return;
+    const originalLabel = btn.textContent;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const d = Object.fromEntries(new FormData(form));
+      const text = `OSFNA 2026 — 4v4 Basketball Registration\n\n` +
+        `Team: ${d.team_name || ''}\n` +
+        `City: ${d.team_city || ''}\n` +
+        `Captain: ${d.captain_name || ''}\n` +
+        `Phone: ${d.captain_phone || ''}\n` +
+        `Email: ${d.captain_email || ''}\n\n` +
+        `Locking in our 4v4 spot — Jul 30 to Aug 1, MPLS.`;
+
+      try { await navigator.clipboard.writeText(text); } catch {}
+
+      msg.className = 'form-msg success';
+      msg.innerHTML = '✓ Registration message copied. Opening Instagram — paste in the DM and hit send.';
+      btn.disabled = true;
+      btn.textContent = 'Opening Instagram…';
+
+      const igAppUrl = 'instagram://direct/new?username=osfna2026';
+      const igWebUrl = 'https://ig.me/m/osfna2026';
+      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = igAppUrl;
+        setTimeout(() => { window.location.href = igWebUrl; }, 800);
+      } else {
+        window.open(igWebUrl, '_blank', 'noopener');
+      }
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }, 2500);
+    });
+  })();
 </script>
 <script src="welcome-modal.js"></script>
 <script src="pwa-shell.js"></script>
