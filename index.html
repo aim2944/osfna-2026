@@ -361,6 +361,14 @@
         <img src="assets/closing-night-poster.jpg" alt="OSFNA 2026 Official Closing Night Concert — Aug 1, Minneapolis. Lineup reveal coming soon." style="width:100%;display:block;" />
       </a>
     </div>
+    <div style="margin-top:1rem;background:linear-gradient(135deg,rgba(239,27,34,0.12),rgba(239,27,34,0.02) 60%),#0b0303;border:1px solid rgba(239,27,34,0.35);border-radius:14px;padding:1.1rem 1.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.85rem;">
+      <div>
+        <div class="eyebrow" style="color:#ff5a5a;margin-bottom:0.25rem;">Closing Night Concert · Aug 1</div>
+        <div style="font-family:var(--font-display);font-size:clamp(1.4rem,4vw,1.9rem);color:#fff;line-height:1;">$75 <span style="color:rgba(255,255,255,0.55);font-size:0.85rem;letter-spacing:0.02em;">early bird pre-order</span></div>
+        <div style="font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:0.3rem;">$100+ at the door · limited pre-order tickets · venue TBA</div>
+      </div>
+      <a href="#" id="concert-preorder" class="pill pill-red">Pre-order $75 →</a>
+    </div>
     <div class="btn-row">
       <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="pill pill-gold">Comment OSFNA on IG →</a>
       <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Get drops in the GC</a>
@@ -428,6 +436,29 @@
       navLink.href = 'itinerary.html';
       navLink.removeAttribute('target');
     }
+  })();
+</script>
+<script>
+  (function() {
+    const btn = document.getElementById('concert-preorder');
+    if (!btn) return;
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket ($75) for Aug 1 in Minneapolis. How do I lock it in?";
+      try { await navigator.clipboard.writeText(text); } catch {}
+      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      const igAppUrl = 'instagram://direct/new?username=osfna2026';
+      const igWebUrl = 'https://ig.me/m/osfna2026';
+      const original = btn.textContent;
+      btn.textContent = '✓ Message copied — opening IG…';
+      if (isMobile) {
+        window.location.href = igAppUrl;
+        setTimeout(() => { window.location.href = igWebUrl; }, 800);
+      } else {
+        window.open(igWebUrl, '_blank', 'noopener');
+      }
+      setTimeout(() => { btn.textContent = original; }, 2400);
+    });
   })();
 </script>
 <script src="welcome-modal.js"></script>
