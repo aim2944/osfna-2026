@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OSFNA 2026 — Tickets, Tournament, Oromo Week</title>
+  <meta name="description" content="OSFNA 2026 in Minneapolis. Get nightlife tickets and VIP tables, then explore the full Oromo Week experience: tournament, vendors, media, and community programming." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo-main.png" />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .night-hero {
+      position: relative;
+      padding: calc(8rem + var(--safe-top)) 2rem 3rem;
+      background:
+        radial-gradient(circle at top right, rgba(204, 32, 32, 0.14), transparent 36%),
+        linear-gradient(180deg, #f4efe5 0%, #efe7d9 100%);
+      color: #070707;
+      min-height: auto;
+    }
+
+    .night-hero-inner {
+      max-width: var(--max-w);
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .night-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .night-eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .night-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.4rem, 9vw, 7.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      color: #070707;
+      max-width: 8ch;
+    }
+
+    .night-sub {
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: rgba(7, 7, 7, 0.68);
+      max-width: 42rem;
+    }
+
+    .night-ctas {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .party-cta-primary,
+    .party-cta-secondary {
+      border-radius: 999px;
+      padding: 0.95rem 1.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.18s, opacity 0.18s, border-color 0.18s, color 0.18s;
+    }
+
+    .party-cta-primary {
+      background: #ef1b22;
+      color: #fff7ee;
+      border: 1px solid #ef1b22;
+    }
+
+    .party-cta-secondary {
+      background: transparent;
+      color: #070707;
+      border: 1px solid rgba(7, 7, 7, 0.16);
+    }
+
+    .party-cta-primary:hover,
+    .party-cta-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .party-cta-secondary:hover {
+      color: #ef1b22;
+      border-color: #ef1b22;
+    }
+
+    .night-passport-note {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(7, 7, 7, 0.58);
+    }
+
+    .night-passport-note a {
+      color: #ef1b22;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hero-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-fact {
+      background: rgba(255, 247, 238, 0.9);
+      border: 1px solid rgba(7, 7, 7, 0.08);
+      border-radius: 999px;
+      padding: 0.6rem 0.95rem;
+      box-shadow: 0 12px 30px rgba(7, 7, 7, 0.06);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #070707;
+    }
+
+    .night-visual {
+      position: relative;
+    }
+
+    .night-visual-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      background: #111111;
+      box-shadow: 0 26px 60px rgba(7, 7, 7, 0.18);
+    }
+
+    .night-visual-frame img {
+      width: 100%;
+      min-height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .night-visual-caption {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      background: rgba(7, 7, 7, 0.78);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1rem 1.1rem;
+    }
+
+    .night-visual-caption span {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .night-visual-caption strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      color: #fff7ee;
+    }
+
+    .price-pulse {
+      background: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .price-pulse-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ef1b22;
+      margin-top: 0.45rem;
+      animation: pulse-blink 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .price-pulse-text {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.74);
+      max-width: 48rem;
+    }
+
+    .price-pulse-text strong {
+      color: #fff7ee;
+    }
+
+    .price-tier-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      background: #ef1b22;
+      color: #fff7ee;
+      border: none;
+    }
+
+    .gated-wrap {
+      position: relative;
+    }
+
+    .gated-wrap.locked .gated-content {
+      filter: blur(5px) saturate(0.8);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .passport-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: rgba(7, 7, 7, 0.7);
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .gated-wrap.locked .passport-overlay {
+      display: flex;
+    }
+
+    .passport-gate-card {
+      text-align: center;
+      max-width: 540px;
+      background: #f2ede3;
+      border: 1px solid rgba(7, 7, 7, 0.08);
+      border-radius: 28px;
+      padding: 2rem 2rem 1.85rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    .passport-gate-icon {
+      width: 68px;
+      height: 68px;
+      background: #ef1b22;
+      color: #fff7ee;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .passport-gate-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 0.92;
+      color: #070707;
+      margin-bottom: 0.75rem;
+    }
+
+    .passport-gate-card h3 span {
+      color: #ef1b22;
+    }
+
+    .passport-gate-card p {
+      color: rgba(7, 7, 7, 0.64);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .passport-gate-btns,
+    .passport-gate-perks {
+      display: flex;
+      gap: 0.875rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .passport-gate-perks {
+      margin-top: 1.75rem;
+      gap: 1rem;
+    }
+
+    .gate-perk {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(7, 7, 7, 0.56);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .gate-perk::before {
+      content: '+';
+      color: #13823a;
+      font-weight: 700;
+    }
+
+    .party-schedule {
+      margin-bottom: 3rem;
+    }
+
+    .party-night {
+      background: #fff7ee;
+      border: 1px solid rgba(7, 7, 7, 0.12);
+      border-radius: 22px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.9rem;
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 1.25rem;
+      align-items: center;
+      box-shadow: 0 12px 28px rgba(7, 7, 7, 0.05);
+    }
+
+    .party-night-date {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #070707;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .party-night-date span {
+      display: block;
+      margin-top: 0.35rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #ef1b22;
+    }
+
+    .party-night-info h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #070707;
+      margin-bottom: 0.25rem;
+    }
+
+    .party-night-info p {
+      font-size: 0.88rem;
+      color: rgba(7, 7, 7, 0.58);
+      margin: 0;
+    }
+
+    .party-avail {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #13823a;
+    }
+
+    .party-avail.limited {
+      color: #ef1b22;
+    }
+
+    .bundle-card {
+      background: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 32px;
+      padding: 2.35rem 2.1rem;
+      margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: 1.15fr auto;
+      gap: 2rem;
+      align-items: center;
+      box-shadow: 0 24px 60px rgba(7, 7, 7, 0.16);
+    }
+
+    .bundle-kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #ef1b22;
+      margin-bottom: 0.65rem;
+    }
+
+    .bundle-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      line-height: 0.95;
+      color: #fff7ee;
+      margin-bottom: 0.7rem;
+    }
+
+    .bundle-card h3 span {
+      color: #ef1b22;
+    }
+
+    .bundle-card p {
+      color: rgba(242, 237, 227, 0.7);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      max-width: 44rem;
+    }
+
+    .bundle-perks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0;
+    }
+
+    .bundle-perk {
+      background: rgba(242, 237, 227, 0.06);
+      border: 1px solid rgba(242, 237, 227, 0.12);
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.72rem;
+      color: #fff7ee;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .bundle-right {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .bundle-price {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      line-height: 0.9;
+      color: #fff7ee;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.04em;
+    }
+
+    .bundle-orig {
+      font-size: 0.9rem;
+      color: rgba(242, 237, 227, 0.4);
+      text-decoration: line-through;
+      margin-bottom: 1rem;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .ticket-card {
+      position: relative;
+      background: #fff7ee;
+      border: 1px solid rgba(7, 7, 7, 0.12);
+      border-radius: 28px;
+      padding: 1.85rem 1.6rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 14px 32px rgba(7, 7, 7, 0.05);
+    }
+
+    .ticket-card:hover {
+      border-color: #ef1b22;
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(7, 7, 7, 0.08);
+    }
+
+    .ticket-card.featured {
+      border-color: #ef3b34;
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0) 1.3px) 0 0 / 10px 10px,
+        linear-gradient(180deg, #ef3b34 0%, #de2f29 100%);
+      color: #fff7ee;
+    }
+
+    .ticket-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 1.3rem;
+      background: #fff7ee;
+      color: #ef3b34;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid rgba(239, 59, 52, 0.22);
+    }
+
+    .ticket-type {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(7, 7, 7, 0.42);
+      margin-bottom: 0.6rem;
+    }
+
+    .ticket-card.featured .ticket-type {
+      color: rgba(255, 247, 238, 0.72);
+    }
+
+    .ticket-name {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      line-height: 0.94;
+      color: #070707;
+      margin-bottom: 1rem;
+    }
+
+    .ticket-card.featured .ticket-name {
+      color: #fff7ee;
+    }
+
+    .ticket-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .ticket-price .amount {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #070707;
+    }
+
+    .ticket-card.featured .ticket-price .amount {
+      color: #fff7ee;
+    }
+
+    .ticket-price .period {
+      font-size: 0.85rem;
+      color: rgba(7, 7, 7, 0.42);
+    }
+
+    .ticket-card.featured .ticket-price .period {
+      color: rgba(255, 247, 238, 0.65);
+    }
+
+    .ticket-original {
+      font-size: 0.82rem;
+      color: rgba(7, 7, 7, 0.3);
+      text-decoration: line-through;
+      margin-bottom: 1.25rem;
+    }
+
+    .ticket-card.featured .ticket-original {
+      color: rgba(255, 247, 238, 0.45);
+    }
+
+    .ticket-perks {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .ticket-perks li {
+      font-size: 0.92rem;
+      color: rgba(7, 7, 7, 0.72);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .ticket-card.featured .ticket-perks li {
+      color: rgba(255, 247, 238, 0.84);
+    }
+
+    .ticket-perks li::before {
+      content: '+';
+      color: #13823a;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .ticket-card.featured .ticket-perks li::before {
+      color: #fff7ee;
+    }
+
+    .ticket-perks li.no::before {
+      content: '-';
+      color: rgba(7, 7, 7, 0.24);
+    }
+
+    .ticket-card.featured .ticket-perks li.no::before {
+      color: rgba(255, 247, 238, 0.35);
+    }
+
+    .ticket-perks li.no {
+      color: rgba(7, 7, 7, 0.28);
+    }
+
+    .ticket-card.featured .ticket-perks li.no {
+      color: rgba(255, 247, 238, 0.42);
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 0.92rem 1rem;
+      border: none;
+      border-radius: 999px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .buy-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .buy-btn-ga {
+      background: #070707;
+      color: #fff7ee;
+    }
+
+    .buy-btn-vip {
+      background: #fff7ee;
+      color: #ef3b34;
+      border: 1px solid rgba(255, 247, 238, 0.42);
+    }
+
+    .buy-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .qty-row label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(7, 7, 7, 0.42);
+    }
+
+    .ticket-card.featured .qty-row label {
+      color: rgba(255, 247, 238, 0.68);
+    }
+
+    .qty-select {
+      background: transparent;
+      border: 1px solid rgba(7, 7, 7, 0.14);
+      border-radius: 999px;
+      color: #070707;
+      font-size: 0.92rem;
+      padding: 0.45rem 0.8rem;
+      font-family: var(--font-body);
+    }
+
+    .ticket-card.featured .qty-select {
+      color: #fff7ee;
+      border-color: rgba(255, 247, 238, 0.28);
+      background: rgba(255, 247, 238, 0.08);
+    }
+
+    .qty-select option {
+      background: #f2ede3;
+      color: #070707;
+    }
+
+    .floor-section {
+      margin-bottom: 3rem;
+    }
+
+    .floor-legend {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.52);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+    }
+
+    .floor-wrap {
+      background: #fffaf1;
+      border: 1px solid rgba(7, 7, 7, 0.12);
+      border-radius: 28px;
+      padding: 2rem;
+      overflow-x: auto;
+      box-shadow: 0 16px 34px rgba(7, 7, 7, 0.05);
+    }
+
+    .floor-svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    .floor-table {
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .floor-table:hover {
+      opacity: 0.82;
+    }
+
+    .floor-table.selected rect,
+    .floor-table.selected circle {
+      stroke: #ef1b22 !important;
+      stroke-width: 3 !important;
+    }
+
+    .floor-table.sold {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .floor-selected-info {
+      margin-top: 1.5rem;
+      padding: 1.35rem 1.5rem;
+      background: #fff0ee;
+      border: 1px solid rgba(239, 59, 52, 0.22);
+      border-radius: 20px;
+      display: none;
+    }
+
+    .floor-selected-info.show {
+      display: block;
+    }
+
+    .floor-selected-info p {
+      color: rgba(7, 7, 7, 0.72);
+      font-size: 0.92rem;
+      margin: 0 0 1rem;
+    }
+
+    .floor-selected-info strong {
+      color: #ef1b22;
+    }
+
+    .form-msg {
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      display: none;
+      margin-bottom: 1rem;
+    }
+
+    .form-msg.error {
+      background: rgba(239, 59, 52, 0.12);
+      border: 1px solid rgba(239, 59, 52, 0.25);
+      color: #b61f19;
+      display: block;
+    }
+
+    .form-msg.success {
+      background: rgba(20, 130, 58, 0.11);
+      border: 1px solid rgba(20, 130, 58, 0.22);
+      color: #0d6a30;
+      display: block;
+    }
+
+    @media (max-width: 960px) {
+      .night-hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .night-visual-frame img {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .bundle-card {
+        grid-template-columns: 1fr;
+      }
+
+      .bundle-right {
+        text-align: left;
+      }
+
+      .party-night {
+        grid-template-columns: 70px 1fr;
+      }
+
+      .party-avail {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .night-hero {
+        padding-inline: 1.25rem;
+      }
+    }
+
+    /* ============================================================
+       HIDE ALL PRICES — show experience, not numbers
+       ============================================================ */
+    .price-pulse,
+    #price-tier-name,
+    #price-countdown,
+    .price-tier-badge,
+    .ticket-price,
+    .ticket-original,
+    .bundle-price,
+    .bundle-orig,
+    #table-price-row { display: none !important; }
+
+    .ticket-card .ticket-name { margin-bottom: 1.25rem; }
+    .bundle-right { display: flex; flex-direction: column; gap: 0.85rem; align-items: stretch; }
+
+    /* ============================================================
+       MOBILE UPGRADES
+       ============================================================ */
+    @media (max-width: 820px) {
+      .night-hero {
+        padding: calc(6rem + var(--safe-top)) 1.25rem 2.25rem;
+      }
+      .night-hero-inner { gap: 1.5rem; }
+      .night-title {
+        font-size: clamp(2.6rem, 11vw, 4.2rem);
+        max-width: 14ch;
+        letter-spacing: -0.04em;
+      }
+      .night-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; }
+      .night-sub { font-size: 0.98rem; line-height: 1.65; }
+      .night-ctas { gap: 0.6rem; }
+      .party-cta-primary, .party-cta-secondary {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.95rem 1.1rem;
+        font-size: 0.72rem;
+      }
+      .hero-facts { gap: 0.5rem; }
+      .hero-fact { font-size: 0.62rem; padding: 0.5rem 0.75rem; letter-spacing: 0.12em; }
+      .night-visual-frame { border-radius: 22px; }
+      .night-visual-frame img { min-height: 320px; }
+      .night-visual-caption {
+        left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+        padding: 0.8rem 0.9rem; border-radius: 16px;
+      }
+      .night-visual-caption strong { font-size: 0.95rem; }
+
+      .bundle-card {
+        grid-template-columns: 1fr;
+        padding: 1.6rem 1.4rem;
+        border-radius: 24px;
+        gap: 1.2rem;
+      }
+      .bundle-card h3 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .bundle-card p { font-size: 0.92rem; }
+      .bundle-perks { gap: 0.45rem; }
+      .bundle-perk { font-size: 0.65rem; padding: 0.35rem 0.65rem; letter-spacing: 0.1em; }
+      .bundle-right { text-align: left; }
+
+      .ticket-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .ticket-card {
+        padding: 1.5rem 1.3rem;
+        border-radius: 22px;
+      }
+      .ticket-name { font-size: 1.7rem; }
+      .ticket-perks li { font-size: 0.88rem; }
+
+      .party-schedule { margin-bottom: 2rem; }
+      .party-night {
+        grid-template-columns: 56px 1fr;
+        padding: 1rem 1.1rem;
+        gap: 0.9rem;
+        border-radius: 18px;
+      }
+      .party-night-date { font-size: 1rem; }
+      .party-night-date span { font-size: 0.6rem; letter-spacing: 0.18em; }
+      .party-night-info h4 { font-size: 0.92rem; line-height: 1.3; }
+      .party-night-info p { font-size: 0.78rem; line-height: 1.45; }
+      .party-avail { display: none; }
+
+      .floor-wrap { padding: 1rem; border-radius: 22px; }
+      .floor-legend { gap: 0.6rem 1rem; margin-bottom: 1rem; }
+      .legend-item { font-size: 0.6rem; letter-spacing: 0.12em; }
+      .floor-selected-info { padding: 1.1rem 1.15rem; border-radius: 16px; }
+
+      .passport-gate-card { padding: 1.6rem 1.4rem; border-radius: 22px; }
+      .passport-gate-card h3 { font-size: clamp(1.5rem, 6vw, 2rem); }
+      .passport-gate-btns { flex-direction: column; }
+      .passport-gate-btns a { width: 100%; text-align: center; }
+
+      /* TikTok strip → 1-up on phones */
+      #hero ~ .section [style*="grid-template-columns:repeat(3,1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .night-hero { padding-top: calc(5.5rem + var(--safe-top)); }
+      .night-title { font-size: clamp(2.4rem, 12vw, 3.6rem); }
+      .night-ctas { flex-direction: column; }
+      .party-cta-primary, .party-cta-secondary { width: 100%; }
+      .ticket-card.featured::before { left: 1rem; font-size: 0.56rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="register.html#basketball" style="color:#ff5a5a;font-weight:700">🏀 4v4 Basketball</a></li>
+    <li><a href="#tickets">Tickets</a></li>
+    <li><a href="#oromo-week">Week</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" id="nav-passport-link" style="color:#fbbf24;font-weight:700">Join GC on IG</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <li><a href="register.html#basketball" style="color:#ff5a5a;font-weight:700">🏀 4v4 Basketball</a></li>
+  <li><a href="#tickets">Tickets</a></li>
+  <li><a href="#oromo-week">Week</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">Join GC on IG</a></li>
+</ul>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero" class="night-hero">
+  <div class="night-hero-inner">
+    <div class="night-copy">
+      <p class="night-eyebrow reveal">OSFNA 2026 . Minneapolis . One-Stop Ticket Hub</p>
+      <h1 class="night-title reveal reveal-delay-1">Tickets, tables, and the full OSFNA week in one place.</h1>
+      <p class="night-sub reveal reveal-delay-2">
+        Buy nightlife access first, then scroll for the rest of the event: tournament, Oromo Week programming, vendors, media, and contact info.
+      </p>
+      <div class="night-ctas reveal reveal-delay-3">
+        <a href="#tickets" class="party-cta-primary">Get Tickets</a>
+        <a href="#oromo-week" class="party-cta-secondary">See The Week</a>
+      </div>
+      <p class="night-passport-note reveal reveal-delay-4">
+        Sign-up is on Instagram. Follow <strong>@osfna2026</strong> + DM <strong>JOIN</strong> to get into the group chat.
+        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" id="passport-hero-cta">Join the GC →</a>
+      </p>
+      <div class="hero-facts reveal reveal-delay-4">
+        <span class="hero-fact">Jul 25 - Aug 1</span>
+        <span class="hero-fact">Minneapolis, MN</span>
+        <span class="hero-fact">7 Official Nights</span>
+        <span class="hero-fact">3,000+ Attendees</span>
+      </div>
+    </div>
+    <div class="night-visual reveal reveal-delay-2">
+      <figure class="night-visual-frame">
+        <img src="assets/hero-bg.jpeg" alt="OSFNA crowd filling the stadium stands during the tournament week" />
+        <figcaption class="night-visual-caption">
+          <span>OSFNA Tournament Week</span>
+          <strong>Full stands. Full week. One hub.</strong>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4v4 BASKETBALL PROMO ===================== -->
+<section id="basketball-promo" class="section section-dark" style="padding:1.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06);background:linear-gradient(135deg,#1a0606 0%,#000 60%);">
+  <div class="section-inner">
+    <a href="register.html#basketball" style="display:flex;align-items:center;gap:1.25rem;padding:1.1rem 1.25rem;background:rgba(239,27,34,0.08);border:1px solid rgba(239,27,34,0.35);border-radius:14px;text-decoration:none;color:#fff;flex-wrap:wrap;">
+      <img src="assets/basketball-4v4-flyer.jpg" alt="4v4 Basketball flyer" style="width:84px;height:84px;border-radius:10px;object-fit:cover;flex-shrink:0;" />
+      <div style="flex:1;min-width:220px;">
+        <div style="font-family:var(--font-head);font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:#ff5a5a;margin-bottom:0.35rem;">🏀 Now Open · Cash Prize</div>
+        <div style="font-family:var(--font-display,'Bebas Neue','Oswald',sans-serif);font-size:clamp(1.4rem,3.2vw,2rem);line-height:1;letter-spacing:-0.01em;color:#fff;">4v4 OROMO BASKETBALL TOURNAMENT</div>
+        <div style="font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:0.4rem;">Jul 30 – Aug 1 · Minneapolis · 2025 champs: New Dallas</div>
+      </div>
+      <span style="background:var(--red);color:#fff;font-family:var(--font-head);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.85rem 1.25rem;border-radius:999px;font-weight:700;flex-shrink:0;">Register 4v4 →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================== DYNAMIC PRICING ===================== -->
+<section class="section section-dark" style="padding:2rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div class="section-inner">
+    <div class="price-pulse">
+      <div class="price-pulse-left">
+        <div class="pulse-dot"></div>
+        <p class="price-pulse-text">
+          <strong id="price-tier-name">Early Bird pricing active</strong> —
+          Buy nightlife access here, keep one QR-ready flow for OSFNA 2026, then use the rest of this homepage for tournament, vendors, media, and Oromo Week details.
+          <span id="price-countdown"></span>
+        </p>
+      </div>
+      <span class="price-tier-badge" id="price-tier-badge">Early Bird</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GATED PARTY BLOCK ===================== -->
+<div class="gated-wrap" id="party-gate-wrap">
+  <div class="passport-overlay" aria-live="polite">
+    <div class="passport-gate-card">
+      <div class="passport-gate-icon">📲</div>
+      <h3>Sign-Up Is On<br><span>Instagram</span></h3>
+      <p>All OSFNA 2026 announcements run through the <strong>@osfna2026</strong> Instagram group chat. Follow + DM <strong>JOIN</strong> to get added — then come back here to grab tickets and your QR.</p>
+      <div class="passport-gate-btns">
+        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="party-cta-primary">Join the OSFNA GC →</a>
+        <a href="passport.html?next=index&amp;mode=login" class="party-cta-secondary">Show My QR</a>
+      </div>
+      <div class="passport-gate-perks">
+        <span class="gate-perk">Party drops in the GC</span>
+        <span class="gate-perk">Venue announcements</span>
+        <span class="gate-perk">QR ticket on the site</span>
+        <span class="gate-perk">Free to join</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="gated-content">
+    <section class="section section-dark" id="schedule-anchor">
+      <div class="section-inner">
+        <p class="section-label reveal" style="color:var(--red);">Event Calendar</p>
+        <h2 class="section-title reveal reveal-delay-1" style="color:white;margin-bottom:2rem;">7 Nights of Oromo Week</h2>
+        <p class="reveal reveal-delay-2" style="max-width:46rem;margin:0 0 1.8rem;color:rgba(255,255,255,0.68);font-size:1rem;line-height:1.7;">
+          The nightlife slate lives at the top of the homepage now. Browse the week, buy the right access, then keep using this same site for the rest of OSFNA 2026.
+        </p>
+        <div class="party-schedule reveal reveal-delay-2">
+          <div class="party-night"><div class="party-night-date">25<span>Jul</span></div><div class="party-night-info"><h4>Opening Night - Welcome to Oromo Week</h4><p>Grand opening ceremony . Live DJ . Cultural performances</p></div><div class="party-avail">Tickets available</div></div>
+          <div class="party-night"><div class="party-night-date">26<span>Jul</span></div><div class="party-night-info"><h4>Diaspora Night - Representing the Cities</h4><p>Regional city challenges . Team rallies . Open floor</p></div><div class="party-avail">Tickets available</div></div>
+          <div class="party-night"><div class="party-night-date">27<span>Jul</span></div><div class="party-night-info"><h4>Heritage Night - Afaan Oromo Night</h4><p>Cultural dress . Traditional music . Spoken word</p></div><div class="party-avail">Tickets available</div></div>
+          <div class="party-night"><div class="party-night-date">28<span>Jul</span></div><div class="party-night-info"><h4>Tournament Night - Championship Build-Up</h4><p>Bracket reveals . Player spotlights . Live scoring</p></div><div class="party-avail">Tickets available</div></div>
+          <div class="party-night"><div class="party-night-date">29<span>Jul</span></div><div class="party-night-info"><h4>All-Star Night - Artist Showcase</h4><p>Live recording artists . VIP tables open . Premium bar</p></div><div class="party-avail limited">Limited availability</div></div>
+          <div class="party-night"><div class="party-night-date">31<span>Jul</span></div><div class="party-night-info"><h4>Championship Eve - Finals Celebration</h4><p>Semi-final watch party . Live commentary . After-party</p></div><div class="party-avail limited">Limited availability</div></div>
+          <div class="party-night"><div class="party-night-date">1<span>Aug</span></div><div class="party-night-info"><h4>Closing Night - Champions Gala</h4><p>Trophy ceremony . Black-tie optional . Closing concert</p></div><div class="party-avail limited">Selling fast</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" style="border-top:1px solid rgba(255,255,255,0.05);" id="bundle">
+      <div class="section-inner">
+        <div class="bundle-card reveal">
+          <div>
+            <p class="bundle-kicker">Best Value . One Stop Pass</p>
+            <h3>All-Access <span>Oromo Week Pass</span></h3>
+            <p>One pass. All seven official parties. Express VIP entry every night. Buy once, carry one QR, and move through the week without friction.</p>
+            <div class="bundle-perks">
+              <span class="bundle-perk">7-Night Access</span>
+              <span class="bundle-perk">VIP Express Entry</span>
+              <span class="bundle-perk">Limited Jersey</span>
+              <span class="bundle-perk">QR Digital Pass</span>
+              <span class="bundle-perk">Priority Table Upgrade</span>
+            </div>
+          </div>
+          <div class="bundle-right">
+            <div class="bundle-price" id="bundle-price">$299</div>
+            <div class="bundle-orig" id="bundle-orig">Value: $455+</div>
+            <div id="bundle-msg" class="form-msg"></div>
+            <div class="qty-row" style="justify-content:center;">
+              <label for="bundle-qty">Qty</label>
+              <select class="qty-select" id="bundle-qty">
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+              </select>
+            </div>
+            <button class="buy-btn buy-btn-ga" id="bundle-btn">Get All-Access Pass →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" style="border-top:1px solid rgba(255,255,255,0.05);" id="tickets">
+      <div class="section-inner">
+        <p class="section-label reveal" style="color:var(--red);">Single Night</p>
+        <h2 class="section-title reveal reveal-delay-1" style="color:white;margin-bottom:0.5rem;">Choose Your Access</h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.68);margin-bottom:2rem;font-size:0.95rem;line-height:1.7;max-width:42rem;">
+          Per-night tickets live inside the same OSFNA 2026 hub. Select your access here, keep the wallet on-device, and use the same site as proof at the venue.
+        </p>
+
+        <div class="ticket-grid reveal reveal-delay-2">
+          <div class="ticket-card">
+            <p class="ticket-type">General Admission</p>
+            <h3 class="ticket-name">GA Pass</h3>
+            <div class="ticket-price">
+              <span class="amount" id="ga-price">$35</span>
+              <span class="period">/ night</span>
+            </div>
+            <p class="ticket-original" id="ga-orig"></p>
+            <ul class="ticket-perks">
+              <li>General floor access</li>
+              <li>Standard entry queue</li>
+              <li>QR digital ticket</li>
+              <li class="no">Express entry</li>
+              <li class="no">Reserved seating</li>
+            </ul>
+            <div class="qty-row">
+              <label for="ga-qty">Qty</label>
+              <select class="qty-select" id="ga-qty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+            </div>
+            <div id="ga-msg" class="form-msg"></div>
+            <button class="buy-btn buy-btn-ga" id="ga-btn">Buy GA Tickets →</button>
+          </div>
+
+          <div class="ticket-card featured">
+            <p class="ticket-type">VIP Access</p>
+            <h3 class="ticket-name">VIP Pass</h3>
+            <div class="ticket-price">
+              <span class="amount" id="vip-price">$75</span>
+              <span class="period">/ night</span>
+            </div>
+            <p class="ticket-original" id="vip-orig"></p>
+            <ul class="ticket-perks">
+              <li>VIP express entry lane</li>
+              <li>Priority floor positioning</li>
+              <li>QR digital ticket</li>
+              <li>Complimentary first drink</li>
+              <li class="no">Reserved table</li>
+            </ul>
+            <div class="qty-row">
+              <label for="vip-qty">Qty</label>
+              <select class="qty-select" id="vip-qty"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+            </div>
+            <div id="vip-msg" class="form-msg"></div>
+            <button class="buy-btn buy-btn-vip" id="vip-btn">Buy VIP Tickets →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" style="border-top:1px solid rgba(255,255,255,0.05);" id="tables">
+      <div class="section-inner">
+        <p class="section-label reveal" style="color:var(--red);">Premium Experience</p>
+        <h2 class="section-title reveal reveal-delay-1" style="color:white;margin-bottom:0.5rem;">VIP Table Reservations</h2>
+        <p class="reveal reveal-delay-2" style="color:rgba(255,255,255,0.68);margin-bottom:2rem;font-size:0.95rem;line-height:1.7;max-width:44rem;">
+          Table reservations stay inside the same website so OSFNA 2026 does not fragment across DMs, side links, or manual lists. Reserve here and keep the gate flow unified.
+        </p>
+
+        <div class="floor-section reveal reveal-delay-2">
+          <div class="floor-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#7c3aed;"></div>Premium Table (seats 8)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1d4ed8;"></div>Standard VIP (seats 6)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#166534;"></div>Available</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#991b1b;"></div>Sold Out</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#92400e;"></div>Reserved</div>
+          </div>
+
+          <div class="floor-wrap">
+            <svg class="floor-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-label="Venue floor plan">
+              <rect x="300" y="20" width="300" height="70" rx="8" fill="#1a0a2e" stroke="rgba(255,180,0,.5)" stroke-width="1.5"/>
+              <text x="450" y="52" text-anchor="middle" fill="rgba(255,180,0,.8)" font-family="Oswald,sans-serif" font-size="11" letter-spacing="3">STAGE</text>
+              <text x="450" y="70" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="DM Sans,sans-serif" font-size="9">Live Artist Performance</text>
+              <rect x="250" y="110" width="400" height="160" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="450" y="196" text-anchor="middle" fill="rgba(255,255,255,.12)" font-family="Oswald,sans-serif" font-size="10" letter-spacing="4">DANCE FLOOR</text>
+              <g class="floor-table" data-id="P1" data-type="premium" data-seats="8" data-status="available" onclick="selectPartyTable(this)"><circle cx="90" cy="190" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/><circle cx="90" cy="190" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/><text x="90" y="186" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P1</text><text x="90" y="200" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">Premium · 8 seats</text></g>
+              <g class="floor-table" data-id="P2" data-type="premium" data-seats="8" data-status="available" onclick="selectPartyTable(this)"><circle cx="810" cy="190" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/><circle cx="810" cy="190" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/><text x="810" y="186" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P2</text><text x="810" y="200" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">Premium · 8 seats</text></g>
+              <g class="floor-table sold" data-id="P3" data-type="premium" data-seats="8" data-status="sold"><circle cx="90" cy="340" r="42" fill="rgba(127,29,29,.25)" stroke="#991b1b" stroke-width="1.5"/><circle cx="90" cy="340" r="28" fill="rgba(127,29,29,.15)" stroke="rgba(153,27,27,.5)" stroke-width="1"/><text x="90" y="336" text-anchor="middle" fill="rgba(252,165,165,.4)" font-family="Oswald,sans-serif" font-size="12">P3</text><text x="90" y="350" text-anchor="middle" fill="rgba(252,165,165,.3)" font-family="DM Sans,sans-serif" font-size="9">SOLD OUT</text></g>
+              <g class="floor-table" data-id="P4" data-type="premium" data-seats="8" data-status="available" onclick="selectPartyTable(this)"><circle cx="810" cy="340" r="42" fill="rgba(109,40,217,.2)" stroke="#7c3aed" stroke-width="1.5"/><circle cx="810" cy="340" r="28" fill="rgba(109,40,217,.15)" stroke="rgba(109,40,217,.5)" stroke-width="1"/><text x="810" y="336" text-anchor="middle" fill="#c4b5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">P4</text><text x="810" y="350" text-anchor="middle" fill="rgba(196,181,253,.5)" font-family="DM Sans,sans-serif" font-size="9">Premium · 8 seats</text></g>
+              <g class="floor-table" data-id="T1" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="155" y="150" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="192" y="186" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T1</text><text x="192" y="200" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table" data-id="T2" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="670" y="150" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="707" y="186" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T2</text><text x="707" y="200" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table" data-id="T3" data-type="standard" data-seats="6" data-status="reserved" style="cursor:default;opacity:.55;"><rect x="155" y="300" width="75" height="75" rx="8" fill="rgba(120,53,15,.25)" stroke="#92400e" stroke-width="1.5"/><text x="192" y="336" text-anchor="middle" fill="rgba(253,211,77,.5)" font-family="Oswald,sans-serif" font-size="12">T3</text><text x="192" y="350" text-anchor="middle" fill="rgba(253,211,77,.35)" font-family="DM Sans,sans-serif" font-size="9">RESERVED</text></g>
+              <g class="floor-table" data-id="T4" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="670" y="300" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="707" y="336" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T4</text><text x="707" y="350" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table" data-id="T5" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="240" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="277" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T5</text><text x="277" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table" data-id="T6" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="375" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="412" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T6</text><text x="412" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table" data-id="T7" data-type="standard" data-seats="6" data-status="available" onclick="selectPartyTable(this)"><rect x="510" y="420" width="75" height="75" rx="8" fill="rgba(29,78,216,.2)" stroke="#1d4ed8" stroke-width="1.5"/><text x="547" y="456" text-anchor="middle" fill="#93c5fd" font-family="Oswald,sans-serif" font-size="12" font-weight="600">T7</text><text x="547" y="470" text-anchor="middle" fill="rgba(147,197,253,.45)" font-family="DM Sans,sans-serif" font-size="9">Standard · 6</text></g>
+              <g class="floor-table sold" data-id="T8" data-type="standard" data-seats="6" data-status="sold"><rect x="645" y="420" width="75" height="75" rx="8" fill="rgba(127,29,29,.2)" stroke="#991b1b" stroke-width="1.5"/><text x="682" y="456" text-anchor="middle" fill="rgba(252,165,165,.4)" font-family="Oswald,sans-serif" font-size="12">T8</text><text x="682" y="470" text-anchor="middle" fill="rgba(252,165,165,.3)" font-family="DM Sans,sans-serif" font-size="9">SOLD OUT</text></g>
+              <rect x="360" y="510" width="180" height="24" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+              <text x="450" y="526" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="Oswald,sans-serif" font-size="9" letter-spacing="3">BAR / ENTRANCE</text>
+            </svg>
+
+            <div class="floor-selected-info" id="table-info">
+              <p>Selected: <strong id="table-name">-</strong> · <strong id="table-desc">-</strong><span id="table-price-row"> · Deposit: <strong id="table-price">-</strong></span></p>
+              <div id="table-msg" class="form-msg"></div>
+              <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+                <div class="qty-row" style="margin-bottom:0;">
+                  <label for="table-night">Night</label>
+                  <select class="qty-select" id="table-night">
+                    <option value="jul25">Jul 25 - Opening Night</option>
+                    <option value="jul26">Jul 26 - Diaspora Night</option>
+                    <option value="jul27">Jul 27 - Heritage Night</option>
+                    <option value="jul28">Jul 28 - Tournament Night</option>
+                    <option value="jul29">Jul 29 - All-Star Night</option>
+                    <option value="jul31">Jul 31 - Championship Eve</option>
+                    <option value="aug01">Aug 1 - Closing Gala</option>
+                  </select>
+                </div>
+                <button class="buy-btn buy-btn-ga" id="table-book-btn" style="width:auto;padding:0.75rem 1.5rem;">Reserve Table →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================== TIKTOK STRIP ===================== -->
+<!-- TikTok preview moved to media.html to reduce homepage scroll -->
+
+<!-- ===================== VENDOR / SPONSOR FOCAL ===================== -->
+<section id="vendors" class="section section-dark" style="border-top:4px solid var(--red);">
+  <div class="section-inner">
+    <p class="section-label reveal" style="color:var(--red);">Vendors at Oromo Week Nightlife</p>
+    <h2 class="section-title reveal reveal-delay-1" style="color:white;">Vend at the<br><span style="color:var(--red);">Party Nights</span></h2>
+
+    <div class="quick-stats reveal reveal-delay-2" style="margin-bottom:3rem;">
+      <div class="stat-box"><div class="stat-number" style="color:var(--red);">7</div><div class="stat-label">Official Party Nights</div></div>
+      <div class="stat-box"><div class="stat-number" style="color:var(--red);">3,000+</div><div class="stat-label">Attendees Across the Week</div></div>
+      <div class="stat-box"><div class="stat-number" style="color:var(--red);">21–35</div><div class="stat-label">Core Buyer Age Range</div></div>
+    </div>
+
+    <div class="sport-cards reveal reveal-delay-2" style="margin-bottom:3rem;">
+      <div class="sport-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(204,32,32,0.35);">
+        <div class="sport-icon">🍔</div>
+        <div class="sport-name" style="color:white;">Late-Night Food</div>
+        <div class="sport-detail">Food trucks and pop-ups outside the venue. Hungry crowd at 11pm-2am every night — highest spend window of the week.</div>
+        <a href="vendor.html#apply" class="btn btn-gold" style="margin-top:1.5rem;display:inline-block;">Apply Now →</a>
+      </div>
+      <div class="sport-card" style="background:rgba(204,32,32,0.15);border:2px solid var(--red);">
+        <div class="sport-icon">💨</div>
+        <div class="sport-name" style="color:white;">Hookah / Lounge</div>
+        <div class="sport-detail">Hookah operators, premium lounge setups, and after-hours partners. Best fit for the All-Star and Closing nights.</div>
+        <a href="vendor.html#apply" class="btn btn-gold" style="margin-top:1.5rem;display:inline-block;">Apply Now →</a>
+      </div>
+      <div class="sport-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(204,32,32,0.35);">
+        <div class="sport-icon">👕</div>
+        <div class="sport-name" style="color:white;">Merch & Apparel</div>
+        <div class="sport-detail">Lobby tables for jerseys, streetwear, and culture brands. High visibility before doors open and during artist sets.</div>
+        <a href="vendor.html#apply" class="btn btn-gold" style="margin-top:1.5rem;display:inline-block;">Apply Now →</a>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <p style="color:rgba(255,255,255,0.7);margin-bottom:1.5rem;max-width:600px;margin-left:auto;margin-right:auto;">
+        Vendors live at the official party nights only — not the daytime tournament. You're posted up where the spend actually happens: dinner-then-drinks, late-night food runs, lobby foot traffic, and after-hours flow.
+      </p>
+      <a href="vendor.html" class="btn btn-gold" style="font-size:1.1rem;padding:1rem 2.5rem;">View Event Vendor Portal →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="section section-light">
+  <div class="section-inner">
+    <p class="section-label reveal">Our Story</p>
+    <h2 class="section-title reveal reveal-delay-1">30 Years of Oromo Heritage</h2>
+
+    <div class="about-prose reveal reveal-delay-2">
+      <p>In the early 1990s, visionary members of the Oromo diaspora conceived an ambitious idea — the creation of an Oromo Sports Federation in North America. That vision took tangible form in <strong>1996</strong> when the inaugural OSFNA soccer tournament launched with six founding clubs. Today, after three decades of growth, OSFNA is the premier gathering of the Oromo diaspora across the continent — a week-long celebration of sport, culture, and community unity recognized by both the Minneapolis and Saint Paul mayors' offices as <em>Oromo Week</em>.</p>
+      <blockquote class="pull-quote" style="margin-top:2rem;margin-bottom:2rem;">
+        <p>"Both the Minneapolis and Saint Paul mayors' offices have recognized OSFNA Sports and Oromo Cultural Festival Week as <em>Oromo Week</em>."</p>
+      </blockquote>
+      <div class="founding-clubs" style="margin-top:1.5rem;">
+        <span class="club-tag">Rissa — MN</span>
+        <span class="club-tag">Madaa Walabuu — Seattle</span>
+        <span class="club-tag">Oromia — Toronto</span>
+        <span class="club-tag">Odaa — Canada</span>
+        <span class="club-tag">Barisaa — Atlanta</span>
+        <span class="club-tag">Bakalcha — Ottawa</span>
+      </div>
+    </div>
+
+    <div class="quick-stats" style="margin-top:3rem;">
+      <div class="stat-box reveal"><div class="stat-number">30</div><div class="stat-label">Years of OSFNA</div></div>
+      <div class="stat-box reveal reveal-delay-1"><div class="stat-number">3,000+</div><div class="stat-label">Expected Attendees</div></div>
+      <div class="stat-box reveal reveal-delay-2"><div class="stat-number">40+</div><div class="stat-label">Cities Represented</div></div>
+    </div>
+
+    <h3 class="reveal" style="font-size:1.3rem;margin-top:3rem;margin-bottom:2rem;color:var(--dark);">Key Milestones</h3>
+    <div class="timeline reveal reveal-delay-1">
+      <div class="timeline-item"><div class="timeline-year">1996</div><div class="timeline-title">Founded</div><div class="timeline-desc">Inaugural tournament, 6 founding clubs.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1997</div><div class="timeline-title">Board Elected</div><div class="timeline-desc">Democratic elections establish OSFNA governance.</div></div>
+      <div class="timeline-item"><div class="timeline-year">2003</div><div class="timeline-title">Miss Oromo NA</div><div class="timeline-desc">Inaugural Miss Oromo North America pageant.</div></div>
+      <div class="timeline-item"><div class="timeline-year">2025</div><div class="timeline-title">Golf Debuts</div><div class="timeline-desc">First-ever OSFNA Golf Tournament.</div></div>
+      <div class="timeline-item"><div class="timeline-year">2025</div><div class="timeline-title">Bylaws Updated</div><div class="timeline-desc">28-year bylaws revised for transparency.</div></div>
+      <div class="timeline-item"><div class="timeline-year">2025</div><div class="timeline-title">Global Expansion</div><div class="timeline-desc">OSFNA launches in Australia, expands to Europe.</div></div>
+    </div>
+
+    <h3 class="reveal" style="font-size:1.3rem;margin-top:3rem;margin-bottom:2rem;color:var(--dark);">2026 Executive Board</h3>
+    <div class="leadership-grid reveal reveal-delay-1">
+      <div class="leadership-card"><div class="leadership-role">President</div><div class="leadership-name">Abdi Roba</div></div>
+      <div class="leadership-card"><div class="leadership-role">Vice President</div><div class="leadership-name">Abdulwali Aman</div></div>
+      <div class="leadership-card"><div class="leadership-role">Secretary</div><div class="leadership-name">Fauzia Ibrahim</div></div>
+      <div class="leadership-card"><div class="leadership-role">Treasurer</div><div class="leadership-name">Geleta Urgessa</div></div>
+      <div class="leadership-card"><div class="leadership-role">Athletic Director</div><div class="leadership-name">Abdo Ibrahim</div></div>
+      <div class="leadership-card"><div class="leadership-role">Event Coordinator</div><div class="leadership-name">Jelani Jillo</div></div>
+      <div class="leadership-card"><div class="leadership-role">Project Manager</div><div class="leadership-name">Mukhtar Musa</div></div>
+      <div class="leadership-card"><div class="leadership-role">Asst. Athletic Director</div><div class="leadership-name">Kassim Tilmo</div></div>
+      <div class="leadership-card"><div class="leadership-role">Public Relations</div><div class="leadership-name">Amina Dedefo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TOURNAMENT ===================== -->
+<section id="tournament" class="section section-dark">
+  <div class="section-inner">
+    <p class="section-label reveal" style="color:var(--red);">Competition</p>
+    <h2 class="section-title reveal reveal-delay-1" style="color:white;">Three Sports. Elite Competition.</h2>
+
+    <div class="sport-cards reveal reveal-delay-2">
+      <div class="sport-card primary">
+        <div class="sport-icon">⚽</div>
+        <div class="sport-name">Soccer</div>
+        <div class="sport-detail">The crown jewel of OSFNA. Three divisions — A, B, and C — compete throughout the week with primetime matches and cultural performances at halftime.</div>
+        <span class="sport-badge">Primary Sport</span>
+      </div>
+      <div class="sport-card">
+        <div class="sport-icon">🏀</div>
+        <div class="sport-name">Basketball</div>
+        <div class="sport-detail">4-on-4 tournament with a cash prize. Jul 30 – Aug 1, Minneapolis. Defending champs: New Dallas.</div>
+        <span class="sport-badge">4v4 · Cash Prize</span>
+        <a href="register.html#basketball" class="btn btn-gold" style="margin-top:1rem;display:inline-block;">Register 4v4 Team →</a>
+      </div>
+      <div class="sport-card">
+        <div class="sport-icon">⛳</div>
+        <div class="sport-name">Golf</div>
+        <div class="sport-detail">The inaugural OSFNA Golf Tournament debuted in 2025. Team Portland claimed the first title. Back bigger for 2026 with a 4-person scramble format.</div>
+        <span class="sport-badge">Est. 2025</span>
+      </div>
+    </div>
+
+    <div class="divisions reveal" style="margin-top:2.5rem;">
+      <div class="division"><div class="division-letter">A</div><div class="division-name">Division A</div><div class="division-desc">Elite clubs</div></div>
+      <div class="division"><div class="division-letter">B</div><div class="division-name">Division B</div><div class="division-desc">Competitive</div></div>
+      <div class="division"><div class="division-letter">C</div><div class="division-name">Division C</div><div class="division-desc">Recreational</div></div>
+    </div>
+
+    <h3 class="reveal" style="font-size:1.3rem;margin-top:3rem;margin-bottom:1.5rem;color:white;">2025 Champions</h3>
+    <div class="champions-grid-compact reveal reveal-delay-1">
+      <div class="champion-card-compact">
+        <img src="assets/champion-div-a.jpeg" alt="Dire Dawa FC" class="champion-card-photo" />
+        <div class="champion-card-title">Division A Soccer</div>
+        <div class="champion-card-name">Dire Dawa FC</div>
+        <div class="champion-card-sub">Minnesota</div>
+      </div>
+      <div class="champion-card-compact">
+        <img src="assets/champion-div-b.jpeg" alt="WBO FC DC" class="champion-card-photo" />
+        <div class="champion-card-title">Division B Soccer</div>
+        <div class="champion-card-name">WBO FC DC</div>
+        <div class="champion-card-sub">Washington, D.C.</div>
+      </div>
+      <div class="champion-card-compact">
+        <img src="assets/champion-basketball.jpeg" alt="New Dallas" class="champion-card-photo" />
+        <div class="champion-card-title">Basketball</div>
+        <div class="champion-card-name">New Dallas</div>
+        <div class="champion-card-sub">Texas</div>
+      </div>
+      <div class="champion-card-compact">
+        <img src="assets/champion-golf.jpeg" alt="Team Portland" class="champion-card-photo" />
+        <div class="champion-card-title">Golf (Inaugural)</div>
+        <div class="champion-card-name">Team Portland</div>
+        <div class="champion-card-sub">Oregon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OROMO WEEK ===================== -->
+<section id="oromo-week" class="section section-green">
+  <div class="section-inner">
+    <p class="section-label reveal" style="color:var(--red);">Culture · Sport · Community</p>
+    <h2 class="section-title reveal reveal-delay-1" style="color:white;">Oromo Week 2026</h2>
+    <div class="week-intro reveal reveal-delay-2">
+      <p style="font-size:1.05rem;color:rgba(255,255,255,.85);line-height:1.8;max-width:750px;margin:0 auto 2.5rem;">Beyond the pitch, Oromo Week is a full week of celebration — nightlife, daytime activities, cultural showcases, and community gatherings. This is where the Oromo diaspora comes home.</p>
+    </div>
+    <div class="week-cards reveal reveal-delay-2">
+      <div class="week-card"><div class="week-card-icon">👑</div><div class="week-card-title">Miss Oromo North America</div><div class="week-card-desc">Running since 2003, this beloved annual program celebrates Oromo women and culture. MONA 2025 crowned Ofifan Dabala.</div></div>
+      <div class="week-card"><div class="week-card-icon">🎵</div><div class="week-card-title">Nightly Concerts</div><div class="week-card-desc">Star-studded concerts featuring renowned Oromo artists every night. Past performers include Gutu Abera, Kemer Yusuf, and Wako Getacho.</div></div>
+      <div class="week-card"><div class="week-card-icon">🎭</div><div class="week-card-title">Cultural Performances</div><div class="week-card-desc">Traditional Oromo dance, music, and cultural exhibitions performed before matches and during halftime.</div></div>
+      <div class="week-card"><div class="week-card-icon">☀️</div><div class="week-card-title">Daytime Activities</div><div class="week-card-desc">Community forums, youth programming, exhibitions, and family-friendly events for all ages.</div></div>
+      <div class="week-card"><div class="week-card-icon">🌐</div><div class="week-card-title">Community Forums</div><div class="week-card-desc">Panel discussions, heritage exhibitions, and organizing sessions connecting Oromos around shared goals.</div></div>
+      <div class="week-card"><div class="week-card-icon">🛍️</div><div class="week-card-title">Event Vendors</div><div class="week-card-desc">Late-night food, hookah, lounges, and merch — posted at the official party nights, not the soccer fields.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Past Featured Artists strip removed; see media.html -->
+
+<!-- ===================== MEDIA PREVIEW ===================== -->
+<section id="media" class="section section-dark">
+  <div class="section-inner">
+    <p class="section-label reveal" style="color:var(--red);">2025 Highlights</p>
+    <h2 class="section-title reveal reveal-delay-1" style="color:white;">Gallery</h2>
+    <div class="gallery-grid reveal reveal-delay-2">
+      <figure class="gallery-item"><img src="assets/champion-div-a.jpeg" alt="OSFNA 2025 Division A Champions" class="gallery-photo" /><figcaption>Division A Champions 2025</figcaption></figure>
+      <figure class="gallery-item"><img src="assets/event-1.jpeg" alt="OSFNA 2025 Event" class="gallery-photo" /><figcaption>OSFNA 2025 Highlights</figcaption></figure>
+      <figure class="gallery-item"><img src="assets/promo-2025.jpeg" alt="OSFNA 2025 Promo" class="gallery-photo" /><figcaption>OSFNA 2025 — Seattle</figcaption></figure>
+      <figure class="gallery-item"><img src="assets/event-2.jpeg" alt="Community Celebration" class="gallery-photo" /><figcaption>Community Celebration</figcaption></figure>
+      <figure class="gallery-item"><img src="assets/miss-oromo.jpeg" alt="Miss Oromo 2025" class="gallery-photo" /><figcaption>Miss Oromo North America 2025</figcaption></figure>
+      <figure class="gallery-item"><img src="assets/champion-div-b.jpeg" alt="Division B Champions" class="gallery-photo" /><figcaption>Division B Champions 2025</figcaption></figure>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="media.html" class="btn btn-gold">View Full Media Gallery →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="gallery-lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+  <img class="lightbox-image" src="" alt="" />
+  <p class="lightbox-caption"></p>
+</div>
+
+<!-- ===================== SPONSORS ===================== -->
+<section id="sponsors" class="section section-mid">
+  <div class="section-inner">
+    <h2 class="reveal" style="font-size:1.3rem;margin-bottom:1.5rem;color:var(--dark);text-align:center;">2025 Partners &amp; Sponsors</h2>
+    <div class="sponsors-strip reveal reveal-delay-1">
+      <img src="assets/sponsor-amibara.png" alt="Amibara Properties" class="sponsor-logo" />
+      <img src="assets/sponsor-teamsters.jpeg" alt="Teamsters Local 117" class="sponsor-logo" />
+    </div>
+    <div style="text-align:center;margin-top:1.5rem;">
+      <p style="color:rgba(255,255,255,0.7);margin-bottom:1rem;">Connect your brand with 3,000+ Oromo diaspora attendees.</p>
+      <a href="#contact" class="btn btn-gold">Become a Sponsor →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="section section-light">
+  <div class="section-inner">
+    <p class="section-label reveal">Get in Touch</p>
+    <h2 class="section-title reveal reveal-delay-1">Contact OSFNA</h2>
+
+    <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:1000px;margin:0 auto 3rem;">
+      <div class="reveal">
+        <h3 style="font-size:1.1rem;margin-bottom:1.5rem;color:var(--dark);">Contact Information</h3>
+        <div class="contact-item" style="margin-bottom:1.5rem;"><div style="font-family:var(--font-head);font-weight:600;color:var(--green);margin-bottom:.4rem;">📍 Mailing Address</div><p style="color:rgba(255,255,255,0.7);line-height:1.6;">465 N Mackubin St, Suite #4<br>St. Paul, MN 55103</p></div>
+        <div class="contact-item" style="margin-bottom:1.5rem;"><div style="font-family:var(--font-head);font-weight:600;color:var(--green);margin-bottom:.4rem;">📞 Phone</div><p><a href="tel:7632188700" style="color:var(--red);font-weight:500;">763-218-8700</a></p></div>
+        <div class="contact-item" style="margin-bottom:1.5rem;"><div style="font-family:var(--font-head);font-weight:600;color:var(--green);margin-bottom:.4rem;">✉️ Email</div><p><a href="mailto:myosfna@gmail.com" style="color:var(--red);font-weight:500;">myosfna@gmail.com</a></p></div>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">
+          <h4 style="font-size:.9rem;font-family:var(--font-head);color:var(--dark);margin-bottom:1rem;">Follow Us</h4>
+          <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">f</a>
+            <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">ig</a>
+            <a href="https://twitter.com/myosfna" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">𝕏</a>
+            <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">tt</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <h3 style="font-size:1.1rem;margin-bottom:1.5rem;color:var(--dark);">Quick Contact</h3>
+        <form class="contact-form" style="background:rgba(255,255,255,0.04);padding:1.5rem;border:1px solid rgba(255,255,255,0.09);border-radius:12px;">
+          <div class="form-field"><label for="c-name">Your Name</label><input type="text" id="c-name" name="name" placeholder="Full name" required /></div>
+          <div class="form-field"><label for="c-email">Email</label><input type="email" id="c-email" name="email" placeholder="you@example.com" required /></div>
+          <div class="form-field"><label for="c-subject">Subject</label><input type="text" id="c-subject" name="subject" placeholder="What's this about?" required /></div>
+          <div class="form-field"><label for="c-message">Message</label><textarea id="c-message" name="message" placeholder="Your message..." required style="min-height:100px;"></textarea></div>
+          <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <div style="max-width:700px;margin:0 auto;">
+      <h3 class="reveal" style="font-size:1.2rem;margin-bottom:1.5rem;color:var(--dark);">Frequently Asked Questions</h3>
+      <div class="reveal reveal-delay-1" style="display:flex;flex-direction:column;gap:1rem;">
+        <details style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:1.2rem;"><summary style="font-family:var(--font-head);font-weight:600;cursor:pointer;color:white;">When does registration open?</summary><p style="margin-top:.8rem;font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.6;">June 1, 2026. Early registration (before May 31) receives Late registration July 11–20.</p></details>
+        <details style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:1.2rem;"><summary style="font-family:var(--font-head);font-weight:600;cursor:pointer;color:white;">Where is OSFNA 2026 being held?</summary><p style="margin-top:.8rem;font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.6;">OSFNA 2026 takes place in Minneapolis, Minnesota. Final venue-specific addresses will be posted on the schedule and passport pages as they are finalized.</p></details>
+        <details style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:1.2rem;"><summary style="font-family:var(--font-head);font-weight:600;cursor:pointer;color:white;">How many players can be on a roster?</summary><p style="margin-top:.8rem;font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.6;">Soccer: up to 22 players (min 12). Basketball: 4v4, up to 6 on roster. Golf: 4-person teams.</p></details>
+        <details style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:1.2rem;"><summary style="font-family:var(--font-head);font-weight:600;cursor:pointer;color:white;">Can I vendor or sponsor OSFNA 2026?</summary><p style="margin-top:.8rem;font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.6;">Yes! Vendor applications open April 2026. Email <a href="mailto:myosfna@gmail.com" style="color:var(--green);">myosfna@gmail.com</a> to discuss sponsorship.</p></details>
+        <details style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:1.2rem;"><summary style="font-family:var(--font-head);font-weight:600;cursor:pointer;color:white;">Is OSFNA open to non-Oromo players?</summary><p style="margin-top:.8rem;font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.6;">All athletes are welcome. Each team must have at least 50% Oromo players per OSFNA bylaws.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">OSFNA<span> 2026</span></div>
+        <p>The Oromo Sports Federation in North America is a nonprofit organization registered in Minnesota, celebrating 30 years of community, sport, and culture.</p>
+        <div class="social-links" style="margin-top:1.5rem;">
+          <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">f</a>
+          <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">ig</a>
+          <a href="https://twitter.com/myosfna" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Sections</p>
+        <ul class="footer-links">
+          <li><a href="#tickets">Tickets</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#tournament">Tournament</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="#oromo-week">Oromo Week</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Pages</p>
+        <ul class="footer-links">
+          <li><a href="vendor.html">Vendors</a></li>
+          <li><a href="media.html">Media</a></li>
+          <li><a href="https://www.osfna.org/" target="_blank" rel="noopener">Official Website →</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <div class="footer-contact-item"><span class="contact-icon">📍</span><span>465 N Mackubin St, Suite #4<br>St. Paul, MN 55103</span></div>
+        <div class="footer-contact-item"><span class="contact-icon">📞</span><a href="tel:7632188700">763-218-8700</a></div>
+        <div class="footer-contact-item"><span class="contact-icon">✉️</span><a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Oromo Sports Federation in North America. Nonprofit 501(c) registered in Minnesota.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=100090295848290" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">ig</a>
+        <a href="https://twitter.com/myosfna" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">𝕏</a>
+        <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">tt</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script async src="https://www.tiktok.com/embed.js"></script>
+<script src="script.js"></script>
+<script>
+// Passport nav auth state
+(function() {
+  const token = localStorage.getItem('osfna_token');
+  const name  = localStorage.getItem('osfna_name');
+  const navLink = document.getElementById('nav-passport-link');
+  const heroCta = document.getElementById('passport-hero-cta');
+  if (token && navLink) {
+    navLink.textContent = '✓ My Passport';
+    navLink.href = 'itinerary.html';
+  }
+  if (token && heroCta) {
+    heroCta.textContent = name ? `Welcome back, ${name.split(' ')[0]} →` : '✓ My Passport';
+    heroCta.href = 'itinerary.html';
+  }
+})();
+</script>
+<script>
+(function() {
+  const token = localStorage.getItem('osfna_token');
+  const wrap = document.getElementById('party-gate-wrap');
+  if (!wrap) return;
+
+  if (!token) {
+    wrap.classList.add('locked');
+    return;
+  }
+
+  fetch('/api/auth?mode=me', { headers: { Authorization: 'Bearer ' + token } })
+    .then((response) => {
+      if (!response.ok) {
+        localStorage.removeItem('osfna_token');
+        wrap.classList.add('locked');
+      }
+    })
+    .catch(() => {
+      wrap.classList.add('locked');
+    });
+})();
+</script>
+<script>
+const PARTY_PRICE_EVENT_DATE = new Date('2026-07-25T10:00:00');
+const PARTY_PRICE_TIERS = [
+  { label: 'Early Bird', minDays: 91, ga: 3500, vip: 7500, bundle: 29900, tableStd: 35000, tablePrem: 50000 },
+  { label: 'Standard', minDays: 61, ga: 4500, vip: 8500, bundle: 33900, tableStd: 37500, tablePrem: 55000 },
+  { label: 'Regular', minDays: 31, ga: 5000, vip: 9500, bundle: 37900, tableStd: 40000, tablePrem: 60000 },
+  { label: 'Late', minDays: 15, ga: 5500, vip: 10000, bundle: 41900, tableStd: 42500, tablePrem: 65000 },
+  { label: 'Last Minute', minDays: 0, ga: 6500, vip: 12000, bundle: 44900, tableStd: 45000, tablePrem: 70000 },
+];
+const PARTY_ORIGINAL_PRICES = { ga: 5000, vip: 10000, bundle: 44900 };
+
+function getPartyPriceTier() {
+  const daysLeft = Math.ceil((PARTY_PRICE_EVENT_DATE - Date.now()) / 86400000);
+  return PARTY_PRICE_TIERS.find((tier) => daysLeft >= tier.minDays) || PARTY_PRICE_TIERS[PARTY_PRICE_TIERS.length - 1];
+}
+
+function formatPartyUsd(cents) {
+  return '$' + (cents / 100).toFixed(0);
+}
+
+let currentPartyTier = getPartyPriceTier();
+let selectedPartyTable = null;
+
+function renderPartyPrices() {
+  currentPartyTier = getPartyPriceTier();
+  const daysLeft = Math.max(0, Math.ceil((PARTY_PRICE_EVENT_DATE - Date.now()) / 86400000));
+
+  const tierName = document.getElementById('price-tier-name');
+  const tierBadge = document.getElementById('price-tier-badge');
+  const tierCountdown = document.getElementById('price-countdown');
+  const gaPrice = document.getElementById('ga-price');
+  const vipPrice = document.getElementById('vip-price');
+  const bundlePrice = document.getElementById('bundle-price');
+  const gaOrig = document.getElementById('ga-orig');
+  const vipOrig = document.getElementById('vip-orig');
+  const bundleOrig = document.getElementById('bundle-orig');
+
+  if (!tierName || !tierBadge || !tierCountdown || !gaPrice || !vipPrice || !bundlePrice) return;
+
+  tierName.textContent = currentPartyTier.label + ' pricing active';
+  tierBadge.textContent = currentPartyTier.label;
+  tierCountdown.textContent = ` ${daysLeft} days until the event.`;
+  gaPrice.textContent = formatPartyUsd(currentPartyTier.ga);
+  vipPrice.textContent = formatPartyUsd(currentPartyTier.vip);
+  bundlePrice.textContent = formatPartyUsd(currentPartyTier.bundle);
+
+  if (gaOrig && vipOrig && bundleOrig) {
+    gaOrig.textContent = currentPartyTier.ga < PARTY_ORIGINAL_PRICES.ga ? `Regular: ${formatPartyUsd(PARTY_ORIGINAL_PRICES.ga)}` : '';
+    vipOrig.textContent = currentPartyTier.vip < PARTY_ORIGINAL_PRICES.vip ? `Regular: ${formatPartyUsd(PARTY_ORIGINAL_PRICES.vip)}` : '';
+    bundleOrig.textContent = currentPartyTier.bundle < PARTY_ORIGINAL_PRICES.bundle ? `Regular: ${formatPartyUsd(PARTY_ORIGINAL_PRICES.bundle)}` : 'Value: $455+';
+  }
+}
+
+function selectPartyTable(el) {
+  if (!el || el.dataset.status === 'sold' || el.dataset.status === 'reserved') return;
+
+  document.querySelectorAll('.floor-table').forEach((table) => table.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const dynamicPrice = el.dataset.type === 'premium' ? currentPartyTier.tablePrem : currentPartyTier.tableStd;
+  selectedPartyTable = {
+    id: el.dataset.id,
+    type: el.dataset.type,
+    seats: el.dataset.seats,
+    price: dynamicPrice,
+  };
+
+  document.getElementById('table-name').textContent = `Table ${el.dataset.id}`;
+  document.getElementById('table-desc').textContent = `${el.dataset.type === 'premium' ? 'Premium' : 'Standard VIP'} · ${el.dataset.seats} seats`;
+  document.getElementById('table-price').textContent = formatPartyUsd(dynamicPrice) + ' deposit';
+  document.getElementById('table-info').classList.add('show');
+}
+
+async function checkoutParty(type, qty, night) {
+  const msgId = type === 'ga' ? 'ga-msg' : type === 'vip' ? 'vip-msg' : type === 'bundle' ? 'bundle-msg' : 'table-msg';
+  const btnId = type === 'ga' ? 'ga-btn' : type === 'vip' ? 'vip-btn' : type === 'bundle' ? 'bundle-btn' : 'table-book-btn';
+  const msg = document.getElementById(msgId);
+  const btn = document.getElementById(btnId);
+  if (!msg || !btn) return;
+
+  const priceMap = {
+    ga: currentPartyTier.ga,
+    vip: currentPartyTier.vip,
+    bundle: currentPartyTier.bundle,
+    table: selectedPartyTable?.price || currentPartyTier.tableStd,
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+  msg.className = 'form-msg';
+
+  try {
+    const token = localStorage.getItem('osfna_token');
+    const response = await fetch('/api/create-party-ticket', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({
+        ticket_type: type,
+        quantity: qty,
+        unit_cents: priceMap[type],
+        price_tier: currentPartyTier.label,
+        night: night || null,
+        table_id: type === 'table' ? selectedPartyTable?.id : null,
+        table_seats: type === 'table' ? selectedPartyTable?.seats : null,
+      }),
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      msg.className = 'form-msg error';
+      msg.textContent = json.error || 'Could not process. Please try again.';
+      btn.disabled = false;
+      btn.textContent = btn.dataset.label;
+      return;
+    }
+
+    if (json.checkoutUrl) {
+      window.location.href = json.checkoutUrl;
+      return;
+    }
+    if (json.wallet_url) {
+      window.location.href = json.wallet_url;
+      return;
+    }
+
+    msg.className = 'form-msg success';
+    msg.textContent = json.message || 'Request received!';
+  } catch {
+    msg.className = 'form-msg error';
+    msg.textContent = 'Network error - please try again.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = btn.dataset.label;
+  }
+}
+
+renderPartyPrices();
+
+['ga-btn', 'vip-btn', 'bundle-btn', 'table-book-btn'].forEach((id) => {
+  const btn = document.getElementById(id);
+  if (btn) btn.dataset.label = btn.textContent;
+});
+
+const gaBtn = document.getElementById('ga-btn');
+const vipBtn = document.getElementById('vip-btn');
+const bundleBtn = document.getElementById('bundle-btn');
+const tableBtn = document.getElementById('table-book-btn');
+
+if (gaBtn) {
+  gaBtn.addEventListener('click', () => checkoutParty('ga', parseInt(document.getElementById('ga-qty').value, 10)));
+}
+if (vipBtn) {
+  vipBtn.addEventListener('click', () => checkoutParty('vip', parseInt(document.getElementById('vip-qty').value, 10)));
+}
+if (bundleBtn) {
+  bundleBtn.addEventListener('click', () => checkoutParty('bundle', parseInt(document.getElementById('bundle-qty').value, 10)));
+}
+if (tableBtn) {
+  tableBtn.addEventListener('click', () => {
+    if (!selectedPartyTable) return;
+    checkoutParty('table', 1, document.getElementById('table-night').value);
+  });
+}
+</script>
+<script src="welcome-modal.js"></script>
+<script src="pwa-shell.js"></script>
+</body>
+</html>
