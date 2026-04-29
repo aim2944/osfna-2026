@@ -120,7 +120,7 @@
           Join the GC on Instagram
         </a>
         <a href="${qrHref}" class="osfna-btn osfna-btn-qr" data-action="qr">${qrLabel}</a>
-        <button type="button" class="osfna-btn osfna-btn-share" data-action="share">📲 Forward to your crew</button>
+        <a href="register.html#basketball" class="osfna-btn osfna-btn-share" data-action="bball">🏀 Register 4v4 Basketball — Cash Prize</a>
       </div>
       <p class="osfna-welcome-note">Sign-up is on Instagram. Follow <strong>@osfna2026</strong> + DM <strong>JOIN</strong>.</p>
     </div>
@@ -140,20 +140,8 @@
   overlay.querySelector('[data-action="qr"]').addEventListener('click', () => {
     sessionStorage.setItem(SESSION_KEY, '1');
   });
-  overlay.querySelector('[data-action="share"]').addEventListener('click', async (e) => {
-    const btn = e.currentTarget;
-    const shareText = "OSFNA 2026 GC is locked in — every drop, every venue, every ticket wave goes here first. If you're coming to Oromo Week, pull up:\n\n" + GC_URL + "\n\nSite: https://osfna-2026.vercel.app";
-    if (navigator.share) {
-      try { await navigator.share({ text: shareText, url: GC_URL }); } catch {}
-    } else {
-      try {
-        await navigator.clipboard.writeText(shareText);
-        btn.textContent = '✓ Copied — paste in DMs';
-        setTimeout(() => { btn.textContent = '📲 Forward to your crew'; }, 2400);
-      } catch {
-        window.prompt('Copy this and send to your crew:', shareText);
-      }
-    }
+  overlay.querySelector('[data-action="bball"]').addEventListener('click', () => {
+    sessionStorage.setItem(SESSION_KEY, '1');
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.body.contains(overlay)) close();
