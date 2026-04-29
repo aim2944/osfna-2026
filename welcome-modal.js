@@ -90,6 +90,17 @@
     .osfna-btn-share:hover {
       border-color: #ef1b22; color: #ef1b22;
     }
+    .osfna-btn-concert {
+      background: #ef1b22; color: #fff;
+      box-shadow: 0 14px 32px rgba(239,27,34,0.28);
+    }
+    .osfna-btn-concert .price {
+      background: rgba(255,255,255,0.18);
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      margin-left: 0.4rem;
+      font-size: 0.7rem;
+    }
     .osfna-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
     .osfna-welcome-note {
       margin: 1.1rem 0 0;
@@ -121,6 +132,7 @@
         </a>
         <a href="${qrHref}" class="osfna-btn osfna-btn-qr" data-action="qr">${qrLabel}</a>
         <a href="register.html#basketball" class="osfna-btn osfna-btn-share" data-action="bball">🏀 Register 4v4 Basketball — Cash Prize</a>
+        <button type="button" class="osfna-btn osfna-btn-concert" data-action="concert">🎤 Closing Night Concert <span class="price">$75 early</span></button>
       </div>
       <p class="osfna-welcome-note">Sign-up is on Instagram. Follow <strong>@osfna2026</strong> + DM <strong>JOIN</strong>.</p>
     </div>
@@ -142,6 +154,22 @@
   });
   overlay.querySelector('[data-action="bball"]').addEventListener('click', () => {
     sessionStorage.setItem(SESSION_KEY, '1');
+  });
+  overlay.querySelector('[data-action="concert"]').addEventListener('click', async (e) => {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    const btn = e.currentTarget;
+    const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket ($75) for Aug 1 in Minneapolis. How do I lock it in?";
+    try { await navigator.clipboard.writeText(text); } catch {}
+    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    const igAppUrl = 'instagram://direct/new?username=osfna2026';
+    const igWebUrl = 'https://ig.me/m/osfna2026';
+    btn.innerHTML = '✓ Message copied — opening IG…';
+    if (isMobile) {
+      window.location.href = igAppUrl;
+      setTimeout(() => { window.location.href = igWebUrl; }, 800);
+    } else {
+      window.open(igWebUrl, '_blank', 'noopener');
+    }
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.body.contains(overlay)) close();
