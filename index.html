@@ -22,9 +22,9 @@
     .home {
       max-width: 980px;
       margin: 0 auto;
-      padding: calc(5rem + env(safe-area-inset-top)) 1.25rem 4rem;
+      padding: 0 1rem 3rem;
     }
-    .home > section + section { margin-top: 3.25rem; }
+    .home > section + section { margin-top: 2.5rem; }
     .eyebrow {
       font-family: var(--font-head);
       font-size: 0.7rem;
@@ -61,32 +61,53 @@
     .pill-ghost  { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.18); }
     .pill-gold   { background: #fbbf24; color: #070707; }
 
-    /* Hero */
+    /* Hero — full-bleed crowd background */
     .hero {
-      background: radial-gradient(circle at top right, rgba(239,27,34,0.18), transparent 55%), #050505;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 22px;
-      padding: 2.25rem 1.75rem 2rem;
+      position: relative;
+      margin: 0 -1rem;
+      padding: calc(5.5rem + env(safe-area-inset-top)) 1.25rem 2.5rem;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: -2;
+      background: url('assets/hero-bg.jpeg') center 30% / cover no-repeat;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.25) 30%, rgba(5,5,5,0.85) 75%, #050505 100%),
+        radial-gradient(circle at 80% 10%, rgba(239,27,34,0.25), transparent 55%);
     }
     .hero h1 {
       font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
-      font-size: clamp(2.6rem, 9vw, 4.5rem);
-      line-height: 0.95;
-      letter-spacing: -0.025em;
-      margin: 0 0 0.85rem;
+      font-size: clamp(3rem, 13vw, 5.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin: 0 0 1rem;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.55);
     }
     .hero h1 .accent { color: var(--red); }
+    .hero .lede { color: rgba(255,255,255,0.88); font-size: 1.05rem; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
     .hero-meta {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-      margin-top: 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.1rem;
     }
     .meta-chip {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.14);
       padding: 0.4rem 0.75rem;
       border-radius: 999px;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.78);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.92);
     }
 
     /* Basketball feature */
@@ -183,11 +204,22 @@
     .foot-links a:hover { color: var(--red); }
 
     @media (max-width: 720px) {
-      .home > section + section { margin-top: 2.25rem; }
+      .home > section + section { margin-top: 2rem; }
+      .title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+      .lede { font-size: 0.95rem; }
+      .pill { padding: 0.95rem 1.15rem; font-size: 0.72rem; flex: 1 1 auto; justify-content: center; }
+      .btn-row { gap: 0.5rem; }
       .bball { grid-template-columns: 1fr; }
-      .bball img { min-height: 240px; max-height: 360px; }
+      .bball img { min-height: auto; max-height: 320px; aspect-ratio: 1/1; }
+      .bball-body { padding: 1.25rem; }
       .sports, .involved { grid-template-columns: 1fr; }
-      .champs { grid-template-columns: repeat(2, 1fr); }
+      .champs { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+      .champ img { height: 120px; }
+      .home-foot { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    }
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 2.6rem; }
+      .pill { font-size: 0.68rem; letter-spacing: 0.1em; padding: 0.85rem 1rem; }
     }
   </style>
 </head>
@@ -217,19 +249,18 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="eyebrow">Oromo Sports Federation · North America</p>
+    <p class="eyebrow" style="color:#ff5a5a;">Oromo Sports Federation · North America</p>
     <h1>OSFNA <span class="accent">2026</span><br>Oromo Week.</h1>
-    <p class="lede">July 25 – August 1, Minneapolis. A full week of soccer, basketball, golf, culture, and community.</p>
-    <div class="btn-row">
-      <a href="register.html#basketball" class="pill pill-red">🏀 Register 4v4 →</a>
-      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-gold">Join GC on IG</a>
-      <a href="passport.html" class="pill pill-ghost">My Passport</a>
-    </div>
+    <p class="lede">July 25 – August 1 · Minneapolis. A full week of soccer, 4v4 basketball, golf, culture, and community.</p>
     <div class="hero-meta">
       <span class="meta-chip">Jul 25 – Aug 1</span>
       <span class="meta-chip">Minneapolis, MN</span>
       <span class="meta-chip">3,000+ attendees</span>
-      <span class="meta-chip">30 yrs of OSFNA</span>
+    </div>
+    <div class="btn-row">
+      <a href="register.html#basketball" class="pill pill-red">🏀 Register 4v4 →</a>
+      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-gold">Join GC</a>
+      <a href="passport.html" class="pill pill-ghost">My Passport</a>
     </div>
   </section>
 
