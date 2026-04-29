@@ -58,6 +58,9 @@
     /* ── Form panels ── */
     .reg-panel { display: none; }
     .reg-panel.active { display: block; }
+    @media (max-width: 760px) {
+      #panel-basketball .reg-form-wrap { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+    }
 
     /* ── Form layout ── */
     .reg-form-wrap {
@@ -337,11 +340,26 @@
 
     <!-- ══════ BASKETBALL TEAM REGISTRATION ══════ -->
     <div class="reg-panel" id="panel-basketball" role="tabpanel">
-      <div class="reg-form-wrap">
-        <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas." style="width:100%;max-width:560px;display:block;margin:0 auto 1.5rem;border-radius:12px;" />
+      <div class="reg-form-wrap" style="max-width:1100px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:2.25rem;align-items:start;">
+        <aside class="bball-side" style="display:flex;flex-direction:column;gap:1.1rem;">
+          <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas." style="width:100%;display:block;border-radius:14px;border:1px solid rgba(255,255,255,0.08);" />
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Date</div><div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:0.95rem;margin-top:0.25rem;">Jul 30 – Aug 1</div></div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">City</div><div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:0.95rem;margin-top:0.25rem;">MPLS, MN</div></div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Format</div><div style="font-family:var(--font-display);font-weight:700;color:var(--red);font-size:0.95rem;margin-top:0.25rem;">4v4</div></div>
+          </div>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.55rem;font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.45;">
+            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">🏀</span><span><strong style="color:#fff;">4v4 format</strong> — 4 starters + up to 2 subs (6 max).</span></li>
+            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">💵</span><span><strong style="color:#fff;">Cash prize</strong> for the winning team.</span></li>
+            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">🏆</span><span><strong style="color:#fff;">2025 champs:</strong> New Dallas.</span></li>
+            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">📍</span><span>Played during <strong style="color:#fff;">Oromo Week MMXXVI</strong>, Minneapolis.</span></li>
+            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">💬</span><span>Bracket + court drops in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" style="color:var(--red);">@osfna2026 group chat</a>.</span></li>
+          </ul>
+        </aside>
+        <div>
         <div class="reg-form-header">
           <h2>4v4 Basketball — Quick Register</h2>
-          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. 4 players + up to 2 subs. Just the basics — captain handles the rest.</p>
+          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. Just the basics — captain handles the rest.</p>
         </div>
         <form class="reg-form" id="form-basketball" novalidate>
           <div class="form-row-2">
@@ -363,6 +381,7 @@
           <button type="submit" class="submit-btn" id="basketball-submit-btn">Lock In Our 4v4 Spot →</button>
           <p class="form-note">Roster (up to 6) and jerseys collected later via the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
+        </div>
       </div>
     </div>
 
