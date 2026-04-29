@@ -225,11 +225,6 @@
     <span class="nav-year">2026</span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#tournament">Tournament</a></li>
-    <li><a href="vendor.html">Vendors</a></li>
-    <li><a href="schedule.html">Schedule</a></li>
-    <li><a href="media.html">Media</a></li>
     <li><a href="register.html" class="active">Register</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
@@ -238,11 +233,6 @@
   </button>
 </nav>
 <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <li><a href="index.html#about">About</a></li>
-  <li><a href="index.html#tournament">Tournament</a></li>
-  <li><a href="vendor.html">Vendors</a></li>
-  <li><a href="schedule.html">Schedule</a></li>
-  <li><a href="media.html">Media</a></li>
   <li><a href="register.html">Register</a></li>
   <li><a href="index.html#contact">Contact</a></li>
 </ul>
@@ -258,8 +248,7 @@
 <!-- TAB BAR -->
 <div class="reg-tabs-wrap">
   <div class="reg-tabs" role="tablist">
-    <button class="reg-tab active" role="tab" aria-selected="true"  data-tab="soccer">Soccer Team</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="basketball">4v4 Basketball</button>
+    <button class="reg-tab active" role="tab" aria-selected="true"  data-tab="basketball">4v4 Basketball</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="volunteers">Volunteers</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="vendor">Vendor</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="sponsorship">Sponsorship</button>
@@ -273,73 +262,8 @@
 <div class="section section-dark" style="padding-top:3rem;padding-bottom:5rem;">
   <div class="section-inner">
 
-    <!-- ══════ SOCCER TEAM REGISTRATION ══════ -->
-    <div class="reg-panel active" id="panel-soccer" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Soccer Team Registration</h2>
-          <p>Register your soccer club for OSFNA 2026. Divisions A (Elite), B (Competitive), and C (Recreational) available. Confirmation and payment info sent to coach email after submission.</p>
-        </div>
-        <form class="reg-form" id="form-soccer" novalidate>
-          <p class="form-section-label">Team Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., Dire Dawa FC" required /></div>
-            <div class="field"><label>City / State <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Minneapolis, MN" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Club Affiliation</label><input type="text" name="club_affiliation" placeholder="Parent club if applicable" /></div>
-            <div class="field"><label>Division <span>*</span></label>
-              <select name="division" required>
-                <option value="">— Select division —</option>
-                <option>Division A — Elite</option>
-                <option>Division B — Competitive</option>
-                <option>Division C — Recreational</option>
-              </select>
-            </div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Head Coach</p>
-          <div class="form-row-2">
-            <div class="field"><label>Coach Full Name <span>*</span></label><input type="text" name="coach_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Coach Email <span>*</span></label><input type="email" name="coach_email" placeholder="coach@email.com" required /></div>
-          </div>
-          <div class="field"><label>Coach Phone <span>*</span></label><input type="tel" name="coach_phone" placeholder="(555) 123-4567" required /></div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Team Details</p>
-          <div class="form-row-2">
-            <div class="field"><label>Roster Size <span>*</span></label>
-              <select name="roster_count" required>
-                <option value="">— Choose —</option>
-                <option>15–18 players</option>
-                <option>19–22 players</option>
-                <option>23–25 players</option>
-              </select>
-            </div>
-            <div class="field"><label>Jersey Color <span>*</span></label><input type="text" name="jersey_color" placeholder="e.g., Green and White" required /></div>
-          </div>
-          <div class="field"><label>Notes / Special Requests</label><textarea name="notes" placeholder="Scheduling conflicts, accommodations, etc."></textarea></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="soccer-heritage" name="heritage_confirmed" required />
-            <label for="soccer-heritage">I confirm that all players on this roster are of Oromo heritage and meet OSFNA 2026 eligibility requirements. <span style="color:var(--red)">*</span></label>
-          </div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="soccer-agree" name="agree" required />
-            <label for="soccer-agree">I confirm this team will comply with all OSFNA 2026 bylaws and competition standards. I understand OSFNA may adjust division placement. <span style="color:var(--red)">*</span></label>
-          </div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="soccer-returning" name="returning" />
-            <label for="soccer-returning">This is a returning team from OSFNA 2025.</label>
-          </div>
-          <input type="hidden" name="sport" value="soccer" />
-          <div class="form-msg" id="soccer-msg"></div>
-          <button type="submit" class="submit-btn" id="soccer-submit-btn">Submit Soccer Registration →</button>
-          <p class="form-note">Registration fee collected at checkout. Bracket drops and gameday updates go out in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
-        </form>
-      </div>
-    </div>
-
     <!-- ══════ BASKETBALL TEAM REGISTRATION ══════ -->
-    <div class="reg-panel" id="panel-basketball" role="tabpanel">
+    <div class="reg-panel active" id="panel-basketball" role="tabpanel">
       <div class="reg-form-wrap" style="max-width:1100px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:2.25rem;align-items:start;">
         <aside class="bball-side" style="display:flex;flex-direction:column;gap:1.1rem;">
           <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas." style="width:100%;display:block;border-radius:14px;border:1px solid rgba(255,255,255,0.08);" />
@@ -829,7 +753,6 @@
     if (btn) btn.dataset.label = btn.textContent;
   }
 
-  wireForm('form-soccer',     '/api/register-team',   'soccer-submit-btn',     'soccer-msg');
   wireForm('form-basketball', '/api/register-team',   'basketball-submit-btn', 'basketball-msg');
   wireForm('form-vendor',     '/api/register-vendor', 'vendor-submit-btn',     'vendor-msg');
 </script>
