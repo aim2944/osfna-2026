@@ -458,8 +458,8 @@
     <div class="reg-panel" id="panel-vendor" role="tabpanel">
       <div class="reg-form-wrap">
         <div class="reg-form-header">
-          <h2>Vendor Application</h2>
-          <p>Apply for a booth at OSFNA 2026. 3,000+ attendees over 7 days. Standard (10×10) and Large (10×20) spaces available. Full details and booth assignments sent after review.</p>
+          <h2>Event Vendor Application</h2>
+          <p>Apply for a vendor slot at the 7 official OSFNA 2026 night events — late-night food, hookah, lounge, merch, jewelry, photo activations, and brand pop-ups. This is for the parties, not the daytime soccer tournament.</p>
         </div>
         <form class="reg-form" id="form-vendor" novalidate>
           <p class="form-section-label">Business Info</p>
@@ -468,13 +468,12 @@
             <div class="field"><label>Business Type</label>
               <select name="business_type">
                 <option value="">— Select —</option>
-                <option>Food &amp; Beverage</option>
-                <option>Clothing &amp; Apparel</option>
-                <option>Cultural Goods &amp; Art</option>
-                <option>Health &amp; Beauty</option>
-                <option>Technology &amp; Electronics</option>
-                <option>Financial Services</option>
-                <option>Community Organization</option>
+                <option>Late-Night Food / Food Truck</option>
+                <option>Hookah / Lounge</option>
+                <option>Streetwear &amp; Apparel</option>
+                <option>Jewelry &amp; Accessories</option>
+                <option>Photo / Video Activation</option>
+                <option>Brand Activation (Beverage / Fintech / Telecom / Auto)</option>
                 <option>Other</option>
               </select>
             </div>
@@ -490,13 +489,15 @@
             <div class="field"><label>City / State</label><input type="text" name="city" placeholder="e.g., Atlanta, GA" /></div>
           </div>
           <hr class="form-divider" />
-          <p class="form-section-label">Booth Requirements</p>
+          <p class="form-section-label">Slot &amp; Nights</p>
           <div class="form-row-2">
-            <div class="field"><label>Booth Size <span>*</span></label>
+            <div class="field"><label>Slot Type <span>*</span></label>
               <select name="booth_size" required>
                 <option value="">— Select —</option>
-                <option value="10x10">10 × 10 — Standard</option>
-                <option value="10x20">10 × 20 — Large</option>
+                <option value="lobby">Lobby Table (merch / accessories)</option>
+                <option value="late_night_food">Late-Night Food (outdoor / curbside)</option>
+                <option value="hookah_lounge">Hookah / Lounge Zone</option>
+                <option value="brand_activation">Brand Activation / Pop-Up</option>
                 <option value="custom">Custom / Inquire</option>
               </select>
             </div>
@@ -510,21 +511,24 @@
             </div>
           </div>
           <div class="field"><label>Products / Services Description <span>*</span></label><textarea name="products_desc" placeholder="Briefly describe what you will be selling or offering" required></textarea></div>
-          <div class="field"><label>Setup Preference</label>
-            <select name="setup_pref">
-              <option value="">— Select —</option>
-              <option>Standard setup day (day before event)</option>
-              <option>Early setup (2 days before)</option>
-              <option>No preference</option>
+          <div class="field"><label>Which Nights? (select all that apply)</label>
+            <select name="nights" multiple size="4">
+              <option value="jul25">Jul 25 — Opening Night</option>
+              <option value="jul26">Jul 26 — Diaspora Night</option>
+              <option value="jul27">Jul 27 — Heritage / Afaan Oromo</option>
+              <option value="jul28">Jul 28 — Tournament Night</option>
+              <option value="jul29">Jul 29 — All-Star / Artist Showcase</option>
+              <option value="jul31">Jul 31 — Championship Eve</option>
+              <option value="aug01">Aug 1 — Closing Gala</option>
             </select>
           </div>
           <div class="field"><label>Additional Notes</label><textarea name="notes" placeholder="Any other requirements or questions"></textarea></div>
           <div class="field checkbox-field">
             <input type="checkbox" id="vendor-agree" name="agree" required />
-            <label for="vendor-agree">I agree to comply with all OSFNA vendor guidelines and health/safety regulations. I understand booth assignments are subject to approval. <span style="color:var(--red)">*</span></label>
+            <label for="vendor-agree">I agree to comply with all event vendor guidelines and health/safety regulations. I understand slot assignments are night-specific and subject to approval. <span style="color:var(--red)">*</span></label>
           </div>
           <div class="form-msg" id="vendor-msg"></div>
-          <button type="submit" class="submit-btn" id="vendor-submit-btn">Submit &amp; Pay Booth Fee →</button>
+          <button type="submit" class="submit-btn" id="vendor-submit-btn">Submit Vendor Application →</button>
           <p class="form-note">Booth assignments and load-in details announced through the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
