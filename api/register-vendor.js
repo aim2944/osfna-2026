@@ -7,6 +7,28 @@ const BOOTH_FEES = {
   custom:  { amount: 0,     label: 'Custom Booth (pricing TBD)' },
 };
 
+async function notifyAdmin(payload) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to     = process.env.NOTIFY_EMAIL;
+  const from   = process.env.NOTIFY_FROM || 'OSFNA Registrations <onboarding@resend.dev>';
+  if (!apiKey || !to) return;
+  const lines = Object.entries(payload).map(([k, v]) => `${k}: ${v ?? ''}`).join('\n');
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject: `[OSFNA] New ${payload.type || 'vendor'} submission — ${payload.business_name || ''}`,
+        text: lines,
+      }),
+    });
+  } catch (e) {
+    console.error('[register-vendor] notify email failed:', e?.message);
+  }
+}
+
 function validate(data) {
   const err = [];
   if (!data.business_name?.trim())  err.push('Business name is required');
@@ -28,6 +50,16 @@ export default async function handler(req, res) {
   const errors = validate(data);
   if (errors.length) return res.status(400).json({ errors });
   if (!fee)          return res.status(400).json({ errors: ['Invalid booth size selection'] });
+
+  await notifyAdmin({
+    type:          'vendor',
+    business_name: data.business_name?.trim(),
+    contact_name:  data.contact_name?.trim(),
+    email:         data.email?.trim(),
+    phone:         data.phone?.trim(),
+    booth_size:    data.booth_size,
+    submitted_at:  new Date().toISOString(),
+  });
 
   if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);

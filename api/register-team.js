@@ -10,26 +10,48 @@ const DIVISION_FEES = {
 
 function validate(data, sport) {
   const err = [];
-  if (!data.team_name?.trim())    err.push('Team name is required');
-  if (!data.team_city?.trim())    err.push('City/State is required');
-  if (!data.jersey_color?.trim()) err.push('Jersey color is required');
-  if (!data.roster_count)         err.push('Roster size is required');
+  if (!data.team_name?.trim()) err.push('Team name is required');
+  if (!data.team_city?.trim()) err.push('City is required');
 
   if (sport === 'soccer') {
-    if (!data.division)             err.push('Division is required');
-    if (!data.coach_name?.trim())   err.push('Coach name is required');
-    if (!data.coach_email?.trim())  err.push('Coach email is required');
-    if (!data.coach_phone?.trim())  err.push('Coach phone is required');
+    if (!data.division)               err.push('Division is required');
+    if (!data.coach_name?.trim())     err.push('Coach name is required');
+    if (!data.coach_email?.trim())    err.push('Coach email is required');
+    if (!data.coach_phone?.trim())    err.push('Coach phone is required');
     if (!DIVISION_FEES[data.division]) err.push('Invalid division selection');
+    if (!data.jersey_color?.trim())   err.push('Jersey color is required');
+    if (!data.roster_count)           err.push('Roster size is required');
+    if (!data.heritage_confirmed)     err.push('Oromo heritage confirmation is required');
   } else {
-    if (!data.captain_name?.trim())  err.push('Captain name is required');
-    if (!data.captain_email?.trim()) err.push('Captain email is required');
-    if (!data.captain_phone?.trim()) err.push('Captain phone is required');
+    if (!data.captain_name?.trim())   err.push('Captain name is required');
+    if (!data.captain_email?.trim())  err.push('Captain email is required');
+    if (!data.captain_phone?.trim())  err.push('Captain phone is required');
   }
 
-  if (!data.heritage_confirmed) err.push('Oromo heritage confirmation is required per OSFNA bylaws');
-  if (!data.agree)              err.push('Terms agreement is required');
+  if (!data.agree) err.push('Terms agreement is required');
   return err;
+}
+
+async function notifyAdmin(payload) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to     = process.env.NOTIFY_EMAIL;
+  const from   = process.env.NOTIFY_FROM || 'OSFNA Registrations <onboarding@resend.dev>';
+  if (!apiKey || !to) return;
+  const lines = Object.entries(payload).map(([k, v]) => `${k}: ${v ?? ''}`).join('\n');
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject: `[OSFNA] New ${payload.sport} registration — ${payload.team_name}`,
+        text: lines,
+      }),
+    });
+  } catch (e) {
+    console.error('[register-team] notify email failed:', e?.message);
+  }
 }
 
 export default async function handler(req, res) {
@@ -43,6 +65,17 @@ export default async function handler(req, res) {
   const errors = validate(data, sport);
   if (errors.length) return res.status(400).json({ errors });
   if (!fee)          return res.status(400).json({ errors: ['Invalid sport/division combination'] });
+
+  await notifyAdmin({
+    sport,
+    format:        data.format || (sport === 'basketball' ? '4v4' : 'standard'),
+    team_name:     data.team_name?.trim(),
+    city:          data.team_city?.trim(),
+    captain_name:  (data.captain_name || data.coach_name || '').trim(),
+    captain_email: (data.captain_email || data.coach_email || '').trim(),
+    captain_phone: (data.captain_phone || data.coach_phone || '').trim(),
+    submitted_at:  new Date().toISOString(),
+  });
 
   const contactEmail = (data.coach_email || data.captain_email || '').trim();
   const contactName  = (data.coach_name  || data.captain_name  || '').trim();
@@ -59,9 +92,9 @@ export default async function handler(req, res) {
       contact_name:      contactName,
       contact_email:     contactEmail,
       contact_phone:     contactPhone,
-      roster_count:      data.roster_count,
-      jersey_color:      data.jersey_color.trim(),
-      heritage_confirmed: true,
+      roster_count:      data.roster_count || null,
+      jersey_color:      data.jersey_color?.trim() || null,
+      heritage_confirmed: !!data.heritage_confirmed,
       returning:         data.returning === 'on',
       notes:             data.notes?.trim() || null,
       status:            'pending_payment',
