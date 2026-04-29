@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>QR Ticket Wallet — OSFNA 2026</title>
+  <meta name="description" content="Offline-ready QR ticket wallet for OSFNA 2026 Minneapolis." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo-main.png" />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #f2ede3;
+      min-height: 100vh;
+      color: #070707;
+    }
+
+    .nav {
+      background: transparent;
+    }
+
+    .nav.scrolled {
+      background: rgba(242,237,227,.94);
+      box-shadow: 0 1px 0 rgba(7,7,7,.08);
+    }
+
+    .nav-links a,
+    .nav-logo-link {
+      color: #070707;
+    }
+
+    .hamburger span {
+      background: #070707;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    .mobile-menu {
+      background: #f2ede3;
+    }
+
+    .mobile-menu a {
+      color: #070707;
+    }
+
+    .ticket-shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: calc(7.5rem + env(safe-area-inset-top)) 1.25rem calc(4rem + env(safe-area-inset-bottom));
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .72fr);
+      align-items: start;
+    }
+
+    .ticket-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .page-kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .95rem;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: #ef1b22;
+    }
+
+    .page-heading {
+      display: grid;
+      gap: .6rem;
+      padding-left: .15rem;
+    }
+
+    .page-heading h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 8vw, 6.6rem);
+      line-height: .88;
+      letter-spacing: -.04em;
+      color: #070707;
+      max-width: 8ch;
+    }
+
+    .page-heading p {
+      max-width: 42rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(7,7,7,.64);
+    }
+
+    .ticket-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.08) 0, rgba(255,255,255,0) 1.3px) 0 0 / 10px 10px,
+        linear-gradient(180deg, #ef3b34 0%, #de2f29 100%);
+      color: #fff7ee;
+      padding: 1.7rem;
+      box-shadow: 0 28px 70px rgba(125, 23, 18, .25);
+    }
+
+    .ticket-card::before,
+    .ticket-card::after {
+      content: '';
+      position: absolute;
+      inset: 14px;
+      border: 2px solid rgba(255,247,238,.9);
+      pointer-events: none;
+    }
+
+    .ticket-card::after {
+      inset: 28px;
+      border-width: 1px;
+      border-color: rgba(255,247,238,.55);
+    }
+
+    .ticket-notch {
+      position: absolute;
+      top: 48%;
+      width: 34px;
+      height: 70px;
+      background: #070707;
+      border-radius: 40px;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .ticket-notch.left {
+      left: -18px;
+    }
+
+    .ticket-notch.right {
+      right: -18px;
+    }
+
+    .ticket-card-inner {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .ticket-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .9rem;
+    }
+
+    .ticket-admit-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: .45rem .7rem;
+      background: #fff7ee;
+      color: #ef3b34;
+      font-weight: 700;
+      letter-spacing: .22em;
+    }
+
+    .ticket-serial {
+      color: rgba(255,247,238,.92);
+      text-align: right;
+    }
+
+    .ticket-wordmark {
+      display: grid;
+      gap: .75rem;
+      justify-items: center;
+      text-align: center;
+      padding: .5rem 0 .2rem;
+    }
+
+    .ticket-wordmark-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1.2rem;
+      width: 100%;
+    }
+
+    .ticket-star {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .ticket-wordmark h2 {
+      font-family: var(--font-head);
+      font-size: clamp(4rem, 10vw, 7.8rem);
+      line-height: .88;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+      color: #fff7ee;
+    }
+
+    .ticket-banner {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: .45rem 1.4rem;
+      background: #fff7ee;
+      color: #ef3b34;
+      font-family: var(--font-head);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+      box-shadow: 0 0 0 1px rgba(255,247,238,.3);
+    }
+
+    .ticket-subline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .95rem;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: rgba(255,247,238,.82);
+    }
+
+    .ticket-perforation {
+      position: relative;
+      height: 20px;
+      margin-top: .1rem;
+    }
+
+    .ticket-perforation::before {
+      content: '';
+      position: absolute;
+      inset: 50% 0 auto;
+      border-top: 2px dashed rgba(255,247,238,.85);
+      transform: translateY(-50%);
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      padding-top: .35rem;
+    }
+
+    .ticket-meta {
+      min-width: 0;
+    }
+
+    .ticket-meta .label {
+      display: block;
+      margin-bottom: .45rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .9rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,247,238,.72);
+    }
+
+    .ticket-meta .value {
+      display: block;
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: .95;
+      text-transform: uppercase;
+      color: #fff7ee;
+    }
+
+    .ticket-bottom {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 1.6rem;
+      align-items: end;
+      padding-top: .2rem;
+    }
+
+    .ticket-qr-block {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+    }
+
+    .ticket-qr-shell {
+      border-radius: 18px;
+      background: #fff7ee;
+      padding: .9rem;
+      width: min(100%, 320px);
+      border: 1px solid rgba(255,247,238,.55);
+      box-shadow: inset 0 0 0 1px rgba(7,7,7,.08);
+    }
+
+    .ticket-qr {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      background: #fff7ee;
+      border-radius: 12px;
+      padding: .6rem;
+      object-fit: contain;
+    }
+
+    .ticket-empty {
+      display: grid;
+      place-items: center;
+      min-height: 280px;
+      text-align: center;
+      color: rgba(7,7,7,.48);
+      background: rgba(7,7,7,.04);
+      border-radius: 12px;
+      border: 1px dashed rgba(7,7,7,.18);
+      padding: 1.4rem;
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+
+    .ticket-ref {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 1.15rem;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: #fff7ee;
+      word-break: break-word;
+    }
+
+    .follow-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 126px;
+      background: #13823a;
+      color: #fff7ee;
+      border: 3px solid rgba(255,247,238,.92);
+      box-shadow: 0 10px 30px rgba(7,7,7,.18);
+      transform: rotate(-4deg);
+      padding: 1rem;
+      text-align: center;
+      align-self: center;
+    }
+
+    .follow-card small {
+      display: block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .78rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,247,238,.88);
+      margin-bottom: .45rem;
+    }
+
+    .follow-card strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .ticket-foot {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: .9rem 1.2rem;
+      border-top: 1px solid rgba(255,247,238,.28);
+      padding-top: 1rem;
+    }
+
+    .ticket-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      border-radius: 999px;
+      padding: .58rem .92rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .78rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,247,238,.28);
+      background: rgba(255,247,238,.08);
+      color: #fff7ee;
+    }
+
+    .ticket-status[data-state="paid"] {
+      color: #ddffd7;
+      background: rgba(20,130,58,.2);
+      border-color: rgba(190,255,179,.42);
+    }
+
+    .ticket-status[data-state="pending_payment"] {
+      color: #fff0bd;
+      background: rgba(251,191,36,.17);
+      border-color: rgba(255,240,189,.38);
+    }
+
+    .ticket-note {
+      max-width: 28rem;
+      font-size: .85rem;
+      color: rgba(255,247,238,.84);
+      line-height: 1.6;
+    }
+
+    .ticket-side {
+      background: #070707;
+      color: #f2ede3;
+      border-radius: 22px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: calc(6rem + env(safe-area-inset-top));
+      box-shadow: 0 24px 60px rgba(7,7,7,.18);
+    }
+
+    .ticket-side-kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .82rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: #ef3b34;
+    }
+
+    .ticket-side h3 {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      line-height: .94;
+      max-width: 9ch;
+    }
+
+    .ticket-side-copy,
+    .ticket-alert-status,
+    .ticket-side-meta p {
+      font-size: .92rem;
+      line-height: 1.7;
+      color: rgba(242,237,227,.68);
+    }
+
+    .wallet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem;
+      margin-top: .2rem;
+    }
+
+    .wallet-actions button,
+    .wallet-actions a {
+      border: 0;
+      border-radius: 999px;
+      padding: .85rem 1.15rem;
+      cursor: pointer;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .76rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .wallet-actions .primary {
+      background: #ef3b34;
+      color: #fff7ee;
+    }
+
+    .wallet-actions .ghost {
+      background: transparent;
+      color: #f2ede3;
+      border: 1px solid rgba(242,237,227,.16);
+    }
+
+    .ticket-side-grid {
+      display: grid;
+      gap: .9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ticket-side-meta {
+      border-radius: 16px;
+      background: rgba(242,237,227,.04);
+      border: 1px solid rgba(242,237,227,.08);
+      padding: 1rem;
+    }
+
+    .ticket-side-meta .label {
+      display: block;
+      margin-bottom: .45rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(242,237,227,.46);
+    }
+
+    .ticket-side-meta .value {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.45rem;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #fff7ee;
+    }
+
+    .ticket-side-footer {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(242,237,227,.1);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .9rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(242,237,227,.72);
+    }
+
+    @media (max-width: 900px) {
+      .ticket-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .page-heading h1 {
+        max-width: none;
+      }
+
+      .ticket-bottom,
+      .ticket-grid,
+      .ticket-side-grid,
+      .ticket-wordmark-row {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-star {
+        display: none;
+      }
+
+      .ticket-side {
+        position: static;
+      }
+
+      .ticket-card {
+        padding: 1.25rem;
+      }
+
+      .ticket-card::before {
+        inset: 10px;
+      }
+
+      .ticket-card::after {
+        inset: 20px;
+      }
+
+      .ticket-foot {
+        align-items: flex-start;
+      }
+
+      .follow-card {
+        width: 100%;
+        transform: none;
+      }
+
+      .ticket-side-footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo-link">
+    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+    <span class="nav-year">2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="parties.html">Parties</a></li>
+    <li><a href="itinerary.html">Itinerary</a></li>
+    <li><a href="passport.html">Passport</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<ul class="mobile-menu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="parties.html">Parties</a></li>
+  <li><a href="itinerary.html">Itinerary</a></li>
+  <li><a href="passport.html">Passport</a></li>
+</ul>
+
+<main class="ticket-shell">
+  <section class="ticket-stage">
+    <div class="page-heading">
+      <p class="page-kicker">OSFNA 2026 . Parties . Launch Wallet</p>
+      <h1>The ticket, locked.</h1>
+      <p>Open it once with signal, then keep the QR on-device for the gate. The page now follows the launch-kit system instead of the default app card styling.</p>
+    </div>
+
+    <article class="ticket-card">
+      <span class="ticket-notch left" aria-hidden="true"></span>
+      <span class="ticket-notch right" aria-hidden="true"></span>
+
+      <div class="ticket-card-inner">
+        <div class="ticket-topline">
+          <span class="ticket-admit-badge">Admit One</span>
+          <span class="ticket-serial" id="ticket-serial">No. 001/2026</span>
+        </div>
+
+        <div class="ticket-wordmark">
+          <div class="ticket-wordmark-row">
+            <span class="ticket-star" aria-hidden="true">*</span>
+            <h2>OSFNA</h2>
+            <span class="ticket-star" aria-hidden="true">*</span>
+          </div>
+          <div class="ticket-banner">Parties</div>
+          <p class="ticket-subline">Oromo Week . MMXXVI</p>
+        </div>
+
+        <div class="ticket-perforation" aria-hidden="true"></div>
+
+        <div class="ticket-grid">
+          <div class="ticket-meta">
+            <span class="label">Date</span>
+            <span class="value" id="ticket-night">JUL 30-AUG 1</span>
+          </div>
+          <div class="ticket-meta">
+            <span class="label">City</span>
+            <span class="value">MPLS, MN</span>
+          </div>
+          <div class="ticket-meta">
+            <span class="label">Admit</span>
+            <span class="value" id="ticket-admit">GA . 21+</span>
+          </div>
+        </div>
+
+        <div class="ticket-bottom">
+          <div class="ticket-qr-block">
+            <div class="ticket-qr-shell" id="ticket-wallet-shell">
+              <img class="ticket-qr" id="ticket-qr" alt="OSFNA ticket QR code" hidden />
+              <div class="ticket-empty" id="ticket-empty">Add a valid `ref` ticket ID to this route, or open the ticket once after checkout so the QR can be stored offline.</div>
+            </div>
+            <div class="ticket-ref" id="ticket-id">—</div>
+          </div>
+
+          <div class="follow-card" aria-label="Follow OSFNA 2026">
+            <div>
+              <small>Follow</small>
+              <strong>@osfna2026</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-foot">
+          <div class="ticket-status" id="ticket-status" data-state="loading">Syncing ticket…</div>
+          <div class="ticket-note" id="wallet-source">Checking for cached wallet data…</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <aside class="ticket-side">
+    <p class="ticket-side-kicker">Lockscreen Alerts</p>
+    <h3>Buzz the pocket directly.</h3>
+    <p class="ticket-side-copy">Use Web Push for score alerts, scarcity drops, and door-open notices without relying on social reach or app-store distribution.</p>
+
+    <div class="wallet-actions">
+      <button class="primary" data-enable-alerts data-status-target="#ticket-alert-status">Enable Alerts</button>
+      <button class="ghost" id="refresh-ticket">Refresh Wallet</button>
+      <button class="ghost" id="copy-ticket">Copy Ticket ID</button>
+    </div>
+    <div class="ticket-alert-status" id="ticket-alert-status"></div>
+
+    <div class="ticket-side-grid">
+      <div class="ticket-side-meta">
+        <span class="label">Access Type</span>
+        <span class="value" id="ticket-type">—</span>
+      </div>
+      <div class="ticket-side-meta">
+        <span class="label">Quantity</span>
+        <span class="value" id="ticket-qty">—</span>
+      </div>
+      <div class="ticket-side-meta">
+        <span class="label">Gate Mode</span>
+        <p>Cache-first wallet route with the QR stored in IndexedDB for offline admission.</p>
+      </div>
+      <div class="ticket-side-meta">
+        <span class="label">Venue Flow</span>
+        <p>Open once before arrival. At the entrance, staff only need the QR on-screen.</p>
+      </div>
+    </div>
+
+    <div class="ticket-side-footer">
+      <span>@OSFNA2026</span>
+      <span>MPLS . JUL 30-AUG 1 . 2026</span>
+    </div>
+  </aside>
+</main>
+
+<script src="pwa-shell.js"></script>
+<script src="script.js"></script>
+<script src="ticket-store.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const ticketId = (params.get('ref') || '').trim().toUpperCase();
+const paidFlow = params.get('paid') === '1';
+
+const ticketStatus = document.getElementById('ticket-status');
+const ticketSource = document.getElementById('wallet-source');
+const ticketQr = document.getElementById('ticket-qr');
+const ticketEmpty = document.getElementById('ticket-empty');
+const ticketIdEl = document.getElementById('ticket-id');
+const ticketSerialEl = document.getElementById('ticket-serial');
+const ticketAdmitEl = document.getElementById('ticket-admit');
+const ticketTypeEl = document.getElementById('ticket-type');
+const ticketNightEl = document.getElementById('ticket-night');
+const ticketQtyEl = document.getElementById('ticket-qty');
+const alertStatus = document.getElementById('ticket-alert-status');
+
+function formatTicketDate(night) {
+  return ({
+    jul25: 'JUL 25',
+    jul26: 'JUL 26',
+    jul27: 'JUL 27',
+    jul28: 'JUL 28',
+    jul29: 'JUL 29',
+    jul31: 'JUL 31',
+    aug01: 'AUG 1',
+  })[night] || (night === 'all-access' ? 'JUL 30-AUG 1' : 'JUL 30-AUG 1');
+}
+
+function formatTicketType(type) {
+  return ({
+    ga: 'General Admission',
+    vip: 'VIP Express Pass',
+    bundle: 'All-Access Pass',
+    table: 'VIP Table',
+  })[type] || 'Ticket';
+}
+
+function formatAdmitLabel(type) {
+  return ({
+    ga: 'GA . 21+',
+    vip: 'VIP . 21+',
+    bundle: 'ALL ACCESS',
+    table: 'TABLE . 21+',
+  })[type] || 'ADMIT';
+}
+
+function formatTicketSerial(id) {
+  const clean = String(id || '').replace(/[^A-Z0-9]/g, '');
+  const serial = (clean.slice(-3) || '001').padStart(3, '0');
+  return `No. ${serial}/2026`;
+}
+
+function updateStatus(state, label, sourceText) {
+  ticketStatus.dataset.state = state;
+  ticketStatus.textContent = label;
+  ticketSource.textContent = sourceText;
+}
+
+function renderTicket(ticket, sourceText) {
+  ticketIdEl.textContent = ticket.id || '—';
+  ticketSerialEl.textContent = formatTicketSerial(ticket.id);
+  ticketAdmitEl.textContent = formatAdmitLabel(ticket.ticket_type);
+  ticketTypeEl.textContent = formatTicketType(ticket.ticket_type);
+  ticketNightEl.textContent = formatTicketDate(ticket.night);
+  ticketQtyEl.textContent = ticket.quantity || '1';
+
+  if (ticket.qr_data_url) {
+    ticketQr.hidden = false;
+    ticketQr.src = ticket.qr_data_url;
+    ticketEmpty.hidden = true;
+  }
+
+  const state = ticket.status || 'cached';
+  const label = state === 'paid'
+    ? 'Paid • Offline-ready'
+    : state === 'pending_payment'
+      ? 'Payment confirmed • waiting for sync'
+      : 'Stored locally';
+
+  updateStatus(state, label, sourceText);
+}
+
+function postTicketToServiceWorker(ticket) {
+  if (!navigator.serviceWorker?.ready) return;
+
+  navigator.serviceWorker.ready
+    .then((registration) => {
+      const worker = registration.active || navigator.serviceWorker.controller;
+      if (worker) worker.postMessage({ type: 'STORE_TICKET', ticket });
+    })
+    .catch(() => {});
+}
+
+function generateQrDataUrl(value) {
+  if (!window.QRCode?.toDataURL) return Promise.resolve(null);
+  return window.QRCode.toDataURL(value, {
+    width: 720,
+    margin: 1,
+    color: {
+      dark: '#050505',
+      light: '#ffffff',
+    },
+  });
+}
+
+async function hydrateTicket(data) {
+  const qrDataUrl = data.qr_data_url || await generateQrDataUrl(data.id || ticketId);
+  const ticket = {
+    id: (data.id || ticketId || '').toUpperCase(),
+    ticket_type: data.ticket_type || 'ga',
+    night: data.night || 'all-access',
+    quantity: data.quantity || 1,
+    status: data.status || 'cached',
+    qr_data_url: qrDataUrl,
+    updated_at: new Date().toISOString(),
+  };
+
+  if (ticket.id && ticket.qr_data_url) {
+    await window.OSFNATicketStore.putTicket(ticket);
+    postTicketToServiceWorker(ticket);
+  }
+
+  return ticket;
+}
+
+async function loadFromNetwork({ allowPoll = false } = {}) {
+  if (!ticketId) return null;
+
+  const response = await fetch(`/api/ticket-wallet?ticket_id=${encodeURIComponent(ticketId)}`, { cache: 'no-store' });
+  if (!response.ok) throw new Error('Ticket lookup failed');
+  const payload = await response.json();
+  const ticket = await hydrateTicket(payload);
+  renderTicket(ticket, 'Fresh from the OSFNA gate wallet.');
+
+  if (allowPoll && ticket.status === 'pending_payment') {
+    alertStatus.textContent = 'Payment landed. Waiting for the ticket to flip to paid…';
+    setTimeout(() => loadFromNetwork().catch(() => {}), 2500);
+  }
+
+  return ticket;
+}
+
+async function loadWallet() {
+  if (!ticketId) {
+    updateStatus('missing', 'Ticket ID required', 'No ticket reference was provided.');
+    return;
+  }
+
+  ticketIdEl.textContent = ticketId;
+
+  const cached = await window.OSFNATicketStore.getTicket(ticketId);
+  if (cached) renderTicket(cached, 'Loaded from the device cache for offline gate access.');
+
+  try {
+    await loadFromNetwork({ allowPoll: paidFlow });
+  } catch (error) {
+    if (cached) {
+      updateStatus(cached.status || 'cached', 'Offline wallet ready', 'Network is unavailable. Showing the locally cached QR.');
+      return;
+    }
+
+    updateStatus('offline', 'Offline and not cached yet', 'This ticket has not been stored on the device yet.');
+    console.error('[ticket-wallet] load failed', error);
+  }
+}
+
+document.getElementById('refresh-ticket').addEventListener('click', async () => {
+  alertStatus.textContent = '';
+  try {
+    await loadFromNetwork();
+  } catch (error) {
+    alertStatus.textContent = error.message;
+  }
+});
+
+document.getElementById('copy-ticket').addEventListener('click', async () => {
+  if (!ticketId) return;
+  try {
+    await navigator.clipboard.writeText(ticketId);
+    alertStatus.textContent = 'Ticket ID copied.';
+  } catch {
+    alertStatus.textContent = 'Clipboard access failed.';
+  }
+});
+
+window.addEventListener('load', loadWallet);
+</script>
+</body>
+</html>

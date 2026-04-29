@@ -37,6 +37,36 @@ function buildSplitMeta(totalCents) {
   };
 }
 
+async function resolveAuthenticatedUser(req) {
+  const token = req.headers.authorization?.replace('Bearer ', '').trim();
+  if (!token || !process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) return null;
+
+  if (token === 'stub-token-dev') {
+    return { id: 'stub', email: 'demo@example.com', full_name: 'Demo User' };
+  }
+
+  const authClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  const { data: { user }, error } = await authClient.auth.getUser(token);
+  if (error || !user) return null;
+
+  let profile = null;
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    const adminClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+    const result = await adminClient
+      .from('attendee_profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .single();
+    profile = result.data || null;
+  }
+
+  return {
+    id: user.id,
+    email: user.email || null,
+    full_name: profile?.full_name || user.user_metadata?.full_name || null,
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -48,6 +78,7 @@ export default async function handler(req, res) {
   const totalCents = unit_cents * quantity;
   const ticketId   = randomBytes(8).toString('hex').toUpperCase();
   const label      = TICKET_LABELS[ticket_type];
+  const actor      = await resolveAuthenticatedUser(req);
 
   // Persist to Supabase before checkout to get a record ID
   if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -62,6 +93,9 @@ export default async function handler(req, res) {
       night:        night || null,
       table_id:     table_id || null,
       table_seats:  table_seats ? parseInt(table_seats, 10) : null,
+      attendee_id:  actor?.id && actor.id !== 'stub' ? actor.id : null,
+      holder_email: actor?.email || null,
+      holder_name:  actor?.full_name || null,
       status:       'pending_payment',
       split_venue:        Math.round(totalCents * SPLIT.venue),
       split_treasury:     Math.round(totalCents * SPLIT.treasury),
@@ -99,7 +133,7 @@ export default async function handler(req, res) {
         quantity,
       }],
       mode: 'payment',
-      success_url: `${origin}/parties.html?success=1&ref=${ticketId}`,
+      success_url: `${origin}/ticket.html?ref=${ticketId}&paid=1`,
       cancel_url:  `${origin}/parties.html`,
       metadata: {
         ticket_id:   ticketId,
@@ -108,6 +142,8 @@ export default async function handler(req, res) {
         night:       night || '',
         table_id:    table_id || '',
         price_tier:  price_tier || '',
+        holder_name: actor?.full_name || '',
+        holder_email: actor?.email || '',
         ...buildSplitMeta(totalCents),
       },
     });
@@ -120,6 +156,7 @@ export default async function handler(req, res) {
     success:   true,
     fallback:  true,
     ticket_id: ticketId,
+    wallet_url: `/ticket.html?ref=${ticketId}`,
     message:   `${label} request received (${quantity}x ${(unit_cents/100).toFixed(0)} each). Payment details will be emailed within 24 hours. Reference: ${ticketId}`,
   });
 }

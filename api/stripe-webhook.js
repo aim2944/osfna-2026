@@ -57,6 +57,19 @@ export default async function handler(req, res) {
       .eq('business_name', business_name)
       .eq('status', 'pending_payment');
     if (error) console.error('[stripe-webhook] vendor update error:', error.message);
+  } else if (session.metadata?.ticket_id) {
+    const { error } = await sb
+      .from('party_tickets')
+      .update({
+        status: 'paid',
+        stripe_session_id: session.id,
+        paid_at: new Date().toISOString(),
+        holder_name: session.metadata?.holder_name || null,
+        holder_email: session.metadata?.holder_email || null,
+      })
+      .eq('ticket_id', session.metadata.ticket_id)
+      .eq('status', 'pending_payment');
+    if (error) console.error('[stripe-webhook] party ticket update error:', error.message);
   }
 
   return res.status(200).json({ received: true });

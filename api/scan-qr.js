@@ -72,6 +72,7 @@ export default async function handler(req, res) {
       valid:       true,
       ticket_type: ticket.ticket_type,
       night:       ticket.night || 'all-access',
+      holder_name: ticket.holder_name || null,
       table_id:    ticket.table_id || null,
       quantity:    ticket.quantity,
     });

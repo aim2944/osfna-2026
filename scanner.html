@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>OSFNA 2026 — Door Scanner</title>
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo-main.png" />
   <link rel="icon" href="assets/favicon.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,6 +25,8 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overscroll-behavior-y: none;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     /* ── Header ── */
@@ -26,7 +34,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.25rem;
+      padding: calc(1rem + env(safe-area-inset-top)) 1.25rem 1rem;
       border-bottom: 1px solid rgba(255,255,255,.07);
     }
     .scan-logo { font-size: 1rem; font-weight: 800; letter-spacing: 0.1em; color: #fff; }
@@ -39,7 +47,7 @@
     .night-select option { background: #111; }
 
     /* ── Main ── */
-    .scan-body { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem 2rem; gap: 1.5rem; }
+    .scan-body { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem calc(2rem + env(safe-area-inset-bottom)); gap: 1.5rem; }
 
     /* ── Camera view ── */
     .camera-container {
@@ -257,6 +265,8 @@ let lastId    = '';
 let cooldown  = false;
 let stats     = { total: 0, ok: 0, fail: 0 };
 let rafId     = null;
+let detectPending = false;
+const detector = 'BarcodeDetector' in window ? new BarcodeDetector({ formats: ['qr_code'] }) : null;
 
 // ── Session stats ──
 function updateStats() {
@@ -296,22 +306,41 @@ function stopCamera() {
 function scanLoop() {
   if (!scanning) return;
   rafId = requestAnimationFrame(scanLoop);
+  if (detectPending) return;
 
   if (video.readyState < 2) return;
   canvas.width  = video.videoWidth;
   canvas.height = video.videoHeight;
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const qr = jsQR(imageData.data, canvas.width, canvas.height, { inversionAttempts: 'dontInvert' });
+  detectPending = true;
+  detectQrValue()
+    .then((value) => {
+      if (!value || cooldown) return;
+      const id = value.trim().toUpperCase();
+      if (id !== lastId) {
+        lastId = id;
+        validate(id);
+      }
+    })
+    .finally(() => {
+      detectPending = false;
+    });
+}
 
-  if (qr && qr.data && !cooldown) {
-    const id = qr.data.trim().toUpperCase();
-    if (id !== lastId) {
-      lastId = id;
-      validate(id);
+async function detectQrValue() {
+  if (detector) {
+    try {
+      const codes = await detector.detect(canvas);
+      if (codes[0]?.rawValue) return codes[0].rawValue;
+    } catch (error) {
+      console.warn('[scanner] BarcodeDetector fallback', error);
     }
   }
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const qr = jsQR(imageData.data, canvas.width, canvas.height, { inversionAttempts: 'dontInvert' });
+  return qr?.data || '';
 }
 
 // ── Validate ticket ──
@@ -360,7 +389,7 @@ function showResult(data, type) {
       <div class="result-title green">VALID — ADMIT</div>
       <span class="result-chip ${chipClass}">${typeLabel[data.ticket_type] || data.ticket_type}</span>
       <div class="result-body">${data.holder_name ? data.holder_name + ' · ' : ''}${data.night === 'all-access' ? 'All-Access' : data.night || ''}${tableInfo}</div>`;
-    vibrate([100, 50, 100]);
+    vibrate(200);
   } else if (type === 'dupe') {
     result.innerHTML = `
       <div class="result-icon">⚠️</div>
@@ -394,5 +423,6 @@ manualBtn.addEventListener('click', () => {
 });
 manualIn.addEventListener('keydown', e => { if (e.key === 'Enter') manualBtn.click(); });
 </script>
+<script src="pwa-shell.js"></script>
 </body>
 </html>

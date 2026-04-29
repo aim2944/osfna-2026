@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
-    "stripe": "^14.18.0"
+    "stripe": "^14.18.0",
+    "web-push": "^3.6.7"
   }
 }

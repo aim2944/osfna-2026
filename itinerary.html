@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Oromo Week City Guide 2026 — OSFNA</title>
   <meta name="description" content="The official OSFNA 2026 city guide. Restaurants, attractions, and late-night spots curated for Oromo Week attendees. Members only." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo-main.png" />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -175,9 +181,9 @@
 <div id="auth-gate" class="auth-gate">
   <div class="auth-gate-icon">🛂</div>
   <h2>Members Only</h2>
-  <p>Create your free Oromo Passport to unlock the official city guide, restaurant directory, and nightlife venues.</p>
-  <a href="passport.html?next=itinerary" class="btn btn-gold" style="text-decoration:none;display:inline-block">Get Your Passport →</a>
-  <p style="font-size:.8rem;color:rgba(255,255,255,.25)">Already have one? <a href="passport.html?next=itinerary&mode=signin" style="color:#fbbf24">Sign in</a></p>
+  <p>Sign-up runs through Instagram. Follow <strong>@myosfna</strong> + DM <strong>JOIN</strong> to get added to the OSFNA 2026 group chat — that's where venues, restaurants, and city drops are announced.</p>
+  <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener" class="btn btn-gold" style="text-decoration:none;display:inline-block">Follow @myosfna →</a>
+  <p style="font-size:.8rem;color:rgba(255,255,255,.25)">Have a ticket? <a href="passport.html?next=itinerary&mode=signin" style="color:#fbbf24">Show my QR</a></p>
 </div>
 
 <!-- Main content — hidden until auth passes -->
@@ -647,5 +653,6 @@ function signOut() {
 }
 document.getElementById('signout-btn')?.addEventListener('click', signOut);
 </script>
+<script src="pwa-shell.js"></script>
 </body>
 </html>

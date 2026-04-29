@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Register — OSFNA 2026</title>
   <meta name="description" content="Register for OSFNA 2026 — Teams, Volunteers, Vendors, Sponsors, Events, Hotels." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo-main.png" />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -324,7 +330,7 @@
           <input type="hidden" name="sport" value="soccer" />
           <div class="form-msg" id="soccer-msg"></div>
           <button type="submit" class="submit-btn" id="soccer-submit-btn">Submit Soccer Registration →</button>
-          <p class="form-note">Registration fee collected at checkout — Div A $750 · Div B $500 · Div C $350<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <p class="form-note">Registration fee collected at checkout. Bracket drops and gameday updates go out in the <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener">@myosfna Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -376,7 +382,7 @@
           <input type="hidden" name="sport" value="basketball" />
           <div class="form-msg" id="basketball-msg"></div>
           <button type="submit" class="submit-btn" id="basketball-submit-btn">Submit Basketball Registration →</button>
-          <p class="form-note">Registration fee: $300 per team — collected at checkout<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <p class="form-note">Registration fee collected at checkout. Schedule + court assignments announced in the <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener">@myosfna Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -519,7 +525,7 @@
           </div>
           <div class="form-msg" id="vendor-msg"></div>
           <button type="submit" class="submit-btn" id="vendor-submit-btn">Submit &amp; Pay Booth Fee →</button>
-          <p class="form-note">10×10 Standard $400 · 10×20 Large $700 · Payment via Stripe checkout<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <p class="form-note">Booth assignments and load-in details announced through the <a href="https://www.instagram.com/myosfna/" target="_blank" rel="noopener">@myosfna Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>
@@ -825,5 +831,6 @@
   wireForm('form-basketball', '/api/register-team',   'basketball-submit-btn', 'basketball-msg');
   wireForm('form-vendor',     '/api/register-vendor', 'vendor-submit-btn',     'vendor-msg');
 </script>
+<script src="pwa-shell.js"></script>
 </body>
 </html>

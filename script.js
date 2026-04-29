@@ -8,14 +8,20 @@ const EVENT_DATE = new Date('2026-07-25T10:00:00');
 
 // ---- COUNTDOWN TIMER ----
 function updateCountdown() {
+  const dayEl = document.getElementById('cd-days');
+  const hourEl = document.getElementById('cd-hours');
+  const minEl = document.getElementById('cd-mins');
+  const secEl = document.getElementById('cd-secs');
+  if (!dayEl || !hourEl || !minEl || !secEl) return;
+
   const now = new Date();
   const diff = EVENT_DATE - now;
 
   if (diff <= 0) {
-    document.getElementById('cd-days').textContent = '00';
-    document.getElementById('cd-hours').textContent = '00';
-    document.getElementById('cd-mins').textContent = '00';
-    document.getElementById('cd-secs').textContent = '00';
+    dayEl.textContent = '00';
+    hourEl.textContent = '00';
+    minEl.textContent = '00';
+    secEl.textContent = '00';
     return;
   }
 
@@ -25,10 +31,10 @@ function updateCountdown() {
   const secs  = Math.floor((diff % (1000 * 60)) / 1000);
 
   const pad = n => String(n).padStart(2, '0');
-  document.getElementById('cd-days').textContent  = pad(days);
-  document.getElementById('cd-hours').textContent = pad(hours);
-  document.getElementById('cd-mins').textContent  = pad(mins);
-  document.getElementById('cd-secs').textContent  = pad(secs);
+  dayEl.textContent  = pad(days);
+  hourEl.textContent = pad(hours);
+  minEl.textContent  = pad(mins);
+  secEl.textContent  = pad(secs);
 }
 
 setInterval(updateCountdown, 1000);
@@ -36,27 +42,31 @@ updateCountdown();
 
 // ---- NAVBAR SCROLL ----
 const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+if (nav) {
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+}
 
 // ---- MOBILE NAV ----
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 
-hamburger.addEventListener('click', () => {
-  const isOpen = hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open', isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
-});
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
 
 // ---- SCROLL REVEAL ----
 const revealEls = document.querySelectorAll('.reveal');
