@@ -216,6 +216,7 @@
       .champs { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
       .champ img { height: 120px; }
       .home-foot { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      #lineup > div[style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 380px) {
       .hero h1 { font-size: 2.6rem; }
@@ -352,9 +353,14 @@
     <p class="eyebrow">Three nights · One week</p>
     <h2 class="title">The lineup.</h2>
     <p class="lede">Headliners drop on Instagram. Comment <strong style="color:#fff;">OSFNA</strong> on the latest @osfna2026 post to get pinged when artists go public.</p>
-    <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" style="display:block;margin-top:1rem;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
-      <img src="assets/lineup-poster.jpg" alt="OSFNA 2026 lineup — Thu Jul 30, Fri Jul 31 (Rooftop Party 2pm), Sat Aug 1 (Surprise Concert 11pm). Headliners TBA." style="width:100%;display:block;" />
-    </a>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem;margin-top:1rem;">
+      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" style="display:block;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+        <img src="assets/lineup-poster.jpg" alt="OSFNA 2026 lineup — Thu Jul 30, Fri Jul 31 (Rooftop Party 2pm), Sat Aug 1 (Surprise Concert 11pm). Headliners TBA." style="width:100%;display:block;" />
+      </a>
+      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" style="display:block;border-radius:14px;overflow:hidden;border:1px solid rgba(239,27,34,0.4);">
+        <img src="assets/closing-night-poster.jpg" alt="OSFNA 2026 Official Closing Night Concert — Aug 1, Minneapolis. Lineup reveal coming soon." style="width:100%;display:block;" />
+      </a>
+    </div>
     <div class="btn-row">
       <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="pill pill-gold">Comment OSFNA on IG →</a>
       <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Get drops in the GC</a>
