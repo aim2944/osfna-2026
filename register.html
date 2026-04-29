@@ -256,7 +256,7 @@
 <div class="reg-tabs-wrap">
   <div class="reg-tabs" role="tablist">
     <button class="reg-tab active" role="tab" aria-selected="true"  data-tab="soccer">Soccer Team</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="basketball">Basketball Team</button>
+    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="basketball">4v4 Basketball</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="volunteers">Volunteers</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="vendor">Vendor</button>
     <button class="reg-tab"        role="tab" aria-selected="false" data-tab="sponsorship">Sponsorship</button>
@@ -338,51 +338,30 @@
     <!-- ══════ BASKETBALL TEAM REGISTRATION ══════ -->
     <div class="reg-panel" id="panel-basketball" role="tabpanel">
       <div class="reg-form-wrap">
+        <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas." style="width:100%;max-width:560px;display:block;margin:0 auto 1.5rem;border-radius:12px;" />
         <div class="reg-form-header">
-          <h2>Basketball Team Registration</h2>
-          <p>Register your basketball team for the OSFNA 2026 tournament. Open division for all skill levels. Minimum 8 players, maximum 12 on roster.</p>
+          <h2>4v4 Basketball — Quick Register</h2>
+          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. 4 players + up to 2 subs. Just the basics — captain handles the rest.</p>
         </div>
         <form class="reg-form" id="form-basketball" novalidate>
-          <p class="form-section-label">Team Info</p>
           <div class="form-row-2">
-            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., Minneapolis Oromos" required /></div>
-            <div class="field"><label>City / State <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Minneapolis, MN" required /></div>
+            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., New Dallas" required /></div>
+            <div class="field"><label>City <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Minneapolis, MN" required /></div>
           </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Team Captain</p>
           <div class="form-row-2">
             <div class="field"><label>Captain Name <span>*</span></label><input type="text" name="captain_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Captain Email <span>*</span></label><input type="email" name="captain_email" placeholder="email@example.com" required /></div>
+            <div class="field"><label>Captain Phone <span>*</span></label><input type="tel" name="captain_phone" placeholder="(555) 123-4567" required /></div>
           </div>
-          <div class="field"><label>Captain Phone <span>*</span></label><input type="tel" name="captain_phone" placeholder="(555) 123-4567" required /></div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Roster</p>
-          <div class="form-row-2">
-            <div class="field"><label>Number of Players <span>*</span></label>
-              <select name="roster_count" required>
-                <option value="">— Choose —</option>
-                <option>8 players</option>
-                <option>9 players</option>
-                <option>10 players</option>
-                <option>11 players</option>
-                <option>12 players</option>
-              </select>
-            </div>
-            <div class="field"><label>Jersey Color <span>*</span></label><input type="text" name="jersey_color" placeholder="e.g., Red and Black" required /></div>
-          </div>
-          <div class="field"><label>Notes</label><textarea name="notes" placeholder="Any additional information"></textarea></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="bball-heritage" name="heritage_confirmed" required />
-            <label for="bball-heritage">I confirm that all players on this roster are of Oromo heritage and meet OSFNA 2026 eligibility requirements. <span style="color:var(--red)">*</span></label>
-          </div>
+          <div class="field"><label>Captain Email <span>*</span></label><input type="email" name="captain_email" placeholder="email@example.com" required /></div>
           <div class="field checkbox-field">
             <input type="checkbox" id="bball-agree" name="agree" required />
-            <label for="bball-agree">I confirm this team will comply with all OSFNA 2026 bylaws and basketball tournament rules. <span style="color:var(--red)">*</span></label>
+            <label for="bball-agree">We'll follow OSFNA 4v4 tournament rules. <span style="color:var(--red)">*</span></label>
           </div>
           <input type="hidden" name="sport" value="basketball" />
+          <input type="hidden" name="format" value="4v4" />
           <div class="form-msg" id="basketball-msg"></div>
-          <button type="submit" class="submit-btn" id="basketball-submit-btn">Submit Basketball Registration →</button>
-          <p class="form-note">Registration fee collected at checkout. Schedule + court assignments announced in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
+          <button type="submit" class="submit-btn" id="basketball-submit-btn">Lock In Our 4v4 Spot →</button>
+          <p class="form-note">Roster (up to 6) and jerseys collected later via the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
         </form>
       </div>
     </div>

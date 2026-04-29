@@ -31,10 +31,10 @@
 
   --space-xs:  0.5rem;
   --space-sm:  1rem;
-  --space-md:  2rem;
-  --space-lg:  4rem;
-  --space-xl:  7rem;
-  --space-2xl: 10rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.75rem;
+  --space-xl:  4.5rem;
+  --space-2xl: 6.5rem;
 
   --max-w: 1200px;
   --radius: 12px;
