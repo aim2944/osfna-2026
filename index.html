@@ -110,36 +110,50 @@
       color: rgba(255,255,255,0.92);
     }
 
-    /* Basketball feature */
-    .bball {
+    /* Feature card row — basketball + concert side-by-side */
+    .feature-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 0.85rem;
+      margin-top: -2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .feature {
       background: linear-gradient(135deg, rgba(239,27,34,0.12), rgba(239,27,34,0.02) 60%), #0b0303;
       border: 1px solid rgba(239,27,34,0.35);
-      border-radius: 22px;
+      border-radius: 18px;
       overflow: hidden;
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-      gap: 0;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: #fff;
+      transition: transform 0.18s, border-color 0.18s;
     }
-    .bball img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      min-height: 280px;
+    .feature:hover { transform: translateY(-3px); border-color: var(--red); }
+    .feature-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+    .feature-body { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+    .feature-eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ff5a5a;
     }
-    .bball-body { padding: 1.75rem; display: flex; flex-direction: column; justify-content: center; }
-    .bball-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
-      margin: 1rem 0 1.25rem;
+    .feature-title {
+      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
+      font-size: clamp(1.1rem, 3.4vw, 1.5rem);
+      line-height: 1; color: #fff;
     }
-    .bball-stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 0.65rem;
-      text-align: center;
+    .feature-meta { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+    .feature-cta {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      background: var(--red); color: #fff;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      font-family: var(--font-head);
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 700;
     }
-    .bball-stat-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-    .bball-stat-value { font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.95rem; margin-top: 0.2rem; }
 
     /* Sports row */
     .sports { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
@@ -209,14 +223,15 @@
       .lede { font-size: 0.95rem; }
       .pill { padding: 0.95rem 1.15rem; font-size: 0.72rem; flex: 1 1 auto; justify-content: center; }
       .btn-row { gap: 0.5rem; }
-      .bball { grid-template-columns: 1fr; }
-      .bball img { min-height: auto; max-height: 320px; aspect-ratio: 1/1; }
-      .bball-body { padding: 1.25rem; }
+      .feature-row { gap: 0.6rem; margin-top: -1.5rem; }
+      .feature-body { padding: 0.85rem 0.9rem 0.95rem; }
+      .feature-title { font-size: 1.05rem; }
+      .feature-meta { font-size: 0.72rem; }
+      .feature-cta { font-size: 0.65rem; padding: 0.5rem 0.85rem; }
       .sports, .involved { grid-template-columns: 1fr; }
       .champs { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
       .champ img { height: 120px; }
       .home-foot { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-      #lineup > div[style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 380px) {
       .hero h1 { font-size: 2.6rem; }
@@ -265,24 +280,26 @@
     </div>
   </section>
 
-  <!-- 4v4 BASKETBALL FEATURE -->
-  <section class="bball" id="basketball">
-    <a href="register.html#basketball" aria-label="Register for 4v4 basketball">
-      <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 4v4 Oromo Basketball Tournament — Jul 30 to Aug 1, Minneapolis. Cash prize. 2025 champs New Dallas." />
+  <!-- FEATURE ROW: 4v4 BASKETBALL + CLOSING NIGHT -->
+  <section class="feature-row" id="basketball">
+    <a href="register.html#basketball" class="feature" aria-label="Register for 4v4 basketball">
+      <img class="feature-img" src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 4v4 Oromo Basketball Tournament — Jul 30 to Aug 1, Minneapolis. Cash prize." />
+      <div class="feature-body">
+        <span class="feature-eyebrow">🏀 Now open · Cash prize</span>
+        <span class="feature-title">4v4 Oromo Basketball</span>
+        <span class="feature-meta">Jul 30 – Aug 1 · MPLS</span>
+        <span class="feature-cta">Register 4v4 →</span>
+      </div>
     </a>
-    <div class="bball-body">
-      <p class="eyebrow" style="color:#ff5a5a;">Now open · Cash prize</p>
-      <h2 class="title">4v4 Oromo Basketball</h2>
-      <p class="lede">4 starters + up to 2 subs. One DM and you're locked in.</p>
-      <div class="bball-stats">
-        <div class="bball-stat"><div class="bball-stat-label">Date</div><div class="bball-stat-value">Jul 30 – Aug 1</div></div>
-        <div class="bball-stat"><div class="bball-stat-label">City</div><div class="bball-stat-value">MPLS, MN</div></div>
-        <div class="bball-stat"><div class="bball-stat-label">Format</div><div class="bball-stat-value" style="color:var(--red);">4v4</div></div>
+    <a href="#concert" class="feature" aria-label="Closing Night Concert">
+      <img class="feature-img" src="assets/closing-night-poster.jpg" alt="OSFNA 2026 Official Closing Night Concert — Aug 1, Minneapolis. Lineup reveal coming soon." />
+      <div class="feature-body">
+        <span class="feature-eyebrow">🎤 Closing Night · Aug 1</span>
+        <span class="feature-title">Closing Night Concert</span>
+        <span class="feature-meta">Lineup reveal coming soon · Venue TBA</span>
+        <span class="feature-cta">Pre-order →</span>
       </div>
-      <div class="btn-row" style="margin-top:0;">
-        <a href="register.html#basketball" class="pill pill-red">Register 4v4 →</a>
-      </div>
-    </div>
+    </a>
   </section>
 
   <!-- SPORTS -->
@@ -348,29 +365,13 @@
     </div>
   </section>
 
-  <!-- LINEUP -->
-  <section id="lineup">
-    <p class="eyebrow">Three nights · One week</p>
-    <h2 class="title">The lineup.</h2>
-    <p class="lede">Headliners drop on Instagram. Comment <strong style="color:#fff;">OSFNA</strong> on the latest @osfna2026 post to get pinged when artists go public.</p>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem;margin-top:1rem;">
-      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" style="display:block;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
-        <img src="assets/lineup-poster.jpg" alt="OSFNA 2026 lineup — Thu Jul 30, Fri Jul 31 (Rooftop Party 2pm), Sat Aug 1 (Surprise Concert 11pm). Headliners TBA." style="width:100%;display:block;" />
-      </a>
-      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" style="display:block;border-radius:14px;overflow:hidden;border:1px solid rgba(239,27,34,0.4);">
-        <img src="assets/closing-night-poster.jpg" alt="OSFNA 2026 Official Closing Night Concert — Aug 1, Minneapolis. Lineup reveal coming soon." style="width:100%;display:block;" />
-      </a>
-    </div>
-    <div style="margin-top:1rem;background:linear-gradient(135deg,rgba(239,27,34,0.12),rgba(239,27,34,0.02) 60%),#0b0303;border:1px solid rgba(239,27,34,0.35);border-radius:14px;padding:1.1rem 1.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.85rem;">
-      <div>
-        <div class="eyebrow" style="color:#ff5a5a;margin-bottom:0.25rem;">Closing Night Concert · Aug 1</div>
-        <div style="font-family:var(--font-display);font-size:clamp(1.4rem,4vw,1.9rem);color:#fff;line-height:1;">$75 <span style="color:rgba(255,255,255,0.55);font-size:0.85rem;letter-spacing:0.02em;">early bird pre-order</span></div>
-        <div style="font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:0.3rem;">$100+ at the door · limited pre-order tickets · venue TBA</div>
-      </div>
-      <a href="#" id="concert-preorder" class="pill pill-red">Pre-order $75 →</a>
-    </div>
+  <!-- CONCERT PREORDER -->
+  <section id="concert">
+    <p class="eyebrow">Closing Night · Aug 1</p>
+    <h2 class="title">Pre-order the concert.</h2>
+    <p class="lede">Early bird pre-order tickets are open now. At-the-door pricing is higher. Venue TBA — drops first in the GC.</p>
     <div class="btn-row">
-      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener" class="pill pill-gold">Comment OSFNA on IG →</a>
+      <a href="#" id="concert-preorder" class="pill pill-red">Pre-order Concert →</a>
       <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Get drops in the GC</a>
     </div>
   </section>
@@ -444,7 +445,7 @@
     if (!btn) return;
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket ($75) for Aug 1 in Minneapolis. How do I lock it in?";
+      const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket for Aug 1 in Minneapolis. How do I lock it in?";
       try { await navigator.clipboard.writeText(text); } catch {}
       const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
       const igAppUrl = 'instagram://direct/new?username=osfna2026';

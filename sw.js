@@ -1,7 +1,7 @@
 importScripts('/ticket-store.js');
 
-const SHELL_CACHE = 'osfna-shell-v8';
-const STATIC_CACHE = 'osfna-static-v8';
+const SHELL_CACHE = 'osfna-shell-v9';
+const STATIC_CACHE = 'osfna-static-v9';
 const OFFLINE_ROUTES = new Set(['/passport.html', '/ticket.html']);
 const CORE_ASSETS = [
   '/',

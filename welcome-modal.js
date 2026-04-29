@@ -132,7 +132,7 @@
         </a>
         <a href="${qrHref}" class="osfna-btn osfna-btn-qr" data-action="qr">${qrLabel}</a>
         <a href="register.html#basketball" class="osfna-btn osfna-btn-share" data-action="bball">🏀 Register 4v4 Basketball — Cash Prize</a>
-        <button type="button" class="osfna-btn osfna-btn-concert" data-action="concert">🎤 Closing Night Concert <span class="price">$75 early</span></button>
+        <button type="button" class="osfna-btn osfna-btn-concert" data-action="concert">🎤 Pre-order Closing Night Concert</button>
       </div>
       <p class="osfna-welcome-note">Sign-up is on Instagram. Follow <strong>@osfna2026</strong> + DM <strong>JOIN</strong>.</p>
     </div>
@@ -158,7 +158,7 @@
   overlay.querySelector('[data-action="concert"]').addEventListener('click', async (e) => {
     sessionStorage.setItem(SESSION_KEY, '1');
     const btn = e.currentTarget;
-    const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket ($75) for Aug 1 in Minneapolis. How do I lock it in?";
+    const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket for Aug 1 in Minneapolis. How do I lock it in?";
     try { await navigator.clipboard.writeText(text); } catch {}
     const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
     const igAppUrl = 'instagram://direct/new?username=osfna2026';
