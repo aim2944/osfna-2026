@@ -24,51 +24,50 @@
     @keyframes osfnaSlideUp { from { transform: translateY(20px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
     .osfna-welcome-card {
       position: relative;
-      width: 100%; max-width: 460px;
+      width: 100%; max-width: 320px;
       background: #fff7ee;
-      border-radius: 28px;
-      padding: 2rem 1.75rem 1.75rem;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      border-radius: 22px;
+      padding: 1.25rem 1.1rem 1rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
       animation: osfnaSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      max-height: 92vh; overflow-y: auto;
     }
     .osfna-welcome-close {
-      position: absolute; top: 0.85rem; right: 0.85rem;
-      width: 36px; height: 36px;
+      position: absolute; top: 0.7rem; right: 0.7rem;
+      width: 28px; height: 28px;
       border: none; background: rgba(7,7,7,0.06);
       border-radius: 50%; cursor: pointer;
-      font-size: 1.2rem; color: #070707; line-height: 1;
+      font-size: 1rem; color: #070707; line-height: 1;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.15s;
     }
     .osfna-welcome-close:hover { background: rgba(7,7,7,0.12); }
     .osfna-welcome-eyebrow {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.66rem; letter-spacing: 0.24em;
+      font-size: 0.6rem; letter-spacing: 0.2em;
       text-transform: uppercase; color: #ef1b22;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.4rem;
     }
     .osfna-welcome-title {
       font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
-      font-size: clamp(1.85rem, 6vw, 2.4rem);
-      line-height: 1; letter-spacing: -0.03em;
-      color: #070707; margin: 0 0 0.65rem;
+      font-size: clamp(1.45rem, 5vw, 1.75rem);
+      line-height: 1; letter-spacing: -0.02em;
+      color: #070707; margin: 0 0 0.4rem;
     }
     .osfna-welcome-title span { color: #ef1b22; }
     .osfna-welcome-sub {
-      font-size: 0.95rem; line-height: 1.55;
-      color: rgba(7,7,7,0.65); margin: 0 0 1.4rem;
+      font-size: 0.8rem; line-height: 1.5;
+      color: rgba(7,7,7,0.62); margin: 0 0 0.85rem;
     }
     .osfna-welcome-btns {
-      display: flex; flex-direction: column; gap: 0.65rem;
+      display: flex; flex-direction: column; gap: 0.45rem;
     }
     .osfna-btn {
       display: flex; align-items: center; justify-content: center;
-      gap: 0.55rem;
-      padding: 1rem 1.2rem;
+      gap: 0.45rem;
+      padding: 0.7rem 1rem;
       border-radius: 999px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem; letter-spacing: 0.14em;
+      font-size: 0.68rem; letter-spacing: 0.12em;
       text-transform: uppercase; font-weight: 700;
       text-decoration: none; cursor: pointer;
       border: none; transition: transform 0.15s, opacity 0.15s;
@@ -101,11 +100,11 @@
       margin-left: 0.4rem;
       font-size: 0.7rem;
     }
-    .osfna-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .osfna-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
     .osfna-welcome-note {
-      margin: 1.1rem 0 0;
-      font-size: 0.78rem; line-height: 1.5;
-      color: rgba(7,7,7,0.45); text-align: center;
+      margin: 0.65rem 0 0;
+      font-size: 0.68rem; line-height: 1.45;
+      color: rgba(7,7,7,0.42); text-align: center;
     }
     .osfna-welcome-note strong { color: #070707; font-weight: 700; }
   `;
@@ -131,8 +130,7 @@
           Join the GC on Instagram
         </a>
         <a href="${qrHref}" class="osfna-btn osfna-btn-qr" data-action="qr">${qrLabel}</a>
-        <a href="register.html#basketball" class="osfna-btn osfna-btn-share" data-action="bball">🏀 Register 4v4 Basketball — Cash Prize</a>
-        <button type="button" class="osfna-btn osfna-btn-concert" data-action="concert">🎤 Pre-order Closing Night Concert</button>
+        <a href="#events" class="osfna-btn osfna-btn-concert" data-action="events">📅 See Oromo Week Events</a>
       </div>
       <p class="osfna-welcome-note">Sign-up is on Instagram. Follow <strong>@osfna2026</strong> + DM <strong>JOIN</strong>.</p>
     </div>
@@ -152,24 +150,9 @@
   overlay.querySelector('[data-action="qr"]').addEventListener('click', () => {
     sessionStorage.setItem(SESSION_KEY, '1');
   });
-  overlay.querySelector('[data-action="bball"]').addEventListener('click', () => {
+  overlay.querySelector('[data-action="events"]').addEventListener('click', () => {
     sessionStorage.setItem(SESSION_KEY, '1');
-  });
-  overlay.querySelector('[data-action="concert"]').addEventListener('click', async (e) => {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    const btn = e.currentTarget;
-    const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket for Aug 1 in Minneapolis. How do I lock it in?";
-    try { await navigator.clipboard.writeText(text); } catch {}
-    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-    const igAppUrl = 'instagram://direct/new?username=osfna2026';
-    const igWebUrl = 'https://ig.me/m/osfna2026';
-    btn.innerHTML = '✓ Message copied — opening IG…';
-    if (isMobile) {
-      window.location.href = igAppUrl;
-      setTimeout(() => { window.location.href = igWebUrl; }, 800);
-    } else {
-      window.open(igWebUrl, '_blank', 'noopener');
-    }
+    overlay.remove();
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.body.contains(overlay)) close();

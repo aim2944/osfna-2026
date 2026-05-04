@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>OSFNA 2026 — Oromo Week · Minneapolis</title>
-  <meta name="description" content="OSFNA 2026 — July 25–Aug 1 in Minneapolis. 4v4 basketball, soccer, golf, and Oromo Week. Register, join the GC, get the QR." />
+  <meta name="description" content="OSFNA 2026 — Oromo Week in Minneapolis. Cultural events, community programming, and championship celebrations. Dates TBD." />
   <meta name="theme-color" content="#000000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -18,13 +18,14 @@
       --red: #ef1b22;
       --red-dark: #b91318;
     }
-    body { background: #050505; color: #fff; }
+    body { background: #050505; color: #fff; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
     .home {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 0 1rem 3rem;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
-    .home > section + section { margin-top: 2.5rem; }
     .eyebrow {
       font-family: var(--font-head);
       font-size: 0.7rem;
@@ -64,9 +65,10 @@
     /* Hero — full-bleed crowd background */
     .hero {
       position: relative;
-      margin: 0 -1rem;
-      padding: calc(5.5rem + env(safe-area-inset-top)) 1.25rem 2.5rem;
-      min-height: 92vh;
+      flex: 1;
+      min-height: 0;
+      margin: 0;
+      padding: calc(4rem + env(safe-area-inset-top)) 1.25rem 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -144,6 +146,20 @@
       line-height: 1; color: #fff;
     }
     .feature-meta { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+    .feature-proof {
+      align-self: flex-start;
+      margin-top: 0.15rem;
+      padding: 0.32rem 0.62rem;
+      border-radius: 999px;
+      background: rgba(251,191,36,0.13);
+      border: 1px solid rgba(251,191,36,0.28);
+      color: #fbbf24;
+      font-family: var(--font-head);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
     .feature-cta {
       align-self: flex-start;
       margin-top: 0.5rem;
@@ -155,17 +171,161 @@
       font-weight: 700;
     }
 
-    /* Sports row */
-    .sports { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .sport {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px;
-      padding: 1.1rem;
+    /* Timeline of event flyers */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0 0;
+      padding: 0.5rem 0 1rem 0;
     }
-    .sport-icon { font-size: 1.6rem; }
-    .sport h3 { font-family: var(--font-display); font-size: 1.2rem; color: #fff; margin: 0.4rem 0 0.3rem; }
-    .sport p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.45; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(239,27,34,0.45) 8%, rgba(239,27,34,0.45) 92%, transparent);
+    }
+    .timeline-day {
+      position: relative;
+      padding: 1.5rem 0 0.9rem 3rem;
+    }
+    .timeline-day:first-child { padding-top: 0.25rem; }
+    .timeline-day::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 1.65rem;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 3px solid #050505;
+      box-shadow: 0 0 0 2px rgba(239,27,34,0.4);
+    }
+    .timeline-day:first-child::before { top: 0.4rem; }
+    .timeline-day-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #fbbf24;
+      margin-bottom: 0.85rem;
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .timeline-day-label .tbd-pill {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+    }
+    .timeline-cards {
+      display: flex; flex-direction: column;
+      gap: 0.85rem;
+    }
+    .flyer-card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0a0a0a;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+      aspect-ratio: 4 / 5;
+    }
+    .flyer-card:hover { transform: translateY(-3px); }
+    .flyer-card img {
+      width: 100%; height: 100%; display: block;
+      object-fit: cover;
+    }
+    .flyer-card .flyer-meta {
+      position: absolute;
+      top: 0.7rem; left: 0.7rem;
+      background: rgba(10,10,10,0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .flyer-card .flyer-meta.red { background: rgba(239,27,34,0.92); }
+    .flyer-card .flyer-meta.gold { background: rgba(251,191,36,0.92); color: #0a0a0a; border-color: transparent; }
+    .flyer-card .flyer-cta {
+      position: absolute;
+      bottom: 0.7rem; left: 0.7rem; right: 0.7rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .flyer-card .flyer-cta strong { color: #fbbf24; white-space: nowrap; }
+
+    /* Placeholder flyer (event without image yet) */
+    .flyer-card.placeholder {
+      background:
+        radial-gradient(circle at 80% 10%, rgba(239,27,34,0.25), transparent 60%),
+        linear-gradient(155deg, #14100c 0%, #050505 70%);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 1.4rem 1.4rem 1.6rem;
+    }
+    .flyer-card.placeholder .ph-eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: #ff5a5a; font-weight: 700;
+    }
+    .flyer-card.placeholder .ph-title {
+      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
+      font-size: clamp(1.7rem, 6vw, 2.6rem);
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: 0.01em;
+      margin-top: 0.6rem;
+    }
+    .flyer-card.placeholder .ph-title em {
+      display: block;
+      font-size: 0.55em;
+      font-style: normal;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+    .flyer-card.placeholder .ph-foot {
+      font-family: var(--font-head);
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 0.85rem;
+    }
+    .flyer-card.placeholder .ph-foot strong { color: #fbbf24; }
+
+    @media (min-width: 720px) {
+      .timeline::before { left: 22px; }
+      .timeline-day { padding-left: 3.5rem; }
+      .timeline-day::before { left: 13px; }
+      .timeline-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 1rem;
+      }
+    }
 
     /* Champions */
     .champs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
@@ -205,37 +365,52 @@
     .involved-h { font-family: var(--font-display); font-size: 1.1rem; }
     .involved-p { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
 
+    /* Quick links bar */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: #050505;
+      flex-shrink: 0;
+    }
+    .quick-link {
+      display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 0.6rem 0.5rem;
+      font-family: var(--font-head);
+      font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.78); text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .quick-link:hover { border-color: var(--red); color: #fff; }
+    .quick-link.ql-red { background: rgba(239,27,34,0.12); border-color: rgba(239,27,34,0.3); color: #ff6b6b; }
+
     /* Footer */
     .home-foot {
-      margin-top: 4rem; padding-top: 2rem;
+      padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
       border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex; flex-wrap: wrap; gap: 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
       justify-content: space-between; align-items: center;
-      font-size: 0.8rem; color: rgba(255,255,255,0.5);
+      font-size: 0.7rem; color: rgba(255,255,255,0.35);
+      flex-shrink: 0;
     }
-    .foot-links { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .foot-links a { color: rgba(255,255,255,0.78); text-decoration: none; }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .foot-links a { color: rgba(255,255,255,0.5); text-decoration: none; }
     .foot-links a:hover { color: var(--red); }
 
     @media (max-width: 720px) {
-      .home > section + section { margin-top: 2rem; }
-      .title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
-      .lede { font-size: 0.95rem; }
-      .pill { padding: 0.95rem 1.15rem; font-size: 0.72rem; flex: 1 1 auto; justify-content: center; }
-      .btn-row { gap: 0.5rem; }
-      .feature-row { gap: 0.6rem; margin-top: -1.5rem; }
-      .feature-body { padding: 0.85rem 0.9rem 0.95rem; }
-      .feature-title { font-size: 1.05rem; }
-      .feature-meta { font-size: 0.72rem; }
-      .feature-cta { font-size: 0.65rem; padding: 0.5rem 0.85rem; }
-      .sports, .involved { grid-template-columns: 1fr; }
-      .champs { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-      .champ img { height: 120px; }
-      .home-foot { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .lede { font-size: 0.92rem; }
+      .pill { padding: 0.8rem 1rem; font-size: 0.7rem; flex: 1 1 auto; justify-content: center; }
+      .btn-row { gap: 0.45rem; margin-top: 1rem; }
+      .home-foot { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
     }
     @media (max-width: 380px) {
-      .hero h1 { font-size: 2.6rem; }
-      .pill { font-size: 0.68rem; letter-spacing: 0.1em; padding: 0.85rem 1rem; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero { padding-bottom: 1.1rem; }
+      .quick-link { font-size: 0.6rem; }
     }
   </style>
 </head>
@@ -247,7 +422,8 @@
     <span class="nav-year">2026</span>
   </a>
   <ul class="nav-links">
-    <li><a href="register.html#basketball" style="color:#ff5a5a;font-weight:700">🏀 4v4 Basketball</a></li>
+    <li><a href="#events" style="color:#ff5a5a;font-weight:700">Events</a></li>
+    <li><a href="https://www.myosfna.com" target="_blank" rel="noopener" style="color:#fff;font-weight:700">myosfna.com</a></li>
     <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" id="nav-passport-link" style="color:#fbbf24;font-weight:700">Join GC</a></li>
   </ul>
   <button class="hamburger" aria-label="Open menu" aria-expanded="false">
@@ -255,9 +431,9 @@
   </button>
 </nav>
 <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <li><a href="register.html#basketball" style="color:#ff5a5a;font-weight:700">🏀 4v4 Basketball</a></li>
+  <li><a href="#events" style="color:#ff5a5a;font-weight:700">Events</a></li>
+  <li><a href="https://www.myosfna.com" target="_blank" rel="noopener">myosfna.com</a></li>
   <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">Join GC on IG</a></li>
-  <li><a href="passport.html">My Passport</a></li>
   <li><a href="#contact">Contact</a></li>
 </ul>
 
@@ -267,165 +443,36 @@
   <section class="hero">
     <p class="eyebrow" style="color:#ff5a5a;">Oromo Sports Federation · North America</p>
     <h1>OSFNA <span class="accent">2026</span><br>Oromo Week.</h1>
-    <p class="lede">July 25 – August 1 · Minneapolis. A full week of soccer, 4v4 basketball, golf, culture, and community.</p>
+    <p class="lede">Minneapolis. A full week of culture, community, and championship celebrations. Official dates and venues TBD.</p>
     <div class="hero-meta">
-      <span class="meta-chip">Jul 25 – Aug 1</span>
+      <span class="meta-chip">Dates TBD</span>
       <span class="meta-chip">Minneapolis, MN</span>
-      <span class="meta-chip">3,000+ attendees</span>
+      <span class="meta-chip">Community · Culture</span>
     </div>
     <div class="btn-row">
-      <a href="register.html#basketball" class="pill pill-red">🏀 Register 4v4 →</a>
-      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-gold">Join GC</a>
-      <a href="passport.html" class="pill pill-ghost">My Passport</a>
+      <a href="parties.html" class="pill pill-red">📅 See Events →</a>
+      <a href="https://www.myosfna.com" target="_blank" rel="noopener" class="pill pill-gold">Visit myosfna.com</a>
+      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Join GC</a>
     </div>
   </section>
-
-  <!-- FEATURE ROW: 4v4 BASKETBALL + CLOSING NIGHT -->
-  <section class="feature-row" id="basketball">
-    <a href="register.html#basketball" class="feature" aria-label="Register for 4v4 basketball">
-      <img class="feature-img" src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 4v4 Oromo Basketball Tournament — Jul 30 to Aug 1, Minneapolis. Cash prize." />
-      <div class="feature-body">
-        <span class="feature-eyebrow">🏀 Now open · Cash prize</span>
-        <span class="feature-title">4v4 Oromo Basketball</span>
-        <span class="feature-meta">Jul 30 – Aug 1 · MPLS</span>
-        <span class="feature-cta">Register 4v4 →</span>
-      </div>
-    </a>
-    <a href="#concert" class="feature" aria-label="Closing Night Concert">
-      <img class="feature-img" src="assets/closing-night-poster.jpg" alt="OSFNA 2026 Official Closing Night Concert — Aug 1, Minneapolis. Lineup reveal coming soon." />
-      <div class="feature-body">
-        <span class="feature-eyebrow">🎤 Closing Night · Aug 1</span>
-        <span class="feature-title">Closing Night Concert</span>
-        <span class="feature-meta">Lineup reveal coming soon · Venue TBA</span>
-        <span class="feature-cta">Pre-order →</span>
-      </div>
-    </a>
-  </section>
-
-  <!-- SPORTS -->
-  <section>
-    <p class="eyebrow">Tournament</p>
-    <h2 class="title">Three sports. One week.</h2>
-    <div class="sports">
-      <div class="sport">
-        <div class="sport-icon">⚽</div>
-        <h3>Soccer</h3>
-        <p>Three divisions. Primetime matches all week.</p>
-      </div>
-      <div class="sport">
-        <div class="sport-icon">🏀</div>
-        <h3>Basketball</h3>
-        <p>4v4 tournament with a cash prize. Open to all.</p>
-      </div>
-      <div class="sport">
-        <div class="sport-icon">⛳</div>
-        <h3>Golf</h3>
-        <p>4-person scramble. Inaugural champs: Team Portland.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CHAMPIONS -->
-  <section>
-    <p class="eyebrow">2025 Champions</p>
-    <h2 class="title">Defending titles.</h2>
-    <div class="champs">
-      <div class="champ">
-        <img src="assets/champion-div-a.jpeg" alt="Dire Dawa FC" />
-        <div class="champ-body">
-          <div class="champ-cat">Soccer · Div A</div>
-          <div class="champ-name">Dire Dawa FC</div>
-          <div class="champ-loc">Minnesota</div>
-        </div>
-      </div>
-      <div class="champ">
-        <img src="assets/champion-div-b.jpeg" alt="WBO FC DC" />
-        <div class="champ-body">
-          <div class="champ-cat">Soccer · Div B</div>
-          <div class="champ-name">WBO FC DC</div>
-          <div class="champ-loc">Washington, D.C.</div>
-        </div>
-      </div>
-      <div class="champ">
-        <img src="assets/champion-basketball.jpeg" alt="New Dallas" />
-        <div class="champ-body">
-          <div class="champ-cat">Basketball</div>
-          <div class="champ-name">New Dallas</div>
-          <div class="champ-loc">Texas</div>
-        </div>
-      </div>
-      <div class="champ">
-        <img src="assets/champion-golf.jpeg" alt="Team Portland" />
-        <div class="champ-body">
-          <div class="champ-cat">Golf · Inaugural</div>
-          <div class="champ-name">Team Portland</div>
-          <div class="champ-loc">Oregon</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONCERT PREORDER -->
-  <section id="concert">
-    <p class="eyebrow">Closing Night · Aug 1</p>
-    <h2 class="title">Pre-order the concert.</h2>
-    <p class="lede">Early bird pre-order tickets are open now. At-the-door pricing is higher. Venue TBA — drops first in the GC.</p>
-    <div class="btn-row">
-      <a href="#" id="concert-preorder" class="pill pill-red">Pre-order Concert →</a>
-      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Get drops in the GC</a>
-    </div>
-  </section>
-
-  <!-- OROMO WEEK -->
-  <section>
-    <p class="eyebrow">Beyond the pitch</p>
-    <h2 class="title">Oromo Week.</h2>
-    <p class="lede">Concerts, cultural performances, Miss Oromo North America, community forums, and family programming — all week long.</p>
-    <div class="week-tags">
-      <span class="week-tag">👑 Miss Oromo North America</span>
-      <span class="week-tag">🎵 Nightly concerts</span>
-      <span class="week-tag">🎭 Cultural performances</span>
-      <span class="week-tag">☀️ Daytime activities</span>
-      <span class="week-tag">🌐 Community forums</span>
-    </div>
-  </section>
-
-  <!-- GET INVOLVED -->
-  <section>
-    <p class="eyebrow">Get involved</p>
-    <h2 class="title">Be part of it.</h2>
-    <div class="involved">
-      <a href="register.html#basketball">
-        <div class="involved-h">🏀 Play 4v4</div>
-        <div class="involved-p">Lock in your team — DM @osfna2026 in one tap.</div>
-      </a>
-      <a href="vendor.html">
-        <div class="involved-h">🛍️ Vend</div>
-        <div class="involved-p">Food, hookah, merch — apply for a booth at the party nights.</div>
-      </a>
-      <a href="mailto:myosfna@gmail.com?subject=Sponsorship">
-        <div class="involved-h">🤝 Sponsor</div>
-        <div class="involved-p">Reach 3,000+ Oromo diaspora attendees across Oromo Week.</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- CONTACT / FOOTER -->
-  <footer class="home-foot" id="contact">
-    <div>
-      <div style="font-family:var(--font-display);font-size:1.1rem;color:#fff;">OSFNA <span style="color:var(--red);">2026</span></div>
-      <div style="margin-top:0.25rem;">© 2026 Oromo Sports Federation in North America · 501(c) · Minnesota</div>
-    </div>
-    <div class="foot-links">
-      <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener">TikTok</a>
-      <a href="mailto:myosfna@gmail.com">Email</a>
-      <a href="tel:7632188700">Call</a>
-      <a href="media.html">Media</a>
-    </div>
-  </footer>
 
 </main>
+
+<div class="quick-links">
+  <a href="parties.html" class="quick-link ql-red">📅 Events</a>
+  <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="quick-link">📲 Join GC</a>
+  <a href="https://www.myosfna.com" target="_blank" rel="noopener" class="quick-link">🌐 myosfna.com</a>
+</div>
+
+<footer class="home-foot" id="contact">
+  <span>© 2026 OSFNA · Minneapolis</span>
+  <div class="foot-links">
+    <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener">TikTok</a>
+    <a href="mailto:myosfna@gmail.com">Email</a>
+    <a href="media.html">Media</a>
+  </div>
+</footer>
 
 <script src="script.js"></script>
 <script>
@@ -443,22 +490,9 @@
   (function() {
     const btn = document.getElementById('concert-preorder');
     if (!btn) return;
-    btn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const text = "OSFNA 2026 — Closing Night Concert\n\nI'd like to pre-order the early bird ticket for Aug 1 in Minneapolis. How do I lock it in?";
-      try { await navigator.clipboard.writeText(text); } catch {}
-      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-      const igAppUrl = 'instagram://direct/new?username=osfna2026';
-      const igWebUrl = 'https://ig.me/m/osfna2026';
-      const original = btn.textContent;
-      btn.textContent = '✓ Message copied — opening IG…';
-      if (isMobile) {
-        window.location.href = igAppUrl;
-        setTimeout(() => { window.location.href = igWebUrl; }, 800);
-      } else {
-        window.open(igWebUrl, '_blank', 'noopener');
-      }
-      setTimeout(() => { btn.textContent = original; }, 2400);
+    btn.addEventListener('click', () => {
+      btn.textContent = 'Opening Party Hub…';
+      setTimeout(() => { btn.textContent = 'Open Party Hub →'; }, 1800);
     });
   })();
 </script>
