@@ -1,502 +1,1012 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>OSFNA 2026 — Oromo Week · Minneapolis</title>
-  <meta name="description" content="OSFNA 2026 — Oromo Week in Minneapolis. Cultural events, community programming, and championship celebrations. Dates TBD." />
-  <meta name="theme-color" content="#000000" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/logo-main.png" />
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    :root {
-      --red: #ef1b22;
-      --red-dark: #b91318;
-    }
-    body { background: #050505; color: #fff; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
-    .home {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .eyebrow {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.6rem;
-    }
-    .title {
-      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
-      font-size: clamp(2rem, 6vw, 3rem);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: #fff;
-      margin: 0 0 0.75rem;
-    }
-    .lede {
-      font-size: 1rem;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.7);
-      max-width: 60ch;
-    }
-    .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.85rem 1.25rem; border-radius: 999px;
-      font-family: var(--font-head);
-      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
-      font-weight: 700; text-decoration: none;
-      transition: transform 0.15s, opacity 0.15s;
-    }
-    .pill:hover { transform: translateY(-1px); opacity: 0.94; }
-    .pill-red    { background: var(--red); color: #fff; }
-    .pill-ghost  { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.18); }
-    .pill-gold   { background: #fbbf24; color: #070707; }
-
-    /* Hero — full-bleed crowd background */
-    .hero {
-      position: relative;
-      flex: 1;
-      min-height: 0;
-      margin: 0;
-      padding: calc(4rem + env(safe-area-inset-top)) 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      isolation: isolate;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0; z-index: -2;
-      background: url('assets/hero-bg.jpeg') center 30% / cover no-repeat;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0; z-index: -1;
-      background:
-        linear-gradient(180deg, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.25) 30%, rgba(5,5,5,0.85) 75%, #050505 100%),
-        radial-gradient(circle at 80% 10%, rgba(239,27,34,0.25), transparent 55%);
-    }
-    .hero h1 {
-      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
-      font-size: clamp(3rem, 13vw, 5.5rem);
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      margin: 0 0 1rem;
-      text-shadow: 0 2px 18px rgba(0,0,0,0.55);
-    }
-    .hero h1 .accent { color: var(--red); }
-    .hero .lede { color: rgba(255,255,255,0.88); font-size: 1.05rem; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
-    .hero-meta {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-top: 1.1rem;
-    }
-    .meta-chip {
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.14);
-      padding: 0.4rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.92);
-    }
-
-    /* Feature card row — basketball + concert side-by-side */
-    .feature-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 0.85rem;
-      margin-top: -2rem;
-      position: relative;
-      z-index: 2;
-    }
-    .feature {
-      background: linear-gradient(135deg, rgba(239,27,34,0.12), rgba(239,27,34,0.02) 60%), #0b0303;
-      border: 1px solid rgba(239,27,34,0.35);
-      border-radius: 18px;
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      text-decoration: none; color: #fff;
-      transition: transform 0.18s, border-color 0.18s;
-    }
-    .feature:hover { transform: translateY(-3px); border-color: var(--red); }
-    .feature-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
-    .feature-body { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.35rem; }
-    .feature-eyebrow {
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #ff5a5a;
-    }
-    .feature-title {
-      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
-      font-size: clamp(1.1rem, 3.4vw, 1.5rem);
-      line-height: 1; color: #fff;
-    }
-    .feature-meta { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
-    .feature-proof {
-      align-self: flex-start;
-      margin-top: 0.15rem;
-      padding: 0.32rem 0.62rem;
-      border-radius: 999px;
-      background: rgba(251,191,36,0.13);
-      border: 1px solid rgba(251,191,36,0.28);
-      color: #fbbf24;
-      font-family: var(--font-head);
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .feature-cta {
-      align-self: flex-start;
-      margin-top: 0.5rem;
-      background: var(--red); color: #fff;
-      padding: 0.55rem 0.95rem;
-      border-radius: 999px;
-      font-family: var(--font-head);
-      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    /* Timeline of event flyers */
-    .timeline {
-      position: relative;
-      margin: 1.5rem 0 0;
-      padding: 0.5rem 0 1rem 0;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 18px; top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg, transparent, rgba(239,27,34,0.45) 8%, rgba(239,27,34,0.45) 92%, transparent);
-    }
-    .timeline-day {
-      position: relative;
-      padding: 1.5rem 0 0.9rem 3rem;
-    }
-    .timeline-day:first-child { padding-top: 0.25rem; }
-    .timeline-day::before {
-      content: '';
-      position: absolute;
-      left: 10px; top: 1.65rem;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: var(--red);
-      border: 3px solid #050505;
-      box-shadow: 0 0 0 2px rgba(239,27,34,0.4);
-    }
-    .timeline-day:first-child::before { top: 0.4rem; }
-    .timeline-day-label {
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: #fbbf24;
-      margin-bottom: 0.85rem;
-      display: flex; align-items: center; gap: 0.55rem;
-    }
-    .timeline-day-label .tbd-pill {
-      font-size: 0.6rem;
-      letter-spacing: 0.18em;
-      padding: 0.2rem 0.5rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-    }
-    .timeline-cards {
-      display: flex; flex-direction: column;
-      gap: 0.85rem;
-    }
-    .flyer-card {
-      position: relative;
-      display: block;
-      text-decoration: none;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #0a0a0a;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
-      transition: transform 0.2s ease;
-      aspect-ratio: 4 / 5;
-    }
-    .flyer-card:hover { transform: translateY(-3px); }
-    .flyer-card img {
-      width: 100%; height: 100%; display: block;
-      object-fit: cover;
-    }
-    .flyer-card .flyer-meta {
-      position: absolute;
-      top: 0.7rem; left: 0.7rem;
-      background: rgba(10,10,10,0.82);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #fff;
-      font-family: var(--font-head);
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.4rem 0.65rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-    .flyer-card .flyer-meta.red { background: rgba(239,27,34,0.92); }
-    .flyer-card .flyer-meta.gold { background: rgba(251,191,36,0.92); color: #0a0a0a; border-color: transparent; }
-    .flyer-card .flyer-cta {
-      position: absolute;
-      bottom: 0.7rem; left: 0.7rem; right: 0.7rem;
-      background: rgba(10,10,10,0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: #fff;
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.65rem 0.85rem;
-      border-radius: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 0.4rem;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .flyer-card .flyer-cta strong { color: #fbbf24; white-space: nowrap; }
-
-    /* Placeholder flyer (event without image yet) */
-    .flyer-card.placeholder {
-      background:
-        radial-gradient(circle at 80% 10%, rgba(239,27,34,0.25), transparent 60%),
-        linear-gradient(155deg, #14100c 0%, #050505 70%);
-      border: 1px solid rgba(255,255,255,0.06);
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: 1.4rem 1.4rem 1.6rem;
-    }
-    .flyer-card.placeholder .ph-eyebrow {
-      font-family: var(--font-head);
-      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
-      color: #ff5a5a; font-weight: 700;
-    }
-    .flyer-card.placeholder .ph-title {
-      font-family: var(--font-display, 'Bebas Neue', 'Oswald', sans-serif);
-      font-size: clamp(1.7rem, 6vw, 2.6rem);
-      line-height: 0.95;
-      color: #fff;
-      letter-spacing: 0.01em;
-      margin-top: 0.6rem;
-    }
-    .flyer-card.placeholder .ph-title em {
-      display: block;
-      font-size: 0.55em;
-      font-style: normal;
-      font-weight: 400;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 0.4rem;
-    }
-    .flyer-card.placeholder .ph-foot {
-      font-family: var(--font-head);
-      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      display: flex; justify-content: space-between; align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 0.85rem;
-    }
-    .flyer-card.placeholder .ph-foot strong { color: #fbbf24; }
-
-    @media (min-width: 720px) {
-      .timeline::before { left: 22px; }
-      .timeline-day { padding-left: 3.5rem; }
-      .timeline-day::before { left: 13px; }
-      .timeline-cards {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0,1fr));
-        gap: 1rem;
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>OSFNA 2026 — Oromo Week · Minneapolis</title>
+    <meta
+      name="description"
+      content="OSFNA 2026 — Oromo Week in Minneapolis. Five nights of cultural programming, concerts, and parties. Dates TBD."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/logo-main.png" />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      :root {
+        --red: #ef1b22;
+        --red-dark: #b91318;
       }
-    }
+      body {
+        background: #050505;
+        color: #fff;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+      .home {
+        display: flex;
+        flex-direction: column;
+      }
+      .eyebrow {
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 0.6rem;
+      }
+      .title {
+        font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
+        font-size: clamp(2rem, 6vw, 3rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: #fff;
+        margin: 0 0 0.75rem;
+      }
+      .lede {
+        font-size: 1rem;
+        line-height: 1.55;
+        color: rgba(255, 255, 255, 0.7);
+        max-width: 60ch;
+      }
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.25rem;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.85rem 1.25rem;
+        border-radius: 999px;
+        font-family: var(--font-head);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          transform 0.15s,
+          opacity 0.15s;
+      }
+      .pill:hover {
+        transform: translateY(-1px);
+        opacity: 0.94;
+      }
+      .pill-red {
+        background: var(--red);
+        color: #fff;
+      }
+      .pill-ghost {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+      .pill-gold {
+        background: #fbbf24;
+        color: #070707;
+      }
 
-    /* Champions */
-    .champs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
-    .champ {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .champ img { width: 100%; height: 110px; object-fit: cover; display: block; }
-    .champ-body { padding: 0.6rem 0.7rem 0.8rem; }
-    .champ-cat { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); }
-    .champ-name { font-family: var(--font-display); color: #fff; font-size: 1rem; margin-top: 0.15rem; }
-    .champ-loc { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem; }
+      /* Hero — full-bleed crowd background */
+      .hero {
+        position: relative;
+        min-height: 56dvh;
+        margin: 0;
+        padding: calc(4rem + env(safe-area-inset-top)) 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        isolation: isolate;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background: url("assets/hero-bg.jpeg") center 30% / cover no-repeat;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(5, 5, 5, 0.55) 0%,
+            rgba(5, 5, 5, 0.25) 30%,
+            rgba(5, 5, 5, 0.85) 75%,
+            #050505 100%
+          ),
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(239, 27, 34, 0.25),
+            transparent 55%
+          );
+      }
+      .hero h1 {
+        font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
+        font-size: clamp(3rem, 13vw, 5.5rem);
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        margin: 0 0 1rem;
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+      }
+      .hero h1 .accent {
+        color: var(--red);
+      }
+      .hero .lede {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.05rem;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1.1rem;
+      }
+      .meta-chip {
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.92);
+      }
 
-    /* Week + getinvolved */
-    .week-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
-    .week-tag {
-      font-size: 0.78rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.78);
-    }
-    .involved { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-    .involved a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 1rem;
-      text-decoration: none;
-      color: #fff;
-      transition: border-color 0.15s, transform 0.15s;
-    }
-    .involved a:hover { border-color: var(--red); transform: translateY(-1px); }
-    .involved-h { font-family: var(--font-display); font-size: 1.1rem; }
-    .involved-p { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+      /* Feature card row — basketball + concert side-by-side */
+      .feature-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+        margin-top: -2rem;
+        position: relative;
+        z-index: 2;
+      }
+      .feature {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(239, 27, 34, 0.12),
+            rgba(239, 27, 34, 0.02) 60%
+          ),
+          #0b0303;
+        border: 1px solid rgba(239, 27, 34, 0.35);
+        border-radius: 18px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: #fff;
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+      }
+      .feature:hover {
+        transform: translateY(-3px);
+        border-color: var(--red);
+      }
+      .feature-img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        display: block;
+      }
+      .feature-body {
+        padding: 1rem 1.1rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .feature-eyebrow {
+        font-family: var(--font-head);
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #ff5a5a;
+      }
+      .feature-title {
+        font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
+        font-size: clamp(1.1rem, 3.4vw, 1.5rem);
+        line-height: 1;
+        color: #fff;
+      }
+      .feature-meta {
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .feature-proof {
+        align-self: flex-start;
+        margin-top: 0.15rem;
+        padding: 0.32rem 0.62rem;
+        border-radius: 999px;
+        background: rgba(251, 191, 36, 0.13);
+        border: 1px solid rgba(251, 191, 36, 0.28);
+        color: #fbbf24;
+        font-family: var(--font-head);
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .feature-cta {
+        align-self: flex-start;
+        margin-top: 0.5rem;
+        background: var(--red);
+        color: #fff;
+        padding: 0.55rem 0.95rem;
+        border-radius: 999px;
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
 
-    /* Quick links bar */
-    .quick-links {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      padding: 0.65rem 1rem;
-      background: #050505;
-      flex-shrink: 0;
-    }
-    .quick-link {
-      display: flex; align-items: center; justify-content: center; gap: 0.35rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 0.6rem 0.5rem;
-      font-family: var(--font-head);
-      font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.78); text-decoration: none;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .quick-link:hover { border-color: var(--red); color: #fff; }
-    .quick-link.ql-red { background: rgba(239,27,34,0.12); border-color: rgba(239,27,34,0.3); color: #ff6b6b; }
+      /* Timeline of event flyers */
+      .timeline {
+        position: relative;
+        margin: 1.5rem 0 0;
+        padding: 0.5rem 0 1rem 0;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(239, 27, 34, 0.45) 8%,
+          rgba(239, 27, 34, 0.45) 92%,
+          transparent
+        );
+      }
+      .timeline-day {
+        position: relative;
+        padding: 1.5rem 0 0.9rem 3rem;
+      }
+      .timeline-day:first-child {
+        padding-top: 0.25rem;
+      }
+      .timeline-day::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 1.65rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--red);
+        border: 3px solid #050505;
+        box-shadow: 0 0 0 2px rgba(239, 27, 34, 0.4);
+      }
+      .timeline-day:first-child::before {
+        top: 0.4rem;
+      }
+      .timeline-day-label {
+        font-family: var(--font-head);
+        font-size: 0.72rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #fbbf24;
+        margin-bottom: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .timeline-day-label .tbd-pill {
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .timeline-day-label .date-pill {
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        background: rgba(239, 27, 34, 0.18);
+        border: 1px solid rgba(239, 27, 34, 0.45);
+        color: #ff8a8a;
+        font-weight: 700;
+      }
+      .timeline-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+      .flyer-card {
+        position: relative;
+        display: block;
+        text-decoration: none;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #0a0a0a;
+        box-shadow:
+          0 14px 30px rgba(0, 0, 0, 0.45),
+          0 2px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease;
+        aspect-ratio: 4 / 5;
+      }
+      .flyer-card:hover {
+        transform: translateY(-3px);
+      }
+      .flyer-card img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+      .flyer-card .flyer-meta {
+        position: absolute;
+        top: 0.7rem;
+        left: 0.7rem;
+        background: rgba(10, 10, 10, 0.82);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #fff;
+        font-family: var(--font-head);
+        font-size: 0.58rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .flyer-card .flyer-meta.red {
+        background: rgba(239, 27, 34, 0.92);
+      }
+      .flyer-card .flyer-meta.gold {
+        background: rgba(251, 191, 36, 0.92);
+        color: #0a0a0a;
+        border-color: transparent;
+      }
+      .flyer-card .flyer-cta {
+        position: absolute;
+        bottom: 0.7rem;
+        left: 0.7rem;
+        right: 0.7rem;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: #fff;
+        font-family: var(--font-head);
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 0.65rem 0.85rem;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .flyer-card .flyer-cta strong {
+        color: #fbbf24;
+        white-space: nowrap;
+      }
 
-    /* Footer */
-    .home-foot {
-      padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-      justify-content: space-between; align-items: center;
-      font-size: 0.7rem; color: rgba(255,255,255,0.35);
-      flex-shrink: 0;
-    }
-    .foot-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .foot-links a { color: rgba(255,255,255,0.5); text-decoration: none; }
-    .foot-links a:hover { color: var(--red); }
+      /* Placeholder flyer (event without image yet) */
+      .flyer-card.placeholder {
+        background:
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(239, 27, 34, 0.25),
+            transparent 60%
+          ),
+          linear-gradient(155deg, #14100c 0%, #050505 70%);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.4rem 1.4rem 1.6rem;
+      }
+      .flyer-card.placeholder .ph-eyebrow {
+        font-family: var(--font-head);
+        font-size: 0.58rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #ff5a5a;
+        font-weight: 700;
+      }
+      .flyer-card.placeholder .ph-title {
+        font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
+        font-size: clamp(1.7rem, 6vw, 2.6rem);
+        line-height: 0.95;
+        color: #fff;
+        letter-spacing: 0.01em;
+        margin-top: 0.6rem;
+      }
+      .flyer-card.placeholder .ph-title em {
+        display: block;
+        font-size: 0.55em;
+        font-style: normal;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.55);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-top: 0.4rem;
+      }
+      .flyer-card.placeholder .ph-foot {
+        font-family: var(--font-head);
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 0.85rem;
+      }
+      .flyer-card.placeholder .ph-foot strong {
+        color: #fbbf24;
+      }
 
-    @media (max-width: 720px) {
-      .lede { font-size: 0.92rem; }
-      .pill { padding: 0.8rem 1rem; font-size: 0.7rem; flex: 1 1 auto; justify-content: center; }
-      .btn-row { gap: 0.45rem; margin-top: 1rem; }
-      .home-foot { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
-    }
-    @media (max-width: 380px) {
-      .hero h1 { font-size: 2.4rem; }
-      .hero { padding-bottom: 1.1rem; }
-      .quick-link { font-size: 0.6rem; }
-    }
-  </style>
-</head>
-<body>
+      @media (min-width: 720px) {
+        .timeline::before {
+          left: 22px;
+        }
+        .timeline-day {
+          padding-left: 3.5rem;
+        }
+        .timeline-day::before {
+          left: 13px;
+        }
+        .timeline-cards {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1rem;
+        }
+      }
 
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="#top" class="nav-logo-link">
-    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
-    <span class="nav-year">2026</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#events" style="color:#ff5a5a;font-weight:700">Events</a></li>
-    <li><a href="https://www.myosfna.com" target="_blank" rel="noopener" style="color:#fff;font-weight:700">myosfna.com</a></li>
-    <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" id="nav-passport-link" style="color:#fbbf24;font-weight:700">Join GC</a></li>
-  </ul>
-  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <li><a href="#events" style="color:#ff5a5a;font-weight:700">Events</a></li>
-  <li><a href="https://www.myosfna.com" target="_blank" rel="noopener">myosfna.com</a></li>
-  <li><a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">Join GC on IG</a></li>
-  <li><a href="#contact">Contact</a></li>
-</ul>
+      /* Champions */
+      .champs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.6rem;
+      }
+      .champ {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .champ img {
+        width: 100%;
+        height: 110px;
+        object-fit: cover;
+        display: block;
+      }
+      .champ-body {
+        padding: 0.6rem 0.7rem 0.8rem;
+      }
+      .champ-cat {
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--red);
+      }
+      .champ-name {
+        font-family: var(--font-display);
+        color: #fff;
+        font-size: 1rem;
+        margin-top: 0.15rem;
+      }
+      .champ-loc {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 0.1rem;
+      }
 
-<main class="home" id="top">
+      /* Week + getinvolved */
+      .week-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+      }
+      .week-tag {
+        font-size: 0.78rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .involved {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+      }
+      .involved a {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        padding: 1rem;
+        text-decoration: none;
+        color: #fff;
+        transition:
+          border-color 0.15s,
+          transform 0.15s;
+      }
+      .involved a:hover {
+        border-color: var(--red);
+        transform: translateY(-1px);
+      }
+      .involved-h {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+      }
+      .involved-p {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 0.2rem;
+      }
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="eyebrow" style="color:#ff5a5a;">Oromo Sports Federation · North America</p>
-    <h1>OSFNA <span class="accent">2026</span><br>Oromo Week.</h1>
-    <p class="lede">Minneapolis. A full week of culture, community, and championship celebrations. Official dates and venues TBD.</p>
-    <div class="hero-meta">
-      <span class="meta-chip">Dates TBD</span>
-      <span class="meta-chip">Minneapolis, MN</span>
-      <span class="meta-chip">Community · Culture</span>
+      /* Quick links bar */
+      .quick-links {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5rem;
+        padding: 0.65rem 1rem;
+        background: #050505;
+        flex-shrink: 0;
+      }
+      .quick-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 0.6rem 0.5rem;
+        font-family: var(--font-head);
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.78);
+        text-decoration: none;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .quick-link:hover {
+        border-color: var(--red);
+        color: #fff;
+      }
+      .quick-link.ql-red {
+        background: rgba(239, 27, 34, 0.12);
+        border-color: rgba(239, 27, 34, 0.3);
+        color: #ff6b6b;
+      }
+
+      /* Footer */
+      .home-foot {
+        padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.35);
+        flex-shrink: 0;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .foot-links a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+      }
+      .foot-links a:hover {
+        color: var(--red);
+      }
+
+      @media (max-width: 720px) {
+        .lede {
+          font-size: 0.92rem;
+        }
+        .pill {
+          padding: 0.8rem 1rem;
+          font-size: 0.7rem;
+          flex: 1 1 auto;
+          justify-content: center;
+        }
+        .btn-row {
+          gap: 0.45rem;
+          margin-top: 1rem;
+        }
+        .quick-links {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .home-foot {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.4rem;
+        }
+      }
+      @media (max-width: 380px) {
+        .hero h1 {
+          font-size: 2.4rem;
+        }
+        .hero {
+          padding-bottom: 1.1rem;
+        }
+        .quick-link {
+          font-size: 0.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <a href="#top" class="nav-logo-link">
+        <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+        <span class="nav-year">2026</span>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
+            >5v5 Interest</a
+          >
+        </li>
+        <li>
+          <a href="#events" style="color: #ff5a5a; font-weight: 700">Events</a>
+        </li>
+        <li>
+          <a
+            href="https://www.myosfna.com"
+            target="_blank"
+            rel="noopener"
+            style="color: #fff; font-weight: 700"
+            >myosfna.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+            target="_blank"
+            rel="noopener"
+            id="nav-passport-link"
+            style="color: #fbbf24; font-weight: 700"
+            >Join GC</a
+          >
+        </li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <li>
+        <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
+          >5v5 Interest</a
+        >
+      </li>
+      <li>
+        <a href="#events" style="color: #ff5a5a; font-weight: 700">Events</a>
+      </li>
+      <li>
+        <a href="https://www.myosfna.com" target="_blank" rel="noopener"
+          >myosfna.com</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+          target="_blank"
+          rel="noopener"
+          >Join GC on IG</a
+        >
+      </li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <main class="home" id="top">
+      <!-- HERO -->
+      <section class="hero">
+        <p class="eyebrow" style="color: #ff5a5a">
+          Oromo Sports Federation · North America
+        </p>
+        <h1>OSFNA <span class="accent">2026</span><br />Oromo Week.</h1>
+        <p class="lede">
+          Minneapolis · Five nights. Concerts, cultural programming, and
+          after-parties. Dates and venues drop in the GC.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-chip">Dates TBD</span>
+          <span class="meta-chip">Minneapolis, MN</span>
+          <span class="meta-chip">Community · Culture</span>
+        </div>
+        <div class="btn-row">
+          <a href="basketball.html" class="pill pill-red">5v5 Interest</a>
+          <a href="#events" class="pill pill-red">📅 See Events ↓</a>
+          <a
+            href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+            target="_blank"
+            rel="noopener"
+            class="pill pill-gold"
+            >Join GC</a
+          >
+          <a
+            href="https://www.myosfna.com"
+            target="_blank"
+            rel="noopener"
+            class="pill pill-ghost"
+            >myosfna.com</a
+          >
+        </div>
+      </section>
+
+      <!-- TIMELINE OF EVENT FLYERS -->
+      <section id="events" style="padding: 1.6rem 1.25rem 2rem">
+        <p class="eyebrow" style="color: #ff5a5a">Oromo Week · Minneapolis</p>
+        <h2 class="title">The week, day by day.</h2>
+        <p class="lede">
+          Tap a card for the flyer. Date, venue, and final access drop in the
+          GC.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-day" id="tuesday">
+            <div class="timeline-day-label">
+              Day 01 · Tuesday <span class="tbd-pill">Date TBD</span>
+            </div>
+            <div class="timeline-cards">
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Oromummaa Welcoming Party — Day 01 Tuesday"
+              >
+                <img
+                  src="assets/oromummaa-flyer.jpg"
+                  alt="OSFNA 2026 Oromummaa Welcoming Party — Day 01, Tuesday, Minneapolis, free admission"
+                  loading="lazy"
+                />
+                <span class="flyer-meta gold">Free Admission</span>
+                <div class="flyer-cta">
+                  <span>“Oromummaa” Welcoming Party</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="timeline-day" id="wednesday">
+            <div class="timeline-day-label">
+              Day 02 · Wednesday <span class="tbd-pill">Date TBD</span>
+            </div>
+            <div class="timeline-cards">
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Faana Nagaa Party Night — Day 02 Wednesday"
+              >
+                <img
+                  src="assets/faana-nagaa-flyer.jpg"
+                  alt="OSFNA 2026 Faana Nagaa Party Night — Day 02, Wednesday, Minneapolis"
+                  loading="lazy"
+                />
+                <span class="flyer-meta red">Party Night</span>
+                <div class="flyer-cta">
+                  <span>“Faana Nagaa” Party Night</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="timeline-day" id="thursday">
+            <div class="timeline-day-label">
+              Day 03 · Thursday <span class="tbd-pill">Date TBD</span>
+            </div>
+            <div class="timeline-cards">
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Galmee Seena Opening Concert Night — Day 03 Thursday"
+              >
+                <img
+                  src="assets/galmee-seena-flyer.jpg"
+                  alt="OSFNA 2026 Galmee Seena Opening Concert Night — Day 03, Thursday, Minneapolis"
+                  loading="lazy"
+                />
+                <span class="flyer-meta red">Opening Night</span>
+                <div class="flyer-cta">
+                  <span>“Galmee Seena” Concert Night</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Thursday Late Night After Party"
+              >
+                <img
+                  src="assets/thursday-late-night-flyer.jpg"
+                  alt="OSFNA 2026 Thursday Late Night After Party — Minneapolis"
+                  loading="lazy"
+                />
+                <span class="flyer-meta">Late Night</span>
+                <div class="flyer-cta">
+                  <span>Late Night After Party</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="timeline-day" id="friday">
+            <div class="timeline-day-label">
+              Day 04 · Friday <span class="tbd-pill">Date TBD</span>
+            </div>
+            <div class="timeline-cards">
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Adaa Night Cultural Party — Day 04 Friday"
+              >
+                <img
+                  src="assets/adaa-night-flyer.jpg"
+                  alt="OSFNA 2026 Adaa Night Cultural Party — Day 04, Friday, Minneapolis"
+                  loading="lazy"
+                />
+                <span class="flyer-meta red">Cultural Night</span>
+                <div class="flyer-cta">
+                  <span>“Adaa Night” Cultural Party</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Friday Rooftop Party"
+              >
+                <img
+                  src="assets/rooftop-party-poster.jpg"
+                  alt="OSFNA 2026 Friday Rooftop Party — Minneapolis"
+                  loading="lazy"
+                />
+                <span class="flyer-meta">Rooftop</span>
+                <div class="flyer-cta">
+                  <span>Rooftop Party</span><strong>Updates in GC →</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="timeline-day" id="saturday">
+            <div class="timeline-day-label">
+              Day 05 · Saturday <span class="date-pill">Aug 8</span>
+            </div>
+            <div class="timeline-cards">
+              <a
+                class="flyer-card"
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Closing Night Concert After Party — Saturday, August 8"
+              >
+                <img
+                  src="assets/closing-night-poster.jpg"
+                  alt="OSFNA 2026 Official Closing Night Concert After Party — Saturday, August 8, Minneapolis. Lineup reveal coming soon."
+                  loading="lazy"
+                />
+                <span class="flyer-meta red">Headline · Closing Night</span>
+                <div class="flyer-cta">
+                  <span>Closing Night Concert After Party</span
+                  ><strong>Updates in GC →</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="quick-links">
+      <a href="basketball.html" class="quick-link ql-red">5v5 Interest</a>
+      <a href="#events" class="quick-link ql-red">📅 Events</a>
+      <a
+        href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+        target="_blank"
+        rel="noopener"
+        class="quick-link"
+        >📲 Join GC</a
+      >
+      <a
+        href="https://www.myosfna.com"
+        target="_blank"
+        rel="noopener"
+        class="quick-link"
+        >🌐 myosfna.com</a
+      >
     </div>
-    <div class="btn-row">
-      <a href="parties.html" class="pill pill-red">📅 See Events →</a>
-      <a href="https://www.myosfna.com" target="_blank" rel="noopener" class="pill pill-gold">Visit myosfna.com</a>
-      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="pill pill-ghost">Join GC</a>
-    </div>
-  </section>
 
-</main>
+    <footer class="home-foot" id="contact">
+      <span>© 2026 OSFNA · Minneapolis</span>
+      <div class="foot-links">
+        <a
+          href="https://www.instagram.com/osfna2026/"
+          target="_blank"
+          rel="noopener"
+          >Instagram</a
+        >
+        <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener"
+          >TikTok</a
+        >
+        <a href="mailto:myosfna@gmail.com">Email</a>
+        <a href="media.html">Media</a>
+      </div>
+    </footer>
 
-<div class="quick-links">
-  <a href="parties.html" class="quick-link ql-red">📅 Events</a>
-  <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="quick-link">📲 Join GC</a>
-  <a href="https://www.myosfna.com" target="_blank" rel="noopener" class="quick-link">🌐 myosfna.com</a>
-</div>
-
-<footer class="home-foot" id="contact">
-  <span>© 2026 OSFNA · Minneapolis</span>
-  <div class="foot-links">
-    <a href="https://www.instagram.com/osfna2026/" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://www.tiktok.com/@myosfna" target="_blank" rel="noopener">TikTok</a>
-    <a href="mailto:myosfna@gmail.com">Email</a>
-    <a href="media.html">Media</a>
-  </div>
-</footer>
-
-<script src="script.js"></script>
-<script>
-  (function() {
-    const token = localStorage.getItem('osfna_token');
-    const navLink = document.getElementById('nav-passport-link');
-    if (token && navLink) {
-      navLink.textContent = '✓ My Passport';
-      navLink.href = 'itinerary.html';
-      navLink.removeAttribute('target');
-    }
-  })();
-</script>
-<script>
-  (function() {
-    const btn = document.getElementById('concert-preorder');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      btn.textContent = 'Opening Party Hub…';
-      setTimeout(() => { btn.textContent = 'Open Party Hub →'; }, 1800);
-    });
-  })();
-</script>
-<script src="welcome-modal.js"></script>
-<script src="pwa-shell.js"></script>
-</body>
+    <script src="script.js"></script>
+    <script>
+      (function () {
+        const token = localStorage.getItem("osfna_token");
+        const navLink = document.getElementById("nav-passport-link");
+        if (token && navLink) {
+          navLink.textContent = "✓ My Passport";
+          navLink.href = "itinerary.html";
+          navLink.removeAttribute("target");
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        const btn = document.getElementById("concert-preorder");
+        if (!btn) return;
+        btn.addEventListener("click", () => {
+          btn.textContent = "Opening Party Hub…";
+          setTimeout(() => {
+            btn.textContent = "Open Party Hub →";
+          }, 1800);
+        });
+      })();
+    </script>
+    <script src="welcome-modal.js"></script>
+    <script src="pwa-shell.js"></script>
+  </body>
 </html>
