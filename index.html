@@ -260,6 +260,70 @@
         font-weight: 700;
       }
 
+      /* Game + Party combo teaser */
+      .combo-teaser {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1.4rem 1.25rem 0;
+        padding: 1.1rem 1.25rem;
+        border-radius: 18px;
+        text-decoration: none;
+        color: #fff7ee;
+        border: 1px solid rgba(251, 191, 36, 0.5);
+        background:
+          radial-gradient(
+            circle at 88% 0%,
+            rgba(251, 191, 36, 0.22),
+            transparent 55%
+          ),
+          linear-gradient(180deg, #141414 0%, #080808 100%);
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+      }
+      .combo-teaser:hover {
+        transform: translateY(-2px);
+        border-color: #fbbf24;
+      }
+      .combo-teaser .combo-badge {
+        font-family: var(--font-head);
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #070707;
+        background: #fbbf24;
+        padding: 0.3rem 0.6rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .combo-teaser .combo-copy {
+        flex: 1 1 12rem;
+        min-width: 0;
+      }
+      .combo-teaser .combo-copy strong {
+        display: block;
+        font-family: var(--font-display, "Bebas Neue", "Oswald", sans-serif);
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+        line-height: 1;
+        letter-spacing: -0.01em;
+      }
+      .combo-teaser .combo-copy span {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .combo-teaser .combo-go {
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #fbbf24;
+        white-space: nowrap;
+      }
+
       /* Timeline of event flyers */
       .timeline {
         position: relative;
@@ -767,6 +831,16 @@
           >
         </div>
       </section>
+
+      <!-- GAME + PARTY COMBO TEASER -->
+      <a class="combo-teaser" href="parties.html">
+        <span class="combo-badge">Coming Soon</span>
+        <span class="combo-copy">
+          <strong>5v5 Game + Party Combo</strong>
+          <span>One bundle — basketball + the party. Drops in the GC.</span>
+        </span>
+        <span class="combo-go">View →</span>
+      </a>
 
       <!-- TIMELINE OF EVENT FLYERS -->
       <section id="events" style="padding: 1.6rem 1.25rem 2rem">
