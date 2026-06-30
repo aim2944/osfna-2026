@@ -576,7 +576,7 @@
         font-size: 0.72rem;
         letter-spacing: 0.28em;
         text-transform: uppercase;
-        color: rgba(7, 7, 7, 0.42);
+        color: rgba(7, 7, 7, 0.62);
         margin-bottom: 0.6rem;
       }
 
@@ -753,7 +753,7 @@
         margin: 0 auto 1.5rem;
       }
 
-      .passport-gate-card h3 {
+      .passport-gate-card h2 {
         font-family: var(--font-display);
         font-size: clamp(1.8rem, 4vw, 2.8rem);
         line-height: 0.92;
@@ -761,7 +761,7 @@
         margin-bottom: 0.75rem;
       }
 
-      .passport-gate-card h3 span {
+      .passport-gate-card h2 span {
         color: #ef1b22;
       }
 
@@ -949,7 +949,8 @@
     </style>
   </head>
   <body>
-    <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <nav class="nav" aria-label="Main navigation">
       <a href="index.html" class="nav-logo-link">
         <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
         <span class="nav-year">2026</span>
@@ -957,7 +958,9 @@
       <ul class="nav-links">
         <li><a href="index.html#about">About</a></li>
         <li><a href="index.html#tournament">Tournament</a></li>
-        <li><a href="parties.html" class="active">Parties</a></li>
+        <li>
+          <a href="parties.html" class="active" aria-current="page">Parties</a>
+        </li>
         <li><a href="media.html">Media</a></li>
         <li><a href="register.html">Register</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -968,297 +971,303 @@
     </nav>
     <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
       <li><a href="index.html#about">About</a></li>
-      <li><a href="parties.html">Parties</a></li>
+      <li><a href="parties.html" aria-current="page">Parties</a></li>
       <li><a href="media.html">Media</a></li>
       <li><a href="register.html">Register</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
 
-    <!-- ══ NIGHT HERO ══ -->
-    <section class="night-hero">
-      <div class="night-hero-inner">
-        <p class="night-eyebrow reveal">
-          OSFNA 2026 · Minneapolis · Oromo Week
-        </p>
-        <h1 class="night-title reveal reveal-delay-1">
-          Tuesday to Saturday cultural programming.
-        </h1>
-        <div class="night-ctas reveal reveal-delay-2">
-          <a href="#tuesday" class="btn-ghost">Tue</a>
-          <a href="#wednesday" class="btn-ghost">Wed</a>
-          <a href="#thursday" class="btn-ghost">Thu</a>
-          <a href="#friday" class="btn-ghost">Fri</a>
-          <a href="#saturday" class="btn-ghost">Sat</a>
-          <a
-            href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-            target="_blank"
-            rel="noopener"
-            class="btn-ghost"
-            >Join GC</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ PASSPORT GATE WRAPPER ══ -->
-    <div class="gated-wrap" id="party-gate-wrap">
-      <div class="passport-overlay" aria-live="polite">
-        <div class="passport-gate-card">
-          <div class="passport-gate-icon">📲</div>
-          <h3>Party Updates Live In<br /><span>The GC</span></h3>
-          <p>
-            Join the <strong>@osfna2026</strong> Instagram group chat for venue
-            drops, access notes, and same-day updates.
+    <main id="main">
+      <!-- ══ NIGHT HERO ══ -->
+      <section class="night-hero">
+        <div class="night-hero-inner">
+          <p class="night-eyebrow reveal">
+            OSFNA 2026 · Minneapolis · Oromo Week
           </p>
-          <div class="passport-gate-btns">
+          <h1 class="night-title reveal reveal-delay-1">
+            Tuesday to Saturday cultural programming.
+          </h1>
+          <div class="night-ctas reveal reveal-delay-2">
+            <a href="#tuesday" class="btn-ghost">Tue</a>
+            <a href="#wednesday" class="btn-ghost">Wed</a>
+            <a href="#thursday" class="btn-ghost">Thu</a>
+            <a href="#friday" class="btn-ghost">Fri</a>
+            <a href="#saturday" class="btn-ghost">Sat</a>
             <a
               href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
               target="_blank"
               rel="noopener"
-              class="btn-gold"
-              >Join the OSFNA GC →</a
+              class="btn-ghost"
+              >Join GC</a
             >
-            <a href="index.html" class="btn-ghost">Back Home</a>
-          </div>
-          <div class="passport-gate-perks">
-            <span class="gate-perk">Venue drops in the GC</span>
-            <span class="gate-perk">Live updates</span>
-            <span class="gate-perk">Free to join</span>
           </div>
         </div>
-      </div>
-      <div class="gated-content">
-        <section
-          class="section section-dark"
-          style="border-top: 1px solid rgba(255, 255, 255, 0.05)"
-        >
-          <div class="section-inner">
-            <!-- Game + Party Combo -->
-            <p class="day-label" style="color: #fbbf24">Bundle · Soccer + Party</p>
-            <div class="ticket-grid" style="margin-bottom: 1.4rem">
-              <div class="ticket-card combo">
-                <p class="ticket-type">Combo Pass</p>
-                <h3 class="ticket-name">Soccer Game + Party Combo</h3>
-                <ul class="ticket-perks">
-                  <li>Entry to OSFNA soccer</li>
-                  <li>Party access included</li>
-                  <li>Bundle price — less than buying separately</li>
-                </ul>
-                <p class="event-note">
-                  Pricing and on-sale date drop in the GC. Join now for first
-                  access.
-                </p>
-                <button class="buy-btn buy-btn-combo" disabled>
-                  Coming Soon
-                </button>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Get notified in GC →</a
-                >
-              </div>
-            </div>
+      </section>
 
-            <!-- Tuesday -->
-            <p id="tuesday" class="day-label">Tuesday · Date TBD</p>
-            <div class="ticket-grid" style="margin-bottom: 0.8rem">
-              <div
-                class="ticket-card"
-                style="
-                  background: #f6fbf5;
-                  border-color: rgba(20, 130, 58, 0.18);
-                "
+      <!-- ══ PASSPORT GATE WRAPPER ══ -->
+      <div class="gated-wrap" id="party-gate-wrap">
+        <div class="passport-overlay" aria-live="polite">
+          <div class="passport-gate-card">
+            <div class="passport-gate-icon" aria-hidden="true">📲</div>
+            <h2>Party Updates Live In<br /><span>The GC</span></h2>
+            <p>
+              Join the <strong>@osfna2026</strong> Instagram group chat for
+              venue drops, access notes, and same-day updates.
+            </p>
+            <div class="passport-gate-btns">
+              <a
+                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                target="_blank"
+                rel="noopener"
+                class="btn-gold"
+                >Join the OSFNA GC →</a
               >
-                <img
-                  class="ticket-flyer"
-                  src="assets/oromummaa-flyer.jpg"
-                  alt="OSFNA 2026 Oromummaa Welcoming Party — Day 01, Tuesday, Minneapolis, free admission"
-                  loading="lazy"
-                />
-                <p class="ticket-type" style="color: #13823a">Free Admission</p>
-                <h3 class="ticket-name">“OROMUMMAA” Welcoming Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
+              <a href="index.html" class="btn-ghost">Back Home</a>
             </div>
-
-            <!-- Wednesday -->
-            <p id="wednesday" class="day-label">Wednesday · Date TBD</p>
-            <div class="ticket-grid" style="margin-bottom: 0.8rem">
-              <div class="ticket-card">
-                <img
-                  class="ticket-flyer"
-                  src="assets/faana-nagaa-flyer.jpg"
-                  alt="OSFNA 2026 Faana Nagaa Party Night — Day 02, Wednesday, Minneapolis"
-                  loading="lazy"
-                />
-                <p class="ticket-type">Party Night</p>
-                <h3 class="ticket-name">“FAANA NAGAA” Party Night</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-            </div>
-
-            <!-- Thursday -->
-            <p id="thursday" class="day-label">Thursday · Date TBD</p>
-            <div class="ticket-grid" style="margin-bottom: 0.8rem">
-              <div class="ticket-card">
-                <img
-                  class="ticket-flyer"
-                  src="assets/galmee-seena-flyer.jpg"
-                  alt="OSFNA 2026 Galmee Seena Opening Concert Night — Day 03, Thursday, Minneapolis"
-                  loading="lazy"
-                />
-                <p class="ticket-type">Opening Party</p>
-                <h3 class="ticket-name">“GALMEE SEENA” Concert Night</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-              <div class="ticket-card">
-                <img
-                  class="ticket-flyer"
-                  src="assets/thursday-late-night-flyer.jpg"
-                  alt="OSFNA 2026 Thursday Late Night After Party — Minneapolis"
-                  loading="lazy"
-                />
-                <p class="ticket-type">Thu Late Night</p>
-                <h3 class="ticket-name">Late Night After Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-            </div>
-
-            <!-- Friday -->
-            <p id="friday" class="day-label">Friday · Date TBD</p>
-            <div class="ticket-grid" style="margin-bottom: 0.8rem">
-              <div class="ticket-card">
-                <img
-                  class="ticket-flyer"
-                  src="assets/adaa-night-flyer.jpg"
-                  alt="OSFNA 2026 Adaa Night Cultural Party — Day 04, Friday, Minneapolis"
-                  loading="lazy"
-                />
-                <p class="ticket-type">Cultural Night</p>
-                <h3 class="ticket-name">“ADAA NIGHT” Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-              <div class="ticket-card">
-                <img
-                  class="ticket-flyer"
-                  src="assets/rooftop-party-poster.jpg"
-                  alt="OSFNA 2026 Friday Rooftop Party — Minneapolis"
-                  loading="lazy"
-                />
-                <p class="ticket-type">Fri Night Party</p>
-                <h3 class="ticket-name">Rooftop Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-              <div class="ticket-card">
-                <p class="ticket-type">Fri Late Night</p>
-                <h3 class="ticket-name">Late Night After Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-            </div>
-
-            <!-- Saturday -->
-            <p id="saturday" class="day-label">Saturday · Aug 8</p>
-            <div class="ticket-grid" style="margin-bottom: 0.8rem">
-              <div class="ticket-card">
-                <p class="ticket-type">Headline · By OSFNA</p>
-                <h3 class="ticket-name">Closing Night Concert After Party</h3>
-                <p class="event-note">
-                  Date, venue, and lineup will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
-              <div class="ticket-card">
-                <p class="ticket-type">Sat Late Night</p>
-                <h3 class="ticket-name">Late Night After Party</h3>
-                <p class="event-note">
-                  Date, venue, and final details will be shared in the GC.
-                </p>
-                <a
-                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                  target="_blank"
-                  rel="noopener"
-                  class="buy-btn buy-btn-ga gc-link"
-                  >Updates in GC →</a
-                >
-              </div>
+            <div class="passport-gate-perks">
+              <span class="gate-perk">Venue drops in the GC</span>
+              <span class="gate-perk">Live updates</span>
+              <span class="gate-perk">Free to join</span>
             </div>
           </div>
-        </section>
+        </div>
+        <div class="gated-content">
+          <section
+            class="section section-dark"
+            style="border-top: 1px solid rgba(255, 255, 255, 0.05)"
+          >
+            <div class="section-inner">
+              <!-- Game + Party Combo -->
+              <h2 class="day-label" style="color: #fbbf24">
+                Bundle · Soccer + Party
+              </h2>
+              <div class="ticket-grid" style="margin-bottom: 1.4rem">
+                <div class="ticket-card combo">
+                  <p class="ticket-type">Combo Pass</p>
+                  <h3 class="ticket-name">Soccer Game + Party Combo</h3>
+                  <ul class="ticket-perks">
+                    <li>Entry to OSFNA soccer</li>
+                    <li>Party access included</li>
+                    <li>Bundle price — less than buying separately</li>
+                  </ul>
+                  <p class="event-note">
+                    Pricing and on-sale date drop in the GC. Join now for first
+                    access.
+                  </p>
+                  <button class="buy-btn buy-btn-combo" disabled>
+                    Coming Soon
+                  </button>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Get notified in GC →</a
+                  >
+                </div>
+              </div>
+
+              <!-- Tuesday -->
+              <h2 id="tuesday" class="day-label">Tuesday · Date TBD</h2>
+              <div class="ticket-grid" style="margin-bottom: 0.8rem">
+                <div
+                  class="ticket-card"
+                  style="
+                    background: #f6fbf5;
+                    border-color: rgba(20, 130, 58, 0.18);
+                  "
+                >
+                  <img
+                    class="ticket-flyer"
+                    src="assets/oromummaa-flyer.jpg"
+                    alt="OSFNA 2026 Oromummaa Welcoming Party — Day 01, Tuesday, Minneapolis, free admission"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type" style="color: #13823a">
+                    Free Admission
+                  </p>
+                  <h3 class="ticket-name">“OROMUMMAA” Welcoming Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+              </div>
+
+              <!-- Wednesday -->
+              <h2 id="wednesday" class="day-label">Wednesday · Date TBD</h2>
+              <div class="ticket-grid" style="margin-bottom: 0.8rem">
+                <div class="ticket-card">
+                  <img
+                    class="ticket-flyer"
+                    src="assets/faana-nagaa-flyer.jpg"
+                    alt="OSFNA 2026 Faana Nagaa Party Night — Day 02, Wednesday, Minneapolis"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type">Party Night</p>
+                  <h3 class="ticket-name">“FAANA NAGAA” Party Night</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+              </div>
+
+              <!-- Thursday -->
+              <h2 id="thursday" class="day-label">Thursday · Date TBD</h2>
+              <div class="ticket-grid" style="margin-bottom: 0.8rem">
+                <div class="ticket-card">
+                  <img
+                    class="ticket-flyer"
+                    src="assets/galmee-seena-flyer.jpg"
+                    alt="OSFNA 2026 Galmee Seena Opening Concert Night — Day 03, Thursday, Minneapolis"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type">Opening Party</p>
+                  <h3 class="ticket-name">“GALMEE SEENA” Concert Night</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+                <div class="ticket-card">
+                  <img
+                    class="ticket-flyer"
+                    src="assets/thursday-late-night-flyer.jpg"
+                    alt="OSFNA 2026 Thursday Late Night After Party — Minneapolis"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type">Thu Late Night</p>
+                  <h3 class="ticket-name">Late Night After Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+              </div>
+
+              <!-- Friday -->
+              <h2 id="friday" class="day-label">Friday · Date TBD</h2>
+              <div class="ticket-grid" style="margin-bottom: 0.8rem">
+                <div class="ticket-card">
+                  <img
+                    class="ticket-flyer"
+                    src="assets/adaa-night-flyer.jpg"
+                    alt="OSFNA 2026 Adaa Night Cultural Party — Day 04, Friday, Minneapolis"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type">Cultural Night</p>
+                  <h3 class="ticket-name">“ADAA NIGHT” Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+                <div class="ticket-card">
+                  <img
+                    class="ticket-flyer"
+                    src="assets/rooftop-party-poster.jpg"
+                    alt="OSFNA 2026 Friday Rooftop Party — Minneapolis"
+                    loading="lazy"
+                  />
+                  <p class="ticket-type">Fri Night Party</p>
+                  <h3 class="ticket-name">Rooftop Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+                <div class="ticket-card">
+                  <p class="ticket-type">Fri Late Night</p>
+                  <h3 class="ticket-name">Late Night After Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+              </div>
+
+              <!-- Saturday -->
+              <h2 id="saturday" class="day-label">Saturday · Aug 8</h2>
+              <div class="ticket-grid" style="margin-bottom: 0.8rem">
+                <div class="ticket-card">
+                  <p class="ticket-type">Headline · By OSFNA</p>
+                  <h3 class="ticket-name">Closing Night Concert After Party</h3>
+                  <p class="event-note">
+                    Date, venue, and lineup will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+                <div class="ticket-card">
+                  <p class="ticket-type">Sat Late Night</p>
+                  <h3 class="ticket-name">Late Night After Party</h3>
+                  <p class="event-note">
+                    Date, venue, and final details will be shared in the GC.
+                  </p>
+                  <a
+                    href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                    target="_blank"
+                    rel="noopener"
+                    class="buy-btn buy-btn-ga gc-link"
+                    >Updates in GC →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- /gated-content -->
       </div>
-      <!-- /gated-content -->
-    </div>
-    <!-- /gated-wrap -->
+      <!-- /gated-wrap -->
+    </main>
 
     <!-- Footer -->
     <footer class="footer">

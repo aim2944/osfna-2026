@@ -680,7 +680,7 @@
         justify-content: space-between;
         align-items: center;
         font-size: 0.7rem;
-        color: rgba(255, 255, 255, 0.35);
+        color: rgba(255, 255, 255, 0.62);
         flex-shrink: 0;
       }
       .foot-links {
@@ -733,70 +733,85 @@
     </style>
   </head>
   <body>
-    <nav class="nav" role="navigation" aria-label="Main navigation">
-      <a href="#top" class="nav-logo-link">
-        <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
-        <span class="nav-year">2026</span>
-      </a>
-      <ul class="nav-links">
-        <li>
-          <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
-            >5v5 Interest</a
-          >
-        </li>
-        <li>
-          <a href="#events" style="color: #ff5a5a; font-weight: 700">Events</a>
-        </li>
-        <li>
-          <a
-            href="https://www.myosfna.com"
-            target="_blank"
-            rel="noopener"
-            style="color: #fff; font-weight: 700"
-            >myosfna.com</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-            target="_blank"
-            rel="noopener"
-            id="nav-passport-link"
-            style="color: #fbbf24; font-weight: 700"
-            >Join GC</a
-          >
-        </li>
-      </ul>
-      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-    <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-      <li>
-        <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
-          >5v5 Interest</a
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#top" class="nav-logo-link" aria-current="page">
+          <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+          <span class="nav-year">2026</span>
+        </a>
+        <ul class="nav-links">
+          <li>
+            <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
+              >5v5 Interest</a
+            >
+          </li>
+          <li>
+            <a href="#events" style="color: #ff5a5a; font-weight: 700"
+              >Events</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.myosfna.com"
+              target="_blank"
+              rel="noopener"
+              style="color: #fff; font-weight: 700"
+              >myosfna.com</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+              target="_blank"
+              rel="noopener"
+              id="nav-passport-link"
+              style="color: #fbbf24; font-weight: 700"
+              >Join GC</a
+            >
+          </li>
+        </ul>
+        <button
+          class="hamburger"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
-      </li>
-      <li>
-        <a href="#events" style="color: #ff5a5a; font-weight: 700">Events</a>
-      </li>
-      <li>
-        <a href="https://www.myosfna.com" target="_blank" rel="noopener"
-          >myosfna.com</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-          target="_blank"
-          rel="noopener"
-          >Join GC on IG</a
-        >
-      </li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+          <span aria-hidden="true"></span><span aria-hidden="true"></span
+          ><span aria-hidden="true"></span>
+        </button>
+      </nav>
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu" id="mobile-menu">
+          <li>
+            <a href="basketball.html" style="color: #ff5a5a; font-weight: 700"
+              >5v5 Interest</a
+            >
+          </li>
+          <li>
+            <a href="#events" style="color: #ff5a5a; font-weight: 700"
+              >Events</a
+            >
+          </li>
+          <li>
+            <a href="https://www.myosfna.com" target="_blank" rel="noopener"
+              >myosfna.com</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+              target="_blank"
+              rel="noopener"
+              >Join GC on IG</a
+            >
+          </li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <main class="home" id="top">
+    <main class="home" id="main">
       <!-- HERO -->
       <section class="hero">
         <p class="eyebrow" style="color: #ff5a5a">

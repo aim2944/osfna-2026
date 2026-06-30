@@ -4,119 +4,147 @@
 
 // ---- CONFIGURATION ----
 // OSFNA 2026: July 25 – Aug 1, 2026
-const EVENT_DATE = new Date('2026-07-25T10:00:00');
+const EVENT_DATE = new Date("2026-07-25T10:00:00");
 
 // ---- COUNTDOWN TIMER ----
 function updateCountdown() {
-  const dayEl = document.getElementById('cd-days');
-  const hourEl = document.getElementById('cd-hours');
-  const minEl = document.getElementById('cd-mins');
-  const secEl = document.getElementById('cd-secs');
+  const dayEl = document.getElementById("cd-days");
+  const hourEl = document.getElementById("cd-hours");
+  const minEl = document.getElementById("cd-mins");
+  const secEl = document.getElementById("cd-secs");
   if (!dayEl || !hourEl || !minEl || !secEl) return;
 
   const now = new Date();
   const diff = EVENT_DATE - now;
 
   if (diff <= 0) {
-    dayEl.textContent = '00';
-    hourEl.textContent = '00';
-    minEl.textContent = '00';
-    secEl.textContent = '00';
+    dayEl.textContent = "00";
+    hourEl.textContent = "00";
+    minEl.textContent = "00";
+    secEl.textContent = "00";
     return;
   }
 
-  const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-  const pad = n => String(n).padStart(2, '0');
-  dayEl.textContent  = pad(days);
+  const pad = (n) => String(n).padStart(2, "0");
+  dayEl.textContent = pad(days);
   hourEl.textContent = pad(hours);
-  minEl.textContent  = pad(mins);
-  secEl.textContent  = pad(secs);
+  minEl.textContent = pad(mins);
+  secEl.textContent = pad(secs);
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // ---- NAVBAR SCROLL ----
-const nav = document.querySelector('.nav');
+const nav = document.querySelector(".nav");
 if (nav) {
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      nav.classList.toggle("scrolled", window.scrollY > 60);
+    },
+    { passive: true },
+  );
 }
 
 // ---- MOBILE NAV ----
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
+const hamburger = document.querySelector(".hamburger");
+const mobileMenu = document.querySelector(".mobile-menu");
 
 if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+  hamburger.addEventListener("click", () => {
+    const isOpen = hamburger.classList.toggle("open");
+    mobileMenu.classList.toggle("open", isOpen);
+    hamburger.setAttribute("aria-expanded", String(isOpen));
+    document.body.style.overflow = isOpen ? "hidden" : "";
   });
 
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("open");
+      mobileMenu.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
     });
   });
 }
 
 // ---- SCROLL REVEAL ----
-const revealEls = document.querySelectorAll('.reveal');
+const revealEls = document.querySelectorAll(".reveal");
 const revealObserver = new IntersectionObserver(
   (entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        entry.target.classList.add("visible");
         revealObserver.unobserve(entry.target);
       }
     });
   },
-  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
 );
-revealEls.forEach(el => revealObserver.observe(el));
+revealEls.forEach((el) => revealObserver.observe(el));
 
 // ---- GALLERY LIGHTBOX ----
-const galleryLightbox = document.getElementById('gallery-lightbox');
+const galleryLightbox = document.getElementById("gallery-lightbox");
 if (galleryLightbox) {
-  const lightboxClose = document.querySelector('.lightbox-close');
-  const lightboxImage = document.querySelector('.lightbox-image');
-  const lightboxCaption = document.querySelector('.lightbox-caption');
-  const galleryPhotos = document.querySelectorAll('.gallery-photo');
+  const lightboxClose = document.querySelector(".lightbox-close");
+  const lightboxImage = document.querySelector(".lightbox-image");
+  const lightboxCaption = document.querySelector(".lightbox-caption");
+  const galleryPhotos = document.querySelectorAll(".gallery-photo");
+  let lastTrigger = null;
 
-  galleryPhotos.forEach(photo => {
-    photo.addEventListener('click', () => {
-      lightboxImage.src = photo.src;
-      lightboxImage.alt = photo.alt;
-      lightboxCaption.textContent = photo.parentElement.querySelector('figcaption').textContent;
-      galleryLightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
+  function openLightbox(photo) {
+    lightboxImage.src = photo.src;
+    lightboxImage.alt = photo.alt;
+    lightboxCaption.textContent =
+      photo.parentElement.querySelector("figcaption").textContent;
+    galleryLightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+    lastTrigger = photo;
+    if (lightboxClose) lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    galleryLightbox.classList.remove("open");
+    document.body.style.overflow = "";
+    if (lastTrigger) {
+      lastTrigger.focus();
+      lastTrigger = null;
+    }
+  }
+
+  galleryPhotos.forEach((photo) => {
+    // Make each thumbnail keyboard-operable as a button.
+    photo.setAttribute("role", "button");
+    photo.setAttribute("tabindex", "0");
+    const cap = photo.parentElement.querySelector("figcaption");
+    photo.setAttribute(
+      "aria-label",
+      "Open photo" + (cap ? ": " + cap.textContent.trim() : ""),
+    );
+    photo.addEventListener("click", () => openLightbox(photo));
+    photo.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(photo);
+      }
     });
   });
 
-  lightboxClose.addEventListener('click', () => {
-    galleryLightbox.classList.remove('open');
-    document.body.style.overflow = '';
+  lightboxClose.addEventListener("click", closeLightbox);
+
+  galleryLightbox.addEventListener("click", (e) => {
+    if (e.target === galleryLightbox) closeLightbox();
   });
 
-  galleryLightbox.addEventListener('click', (e) => {
-    if (e.target === galleryLightbox) {
-      galleryLightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && galleryLightbox.classList.contains('open')) {
-      galleryLightbox.classList.remove('open');
-      document.body.style.overflow = '';
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && galleryLightbox.classList.contains("open")) {
+      closeLightbox();
     }
   });
 }
@@ -125,66 +153,71 @@ if (galleryLightbox) {
 // Only load TikTok embed script after page is fully loaded
 // Replace data-video-id values with real TikTok video IDs when available
 function loadTikTokEmbeds() {
-  const slots = document.querySelectorAll('.tiktok-embed-slot');
+  const slots = document.querySelectorAll(".tiktok-embed-slot");
   if (!slots.length) return;
 
-  slots.forEach(slot => {
+  slots.forEach((slot) => {
     const videoId = slot.dataset.videoId;
-    if (!videoId || videoId === 'PLACEHOLDER') return;
+    if (!videoId || videoId === "PLACEHOLDER") return;
 
-    const blockquote = document.createElement('blockquote');
-    blockquote.className = 'tiktok-embed';
-    blockquote.setAttribute('cite', `https://www.tiktok.com/@myosfna/video/${videoId}`);
-    blockquote.setAttribute('data-video-id', videoId);
-    blockquote.style.maxWidth = '100%';
-    blockquote.style.minWidth = '100%';
+    const blockquote = document.createElement("blockquote");
+    blockquote.className = "tiktok-embed";
+    blockquote.setAttribute(
+      "cite",
+      `https://www.tiktok.com/@myosfna/video/${videoId}`,
+    );
+    blockquote.setAttribute("data-video-id", videoId);
+    blockquote.style.maxWidth = "100%";
+    blockquote.style.minWidth = "100%";
 
-    const section = document.createElement('section');
+    const section = document.createElement("section");
     blockquote.appendChild(section);
-    slot.innerHTML = '';
+    slot.innerHTML = "";
     slot.appendChild(blockquote);
   });
 
   // Load TikTok embed script once
-  const script = document.createElement('script');
+  const script = document.createElement("script");
   script.async = true;
-  script.src = 'https://www.tiktok.com/embed.js';
+  script.src = "https://www.tiktok.com/embed.js";
   document.body.appendChild(script);
 }
 
-window.addEventListener('load', loadTikTokEmbeds);
+window.addEventListener("load", loadTikTokEmbeds);
 
 // ---- PASSPORT NAV AUTH STATE ----
 // Runs on every page that includes script.js
-(function() {
-  const token = localStorage.getItem('osfna_token');
-  const name  = localStorage.getItem('osfna_name');
+(function () {
+  const token = localStorage.getItem("osfna_token");
+  const name = localStorage.getItem("osfna_name");
 
   // Update any .nav-passport-link elements (parties, register, vendor pages)
-  document.querySelectorAll('[data-passport-nav]').forEach(el => {
+  document.querySelectorAll("[data-passport-nav]").forEach((el) => {
     if (token) {
-      el.textContent = name ? `✓ ${name.split(' ')[0]}` : '✓ My Passport';
-      el.href = 'itinerary.html';
-      el.style.color = '#fbbf24';
+      el.textContent = name ? `✓ ${name.split(" ")[0]}` : "✓ My Passport";
+      el.href = "itinerary.html";
+      el.style.color = "#fbbf24";
     }
   });
 })();
 
 // ---- VENDOR FORM SUBMIT ----
-const vendorForm = document.getElementById('vendor-form');
+const vendorForm = document.getElementById("vendor-form");
 if (vendorForm) {
-  vendorForm.addEventListener('submit', (e) => {
+  vendorForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = new FormData(vendorForm);
-    const name    = data.get('name') || '';
-    const business = data.get('business') || '';
-    const email   = data.get('email') || '';
-    const type    = data.get('type') || '';
-    const message = data.get('message') || '';
+    const name = data.get("name") || "";
+    const business = data.get("business") || "";
+    const email = data.get("email") || "";
+    const type = data.get("type") || "";
+    const message = data.get("message") || "";
 
-    const subject = encodeURIComponent(`OSFNA 2026 Vendor Inquiry — ${business}`);
+    const subject = encodeURIComponent(
+      `OSFNA 2026 Vendor Inquiry — ${business}`,
+    );
     const body = encodeURIComponent(
-      `Name: ${name}\nBusiness: ${business}\nEmail: ${email}\nType: ${type}\n\nMessage:\n${message}`
+      `Name: ${name}\nBusiness: ${business}\nEmail: ${email}\nType: ${type}\n\nMessage:\n${message}`,
     );
     window.location.href = `mailto:myosfna@gmail.com?subject=${subject}&body=${body}`;
   });
