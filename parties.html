@@ -1,959 +1,1316 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Parties &amp; Events — OSFNA 2026 Oromo Week</title>
-  <meta name="description" content="Official OSFNA 2026 Oromo Week events. Cultural programming Tuesday through Saturday. Dates and venues TBD — updates in the GC." />
-  <meta name="theme-color" content="#000000" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/logo-main.png" />
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background: #f2ede3;
-      min-height: 100vh;
-      color: #070707;
-    }
-
-    body p,
-    body li,
-    body label {
-      color: inherit;
-    }
-
-    .section-dark,
-    .section-light,
-    .section-mid {
-      background: transparent;
-      color: #070707;
-    }
-
-    .section {
-      padding: clamp(3.5rem, 7vw, 6rem) 2rem;
-    }
-
-    .section-label {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: #ef1b22 !important;
-      margin-bottom: 1rem;
-    }
-
-    .section-label::before {
-      width: 32px;
-      background: currentColor;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.9rem, 7vw, 5.6rem);
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      text-transform: none;
-      color: #070707;
-      margin-bottom: 1.2rem;
-    }
-
-    .nav {
-      background: transparent;
-    }
-
-    .nav.scrolled {
-      background: rgba(242,237,227,.95);
-      box-shadow: 0 1px 0 rgba(7,7,7,.08);
-    }
-
-    .nav-links a {
-      color: rgba(7,7,7,.8);
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #ef1b22;
-    }
-
-    .hamburger span {
-      background: #070707;
-    }
-
-    .mobile-menu {
-      background: #f2ede3;
-    }
-
-    .mobile-menu a {
-      color: #070707;
-    }
-
-    .night-hero {
-      position: relative;
-      padding: calc(8rem + var(--safe-top)) 2rem 3rem;
-      background: transparent;
-      min-height: auto;
-    }
-
-    .night-hero::before {
-      display: none;
-    }
-
-    .night-hero-inner {
-      max-width: var(--max-w);
-      width: 100%;
-      margin: 0 auto;
-      display: grid;
-      gap: 1.6rem;
-    }
-
-    .night-eyebrow {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.86rem;
-      letter-spacing: 0.42em;
-      text-transform: uppercase;
-      color: #ef1b22;
-    }
-
-    .night-title {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 10vw, 8rem);
-      line-height: 0.87;
-      letter-spacing: -0.05em;
-      color: #070707;
-      max-width: 9ch;
-    }
-
-    .night-title span {
-      color: inherit;
-    }
-
-    .night-sub {
-      font-size: 1.08rem;
-      line-height: 1.75;
-      color: rgba(7,7,7,.68);
-      max-width: 48rem;
-    }
-
-    .night-ctas {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-gold,
-    .buy-btn-gold {
-      background: #ef1b22;
-      color: #fff7ee;
-      border: none;
-      border-radius: 999px;
-      padding: 0.92rem 1.5rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .18s, opacity .18s;
-    }
-
-    .btn-gold:hover,
-    .buy-btn-gold:hover {
-      opacity: .92;
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: #070707;
-      border: 1px solid rgba(7,7,7,.16);
-      border-radius: 999px;
-      padding: 0.92rem 1.5rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color .18s, color .18s, transform .18s;
-    }
-
-    .btn-ghost:hover {
-      border-color: #ef1b22;
-      color: #ef1b22;
-      transform: translateY(-2px);
-    }
-
-    .night-microgrid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: .4rem;
-    }
-
-    .night-microcard {
-      background: #fff7ee;
-      border: 1px solid rgba(7,7,7,.1);
-      border-radius: 22px;
-      padding: 1rem 1.1rem;
-      box-shadow: 0 12px 30px rgba(7,7,7,.06);
-    }
-
-    .night-microcard .eyebrow {
-      display: block;
-      margin-bottom: .45rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .68rem;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      color: #ef1b22;
-    }
-
-    .night-microcard strong {
-      display: block;
-      font-family: var(--font-head);
-      font-size: 1.15rem;
-      line-height: 1.06;
-      text-transform: uppercase;
-      color: #070707;
-    }
-
-    .pulse-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #ef1b22;
-      margin-top: .45rem;
-      animation: blink 1.2s ease-in-out infinite;
-    }
-
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-
-    .party-schedule {
-      margin-bottom: 3rem;
-    }
-
-    .party-night {
-      background: #fff7ee;
-      border: 1px solid rgba(7,7,7,.1);
-      border-radius: 22px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 0.9rem;
-      display: grid;
-      grid-template-columns: 90px 1fr auto;
-      gap: 1.25rem;
-      align-items: center;
-      box-shadow: 0 12px 28px rgba(7,7,7,.05);
-    }
-
-    .party-night-date {
-      font-family: var(--font-display);
-      font-size: 1.18rem;
-      font-weight: 800;
-      color: #070707;
-      text-align: center;
-      line-height: 1;
-    }
-
-    .party-night-date span {
-      display: block;
-      margin-top: .35rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .68rem;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      color: #ef1b22;
-    }
-
-    .party-night-info h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #070707;
-      margin-bottom: 0.25rem;
-    }
-
-    .party-night-info p {
-      font-size: 0.88rem;
-      color: rgba(7,7,7,.58);
-      margin: 0;
-    }
-
-    .party-avail {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #13823a;
-    }
-
-    .party-avail.limited {
-      color: #ef1b22;
-    }
-
-    .bundle-card {
-      background: #070707;
-      border-radius: 22px;
-      padding: 1.3rem 1.4rem;
-      margin-bottom: 1.5rem;
-      display: grid;
-      grid-template-columns: 1.15fr auto;
-      gap: 1.25rem;
-      align-items: center;
-      box-shadow: 0 14px 36px rgba(7,7,7,.14);
-    }
-    .bundle-card h3 { font-size: 1.5rem !important; margin-bottom: .4rem !important; }
-    .bundle-card p { font-size: .82rem !important; line-height: 1.55 !important; margin-bottom: .65rem !important; }
-    .bundle-perks { gap: .4rem !important; }
-    .bundle-perk { padding: .25rem .55rem !important; font-size: .62rem !important; }
-
-    .bundle-kicker {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .74rem;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      color: #ef1b22;
-      margin-bottom: .65rem;
-    }
-
-    .bundle-card h3 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 3.1rem);
-      line-height: .95;
-      color: #fff7ee;
-      margin-bottom: .7rem;
-    }
-
-    .bundle-card h3 span {
-      color: #ef1b22;
-    }
-
-    .bundle-card p {
-      color: rgba(242,237,227,.7);
-      font-size: 0.96rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-      max-width: 44rem;
-    }
-
-    .bundle-perks {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 0;
-    }
-
-    .bundle-perk {
-      background: rgba(242,237,227,.06);
-      border: 1px solid rgba(242,237,227,.12);
-      border-radius: 999px;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.72rem;
-      color: #fff7ee;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .bundle-right {
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .ticket-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: .8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .ticket-card {
-      position: relative;
-      background: #fff7ee;
-      border: 1px solid rgba(7,7,7,.12);
-      border-radius: 16px;
-      padding: .95rem .95rem;
-      transition: border-color .2s, transform .2s, box-shadow .2s;
-      box-shadow: 0 6px 16px rgba(7,7,7,.04);
-    }
-
-    .ticket-card .ticket-flyer {
-      display: block;
-      width: calc(100% + 1.9rem);
-      margin: -.95rem -.95rem .85rem -.95rem;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      border-radius: 16px 16px 0 0;
-      background: #0a0a0a;
-    }
-    .ticket-card .ticket-type { margin-bottom: .35rem; font-size: .65rem; letter-spacing: .22em; }
-    .ticket-card .ticket-name { font-size: 1.15rem !important; margin-bottom: .45rem !important; }
-    .ticket-card .ticket-perks { margin-bottom: .65rem; gap: .25rem; }
-    .ticket-card .ticket-perks li { font-size: .76rem; }
-    .ticket-card p { font-size: .78rem !important; line-height: 1.45 !important; margin-bottom: .55rem !important; color: rgba(7,7,7,.6) !important; }
-    .ticket-card .buy-btn { padding: .6rem .8rem; font-size: .66rem; letter-spacing: .12em; }
-    .event-note {
-      min-height: 2.6rem;
-    }
-    .gc-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      margin-top: .65rem;
-    }
-    .section { padding: clamp(1.4rem, 3.5vw, 2.5rem) 1.5rem !important; }
-    .night-hero { padding: calc(5rem + var(--safe-top)) 1.5rem 1.5rem !important; }
-    .night-hero-inner { gap: .75rem !important; }
-    .night-title { font-size: clamp(2.2rem, 6vw, 4rem) !important; }
-    .night-sub { display: none; }
-    .day-label {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: .72rem; letter-spacing: .28em; text-transform: uppercase;
-      color: #ef1b22; margin: 0 0 .5rem;
-    }
-
-    .ticket-card:hover {
-      border-color: #ef1b22;
-      transform: translateY(-6px);
-      box-shadow: 0 18px 40px rgba(7,7,7,.08);
-    }
-
-    .ticket-card.featured {
-      border-color: #ef3b34;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.08) 0, rgba(255,255,255,0) 1.3px) 0 0 / 10px 10px,
-        linear-gradient(180deg, #ef3b34 0%, #de2f29 100%);
-      color: #fff7ee;
-    }
-
-    .ticket-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: -12px;
-      left: 1.3rem;
-      background: #fff7ee;
-      color: #ef3b34;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.8rem;
-      border-radius: 999px;
-      font-weight: 700;
-      border: 1px solid rgba(239,59,52,.22);
-    }
-
-    .ticket-type {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(7,7,7,.42);
-      margin-bottom: 0.6rem;
-    }
-
-    .ticket-card.featured .ticket-type {
-      color: rgba(255,247,238,.72);
-    }
-
-    .ticket-name {
-      font-family: var(--font-display);
-      font-size: 1.45rem;
-      line-height: 1;
-      color: #070707;
-      margin-bottom: .65rem;
-    }
-
-    .ticket-card.featured .ticket-name {
-      color: #fff7ee;
-    }
-
-    .ticket-perks {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-
-    .ticket-perks li {
-      font-size: 0.92rem;
-      color: rgba(7,7,7,.72);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .ticket-card.featured .ticket-perks li {
-      color: rgba(255,247,238,.84);
-    }
-
-    .ticket-perks li::before {
-      content: '+';
-      color: #13823a;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .ticket-card.featured .ticket-perks li::before {
-      color: #fff7ee;
-    }
-
-    .ticket-perks li.no::before {
-      content: '−';
-      color: rgba(7,7,7,.24);
-    }
-
-    .ticket-card.featured .ticket-perks li.no::before {
-      color: rgba(255,247,238,.35);
-    }
-
-    .ticket-perks li.no {
-      color: rgba(7,7,7,.28);
-    }
-
-    .ticket-card.featured .ticket-perks li.no {
-      color: rgba(255,247,238,.42);
-    }
-
-    .buy-btn {
-      width: 100%;
-      padding: 0.92rem 1rem;
-      border: none;
-      border-radius: 999px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: opacity .15s, transform .15s;
-    }
-
-    .buy-btn:hover {
-      opacity: .9;
-      transform: translateY(-2px);
-    }
-
-    .buy-btn-ga {
-      background: #070707;
-      color: #fff7ee;
-    }
-
-    .buy-btn-vip {
-      background: #fff7ee;
-      color: #ef3b34;
-      border: 1px solid rgba(255,247,238,.42);
-    }
-
-    .buy-btn:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .form-msg {
-      border-radius: 14px;
-      padding: 0.9rem 1rem;
-      font-size: 0.88rem;
-      line-height: 1.55;
-      display: none;
-      margin-bottom: 1rem;
-    }
-
-    .form-msg.error {
-      background: rgba(239,59,52,.12);
-      border: 1px solid rgba(239,59,52,.25);
-      color: #b61f19;
-      display: block;
-    }
-
-    .form-msg.success {
-      background: rgba(20,130,58,.11);
-      border: 1px solid rgba(20,130,58,.22);
-      color: #0d6a30;
-      display: block;
-    }
-
-    .gated-wrap {
-      position: relative;
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .gated-wrap.locked .gated-content {
-      filter: none;
-      pointer-events: auto;
-      user-select: auto;
-    }
-
-    .passport-overlay {
-      display: none;
-      position: static;
-      inset: auto;
-      z-index: 1;
-      background: transparent;
-      padding: 0;
-    }
-
-    .gated-wrap.locked .passport-overlay {
-      display: block;
-    }
-
-    .passport-gate-card {
-      text-align: left;
-      max-width: none;
-      background: linear-gradient(135deg, #f2ede3 0%, #fff6e9 100%);
-      border: 1px solid rgba(7,7,7,.08);
-      border-radius: 28px;
-      padding: 2rem 2rem 1.85rem;
-      box-shadow: 0 18px 44px rgba(0,0,0,.12);
-    }
-
-    .passport-gate-icon {
-      width: 68px;
-      height: 68px;
-      background: #ef1b22;
-      color: #fff7ee;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      margin: 0 auto 1.5rem;
-    }
-
-    .passport-gate-card h3 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      line-height: .92;
-      color: #070707;
-      margin-bottom: 0.75rem;
-    }
-
-    .passport-gate-card h3 span {
-      color: #ef1b22;
-    }
-
-    .passport-gate-card p {
-      color: rgba(7,7,7,.64);
-      font-size: 0.98rem;
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
-
-    .passport-gate-btns {
-      display: flex;
-      gap: 0.875rem;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .passport-gate-perks {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      margin-top: 1.75rem;
-    }
-
-    .gate-perk {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(7,7,7,.56);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .gate-perk::before {
-      content: '+';
-      color: #13823a;
-      font-weight: 700;
-    }
-
-    .footer {
-      background: transparent !important;
-      border-top: 1px solid rgba(7,7,7,.1);
-    }
-
-    .footer-brand .footer-logo {
-      color: #070707;
-    }
-
-    .footer-brand .footer-logo span {
-      color: #ef1b22 !important;
-    }
-
-    .footer-brand p,
-    .footer-col-title,
-    .footer-copy,
-    .footer-links a {
-      color: rgba(7,7,7,.58) !important;
-    }
-
-    .footer-links a:hover {
-      color: #ef1b22 !important;
-    }
-
-    @media (max-width: 900px) {
-      .night-microgrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .bundle-card {
-        grid-template-columns: 1fr;
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Parties &amp; Events — OSFNA 2026 Oromo Week</title>
+    <meta
+      name="description"
+      content="Official OSFNA 2026 Oromo Week events. Cultural programming Tuesday through Saturday. Dates and venues TBD — updates in the GC."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/logo-main.png" />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: #f2ede3;
+        min-height: 100vh;
+        color: #070707;
       }
 
-      .bundle-right {
-        text-align: left;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .party-night {
-        grid-template-columns: 60px 1fr;
+      body p,
+      body li,
+      body label {
+        color: inherit;
       }
 
-      .party-avail {
+      .section-dark,
+      .section-light,
+      .section-mid {
+        background: transparent;
+        color: #070707;
+      }
+
+      .section {
+        padding: clamp(3.5rem, 7vw, 6rem) 2rem;
+      }
+
+      .section-label {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.82rem;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        color: #ef1b22 !important;
+        margin-bottom: 1rem;
+      }
+
+      .section-label::before {
+        width: 32px;
+        background: currentColor;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.9rem, 7vw, 5.6rem);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        text-transform: none;
+        color: #070707;
+        margin-bottom: 1.2rem;
+      }
+
+      .nav {
+        background: transparent;
+      }
+
+      .nav.scrolled {
+        background: rgba(242, 237, 227, 0.95);
+        box-shadow: 0 1px 0 rgba(7, 7, 7, 0.08);
+      }
+
+      .nav-links a {
+        color: rgba(7, 7, 7, 0.8);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #ef1b22;
+      }
+
+      .hamburger span {
+        background: #070707;
+      }
+
+      .mobile-menu {
+        background: #f2ede3;
+      }
+
+      .mobile-menu a {
+        color: #070707;
+      }
+
+      .night-hero {
+        position: relative;
+        padding: calc(8rem + var(--safe-top)) 2rem 3rem;
+        background: transparent;
+        min-height: auto;
+      }
+
+      .night-hero::before {
         display: none;
       }
 
-      .night-microgrid {
-        grid-template-columns: 1fr;
+      .night-hero-inner {
+        max-width: var(--max-w);
+        width: 100%;
+        margin: 0 auto;
+        display: grid;
+        gap: 1.6rem;
       }
-    }
 
-    .ticket-card .ticket-name { margin-bottom: 0.75rem; }
-    .bundle-right { display: flex; flex-direction: column; gap: 0.85rem; align-items: stretch; }
+      .night-eyebrow {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.86rem;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: #ef1b22;
+      }
 
-    /* Mobile polish */
-    @media (max-width: 820px) {
-      .night-hero { padding-inline: 1.25rem; }
-      .night-title { font-size: clamp(2.6rem, 11vw, 4.2rem); letter-spacing: -0.04em; }
-      .night-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; }
-      .night-sub { font-size: 0.95rem; line-height: 1.65; }
-      .night-ctas { gap: 0.5rem; flex-direction: column; }
-      .night-ctas a { width: 100%; text-align: center; }
-      .bundle-card { grid-template-columns: 1fr; padding: 1.6rem 1.4rem; border-radius: 24px; gap: 1.2rem; }
-      .bundle-right { text-align: left; }
-      .ticket-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .ticket-card { padding: 1.5rem 1.3rem; border-radius: 22px; }
-      .party-night { grid-template-columns: 56px 1fr; padding: 1rem 1.1rem; gap: 0.9rem; border-radius: 18px; }
-      .party-night-date { font-size: 1rem; }
-      .party-night-info h4 { font-size: 0.92rem; line-height: 1.3; }
-      .party-night-info p { font-size: 0.78rem; line-height: 1.45; }
-      .party-avail { display: none; }
-      .floor-wrap { padding: 1rem; border-radius: 22px; }
-      .passport-gate-card { padding: 1.6rem 1.4rem; border-radius: 22px; }
-      .passport-gate-btns { flex-direction: column; }
-      .passport-gate-btns a { width: 100%; text-align: center; }
-    }
-  </style>
-</head>
-<body>
+      .night-title {
+        font-family: var(--font-display);
+        font-size: clamp(4rem, 10vw, 8rem);
+        line-height: 0.87;
+        letter-spacing: -0.05em;
+        color: #070707;
+        max-width: 9ch;
+      }
 
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo-link">
-    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
-    <span class="nav-year">2026</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#tournament">Tournament</a></li>
-    <li><a href="parties.html" class="active">Parties</a></li>
-    <li><a href="media.html">Media</a></li>
-    <li><a href="register.html">Register</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
-  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <li><a href="index.html#about">About</a></li>
-  <li><a href="parties.html">Parties</a></li>
-  <li><a href="media.html">Media</a></li>
-  <li><a href="register.html">Register</a></li>
-  <li><a href="index.html#contact">Contact</a></li>
-</ul>
+      .night-title span {
+        color: inherit;
+      }
 
-<!-- ══ NIGHT HERO ══ -->
-<section class="night-hero">
-  <div class="night-hero-inner">
-    <p class="night-eyebrow reveal">OSFNA 2026 · Minneapolis · Oromo Week</p>
-    <h1 class="night-title reveal reveal-delay-1">Tuesday to Saturday cultural programming.</h1>
-    <div class="night-ctas reveal reveal-delay-2">
-      <a href="#tuesday" class="btn-ghost">Tue</a>
-      <a href="#wednesday" class="btn-ghost">Wed</a>
-      <a href="#thursday" class="btn-ghost">Thu</a>
-      <a href="#friday" class="btn-ghost">Fri</a>
-      <a href="#saturday" class="btn-ghost">Sat</a>
-      <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="btn-ghost">Join GC</a>
+      .night-sub {
+        font-size: 1.08rem;
+        line-height: 1.75;
+        color: rgba(7, 7, 7, 0.68);
+        max-width: 48rem;
+      }
+
+      .night-ctas {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn-gold,
+      .buy-btn-gold {
+        background: #ef1b22;
+        color: #fff7ee;
+        border: none;
+        border-radius: 999px;
+        padding: 0.92rem 1.5rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          transform 0.18s,
+          opacity 0.18s;
+      }
+
+      .btn-gold:hover,
+      .buy-btn-gold:hover {
+        opacity: 0.92;
+        transform: translateY(-2px);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: #070707;
+        border: 1px solid rgba(7, 7, 7, 0.16);
+        border-radius: 999px;
+        padding: 0.92rem 1.5rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          border-color 0.18s,
+          color 0.18s,
+          transform 0.18s;
+      }
+
+      .btn-ghost:hover {
+        border-color: #ef1b22;
+        color: #ef1b22;
+        transform: translateY(-2px);
+      }
+
+      .night-microgrid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 0.4rem;
+      }
+
+      .night-microcard {
+        background: #fff7ee;
+        border: 1px solid rgba(7, 7, 7, 0.1);
+        border-radius: 22px;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 12px 30px rgba(7, 7, 7, 0.06);
+      }
+
+      .night-microcard .eyebrow {
+        display: block;
+        margin-bottom: 0.45rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #ef1b22;
+      }
+
+      .night-microcard strong {
+        display: block;
+        font-family: var(--font-head);
+        font-size: 1.15rem;
+        line-height: 1.06;
+        text-transform: uppercase;
+        color: #070707;
+      }
+
+      .pulse-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #ef1b22;
+        margin-top: 0.45rem;
+        animation: blink 1.2s ease-in-out infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+
+      .party-schedule {
+        margin-bottom: 3rem;
+      }
+
+      .party-night {
+        background: #fff7ee;
+        border: 1px solid rgba(7, 7, 7, 0.1);
+        border-radius: 22px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 0.9rem;
+        display: grid;
+        grid-template-columns: 90px 1fr auto;
+        gap: 1.25rem;
+        align-items: center;
+        box-shadow: 0 12px 28px rgba(7, 7, 7, 0.05);
+      }
+
+      .party-night-date {
+        font-family: var(--font-display);
+        font-size: 1.18rem;
+        font-weight: 800;
+        color: #070707;
+        text-align: center;
+        line-height: 1;
+      }
+
+      .party-night-date span {
+        display: block;
+        margin-top: 0.35rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #ef1b22;
+      }
+
+      .party-night-info h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #070707;
+        margin-bottom: 0.25rem;
+      }
+
+      .party-night-info p {
+        font-size: 0.88rem;
+        color: rgba(7, 7, 7, 0.58);
+        margin: 0;
+      }
+
+      .party-avail {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #13823a;
+      }
+
+      .party-avail.limited {
+        color: #ef1b22;
+      }
+
+      .bundle-card {
+        background: #070707;
+        border-radius: 22px;
+        padding: 1.3rem 1.4rem;
+        margin-bottom: 1.5rem;
+        display: grid;
+        grid-template-columns: 1.15fr auto;
+        gap: 1.25rem;
+        align-items: center;
+        box-shadow: 0 14px 36px rgba(7, 7, 7, 0.14);
+      }
+      .bundle-card h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.4rem !important;
+      }
+      .bundle-card p {
+        font-size: 0.82rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 0.65rem !important;
+      }
+      .bundle-perks {
+        gap: 0.4rem !important;
+      }
+      .bundle-perk {
+        padding: 0.25rem 0.55rem !important;
+        font-size: 0.62rem !important;
+      }
+
+      .bundle-kicker {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.74rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #ef1b22;
+        margin-bottom: 0.65rem;
+      }
+
+      .bundle-card h3 {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 3.1rem);
+        line-height: 0.95;
+        color: #fff7ee;
+        margin-bottom: 0.7rem;
+      }
+
+      .bundle-card h3 span {
+        color: #ef1b22;
+      }
+
+      .bundle-card p {
+        color: rgba(242, 237, 227, 0.7);
+        font-size: 0.96rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        max-width: 44rem;
+      }
+
+      .bundle-perks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 0;
+      }
+
+      .bundle-perk {
+        background: rgba(242, 237, 227, 0.06);
+        border: 1px solid rgba(242, 237, 227, 0.12);
+        border-radius: 999px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.72rem;
+        color: #fff7ee;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .bundle-right {
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .ticket-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .ticket-card {
+        position: relative;
+        background: #fff7ee;
+        border: 1px solid rgba(7, 7, 7, 0.12);
+        border-radius: 16px;
+        padding: 0.95rem 0.95rem;
+        transition:
+          border-color 0.2s,
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 6px 16px rgba(7, 7, 7, 0.04);
+      }
+
+      .ticket-card .ticket-flyer {
+        display: block;
+        width: calc(100% + 1.9rem);
+        margin: -0.95rem -0.95rem 0.85rem -0.95rem;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        border-radius: 16px 16px 0 0;
+        background: #0a0a0a;
+      }
+      .ticket-card .ticket-type {
+        margin-bottom: 0.35rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.22em;
+      }
+      .ticket-card .ticket-name {
+        font-size: 1.15rem !important;
+        margin-bottom: 0.45rem !important;
+      }
+      .ticket-card .ticket-perks {
+        margin-bottom: 0.65rem;
+        gap: 0.25rem;
+      }
+      .ticket-card .ticket-perks li {
+        font-size: 0.76rem;
+      }
+      .ticket-card p {
+        font-size: 0.78rem !important;
+        line-height: 1.45 !important;
+        margin-bottom: 0.55rem !important;
+        color: rgba(7, 7, 7, 0.6) !important;
+      }
+      .ticket-card .buy-btn {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+      }
+      .event-note {
+        min-height: 2.6rem;
+      }
+      .gc-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin-top: 0.65rem;
+      }
+      .section {
+        padding: clamp(1.4rem, 3.5vw, 2.5rem) 1.5rem !important;
+      }
+      .night-hero {
+        padding: calc(5rem + var(--safe-top)) 1.5rem 1.5rem !important;
+      }
+      .night-hero-inner {
+        gap: 0.75rem !important;
+      }
+      .night-title {
+        font-size: clamp(2.2rem, 6vw, 4rem) !important;
+      }
+      .night-sub {
+        display: none;
+      }
+      .day-label {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #ef1b22;
+        margin: 0 0 0.5rem;
+      }
+
+      .ticket-card:hover {
+        border-color: #ef1b22;
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(7, 7, 7, 0.08);
+      }
+
+      .ticket-card.featured {
+        border-color: #ef3b34;
+        background:
+          radial-gradient(
+              circle at center,
+              rgba(255, 255, 255, 0.08) 0,
+              rgba(255, 255, 255, 0) 1.3px
+            )
+            0 0 / 10px 10px,
+          linear-gradient(180deg, #ef3b34 0%, #de2f29 100%);
+        color: #fff7ee;
+      }
+
+      .ticket-card.featured::before {
+        content: "Most Popular";
+        position: absolute;
+        top: -12px;
+        left: 1.3rem;
+        background: #fff7ee;
+        color: #ef3b34;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        font-weight: 700;
+        border: 1px solid rgba(239, 59, 52, 0.22);
+      }
+
+      .ticket-card.combo {
+        border-color: #fbbf24;
+        background:
+          radial-gradient(
+            circle at 85% 10%,
+            rgba(251, 191, 36, 0.2),
+            transparent 55%
+          ),
+          linear-gradient(180deg, #141414 0%, #080808 100%);
+        color: #fff7ee;
+      }
+      .ticket-card.combo::before {
+        content: "Coming Soon";
+        position: absolute;
+        top: -12px;
+        left: 1.3rem;
+        background: #fbbf24;
+        color: #070707;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+      .ticket-card.combo:hover {
+        border-color: #fbbf24;
+      }
+      .ticket-card.combo .ticket-type {
+        color: #fbbf24;
+      }
+      .ticket-card.combo .ticket-name {
+        color: #fff7ee;
+      }
+      .ticket-card.combo p {
+        color: rgba(255, 247, 238, 0.6) !important;
+      }
+      .ticket-card.combo .ticket-perks li {
+        color: rgba(255, 247, 238, 0.84);
+      }
+      .ticket-card.combo .ticket-perks li::before {
+        color: #fbbf24;
+      }
+      .buy-btn-combo {
+        background: #fbbf24;
+        color: #070707;
+      }
+
+      .ticket-type {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(7, 7, 7, 0.42);
+        margin-bottom: 0.6rem;
+      }
+
+      .ticket-card.featured .ticket-type {
+        color: rgba(255, 247, 238, 0.72);
+      }
+
+      .ticket-name {
+        font-family: var(--font-display);
+        font-size: 1.45rem;
+        line-height: 1;
+        color: #070707;
+        margin-bottom: 0.65rem;
+      }
+
+      .ticket-card.featured .ticket-name {
+        color: #fff7ee;
+      }
+
+      .ticket-perks {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+
+      .ticket-perks li {
+        font-size: 0.92rem;
+        color: rgba(7, 7, 7, 0.72);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .ticket-card.featured .ticket-perks li {
+        color: rgba(255, 247, 238, 0.84);
+      }
+
+      .ticket-perks li::before {
+        content: "+";
+        color: #13823a;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .ticket-card.featured .ticket-perks li::before {
+        color: #fff7ee;
+      }
+
+      .ticket-perks li.no::before {
+        content: "−";
+        color: rgba(7, 7, 7, 0.24);
+      }
+
+      .ticket-card.featured .ticket-perks li.no::before {
+        color: rgba(255, 247, 238, 0.35);
+      }
+
+      .ticket-perks li.no {
+        color: rgba(7, 7, 7, 0.28);
+      }
+
+      .ticket-card.featured .ticket-perks li.no {
+        color: rgba(255, 247, 238, 0.42);
+      }
+
+      .buy-btn {
+        width: 100%;
+        padding: 0.92rem 1rem;
+        border: none;
+        border-radius: 999px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+      }
+
+      .buy-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      .buy-btn-ga {
+        background: #070707;
+        color: #fff7ee;
+      }
+
+      .buy-btn-vip {
+        background: #fff7ee;
+        color: #ef3b34;
+        border: 1px solid rgba(255, 247, 238, 0.42);
+      }
+
+      .buy-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .form-msg {
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        display: none;
+        margin-bottom: 1rem;
+      }
+
+      .form-msg.error {
+        background: rgba(239, 59, 52, 0.12);
+        border: 1px solid rgba(239, 59, 52, 0.25);
+        color: #b61f19;
+        display: block;
+      }
+
+      .form-msg.success {
+        background: rgba(20, 130, 58, 0.11);
+        border: 1px solid rgba(20, 130, 58, 0.22);
+        color: #0d6a30;
+        display: block;
+      }
+
+      .gated-wrap {
+        position: relative;
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .gated-wrap.locked .gated-content {
+        filter: none;
+        pointer-events: auto;
+        user-select: auto;
+      }
+
+      .passport-overlay {
+        display: none;
+        position: static;
+        inset: auto;
+        z-index: 1;
+        background: transparent;
+        padding: 0;
+      }
+
+      .gated-wrap.locked .passport-overlay {
+        display: block;
+      }
+
+      .passport-gate-card {
+        text-align: left;
+        max-width: none;
+        background: linear-gradient(135deg, #f2ede3 0%, #fff6e9 100%);
+        border: 1px solid rgba(7, 7, 7, 0.08);
+        border-radius: 28px;
+        padding: 2rem 2rem 1.85rem;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.12);
+      }
+
+      .passport-gate-icon {
+        width: 68px;
+        height: 68px;
+        background: #ef1b22;
+        color: #fff7ee;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        margin: 0 auto 1.5rem;
+      }
+
+      .passport-gate-card h3 {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        line-height: 0.92;
+        color: #070707;
+        margin-bottom: 0.75rem;
+      }
+
+      .passport-gate-card h3 span {
+        color: #ef1b22;
+      }
+
+      .passport-gate-card p {
+        color: rgba(7, 7, 7, 0.64);
+        font-size: 0.98rem;
+        line-height: 1.75;
+        margin-bottom: 2rem;
+      }
+
+      .passport-gate-btns {
+        display: flex;
+        gap: 0.875rem;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .passport-gate-perks {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-top: 1.75rem;
+      }
+
+      .gate-perk {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(7, 7, 7, 0.56);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .gate-perk::before {
+        content: "+";
+        color: #13823a;
+        font-weight: 700;
+      }
+
+      .footer {
+        background: transparent !important;
+        border-top: 1px solid rgba(7, 7, 7, 0.1);
+      }
+
+      .footer-brand .footer-logo {
+        color: #070707;
+      }
+
+      .footer-brand .footer-logo span {
+        color: #ef1b22 !important;
+      }
+
+      .footer-brand p,
+      .footer-col-title,
+      .footer-copy,
+      .footer-links a {
+        color: rgba(7, 7, 7, 0.58) !important;
+      }
+
+      .footer-links a:hover {
+        color: #ef1b22 !important;
+      }
+
+      @media (max-width: 900px) {
+        .night-microgrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .bundle-card {
+          grid-template-columns: 1fr;
+        }
+
+        .bundle-right {
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .party-night {
+          grid-template-columns: 60px 1fr;
+        }
+
+        .party-avail {
+          display: none;
+        }
+
+        .night-microgrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .ticket-card .ticket-name {
+        margin-bottom: 0.75rem;
+      }
+      .bundle-right {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        align-items: stretch;
+      }
+
+      /* Mobile polish */
+      @media (max-width: 820px) {
+        .night-hero {
+          padding-inline: 1.25rem;
+        }
+        .night-title {
+          font-size: clamp(2.6rem, 11vw, 4.2rem);
+          letter-spacing: -0.04em;
+        }
+        .night-eyebrow {
+          font-size: 0.72rem;
+          letter-spacing: 0.18em;
+        }
+        .night-sub {
+          font-size: 0.95rem;
+          line-height: 1.65;
+        }
+        .night-ctas {
+          gap: 0.5rem;
+          flex-direction: column;
+        }
+        .night-ctas a {
+          width: 100%;
+          text-align: center;
+        }
+        .bundle-card {
+          grid-template-columns: 1fr;
+          padding: 1.6rem 1.4rem;
+          border-radius: 24px;
+          gap: 1.2rem;
+        }
+        .bundle-right {
+          text-align: left;
+        }
+        .ticket-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .ticket-card {
+          padding: 1.5rem 1.3rem;
+          border-radius: 22px;
+        }
+        .party-night {
+          grid-template-columns: 56px 1fr;
+          padding: 1rem 1.1rem;
+          gap: 0.9rem;
+          border-radius: 18px;
+        }
+        .party-night-date {
+          font-size: 1rem;
+        }
+        .party-night-info h4 {
+          font-size: 0.92rem;
+          line-height: 1.3;
+        }
+        .party-night-info p {
+          font-size: 0.78rem;
+          line-height: 1.45;
+        }
+        .party-avail {
+          display: none;
+        }
+        .floor-wrap {
+          padding: 1rem;
+          border-radius: 22px;
+        }
+        .passport-gate-card {
+          padding: 1.6rem 1.4rem;
+          border-radius: 22px;
+        }
+        .passport-gate-btns {
+          flex-direction: column;
+        }
+        .passport-gate-btns a {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <a href="index.html" class="nav-logo-link">
+        <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+        <span class="nav-year">2026</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#tournament">Tournament</a></li>
+        <li><a href="parties.html" class="active">Parties</a></li>
+        <li><a href="media.html">Media</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="parties.html">Parties</a></li>
+      <li><a href="media.html">Media</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+
+    <!-- ══ NIGHT HERO ══ -->
+    <section class="night-hero">
+      <div class="night-hero-inner">
+        <p class="night-eyebrow reveal">
+          OSFNA 2026 · Minneapolis · Oromo Week
+        </p>
+        <h1 class="night-title reveal reveal-delay-1">
+          Tuesday to Saturday cultural programming.
+        </h1>
+        <div class="night-ctas reveal reveal-delay-2">
+          <a href="#tuesday" class="btn-ghost">Tue</a>
+          <a href="#wednesday" class="btn-ghost">Wed</a>
+          <a href="#thursday" class="btn-ghost">Thu</a>
+          <a href="#friday" class="btn-ghost">Fri</a>
+          <a href="#saturday" class="btn-ghost">Sat</a>
+          <a
+            href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+            target="_blank"
+            rel="noopener"
+            class="btn-ghost"
+            >Join GC</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PASSPORT GATE WRAPPER ══ -->
+    <div class="gated-wrap" id="party-gate-wrap">
+      <div class="passport-overlay" aria-live="polite">
+        <div class="passport-gate-card">
+          <div class="passport-gate-icon">📲</div>
+          <h3>Party Updates Live In<br /><span>The GC</span></h3>
+          <p>
+            Join the <strong>@osfna2026</strong> Instagram group chat for venue
+            drops, access notes, and same-day updates.
+          </p>
+          <div class="passport-gate-btns">
+            <a
+              href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+              target="_blank"
+              rel="noopener"
+              class="btn-gold"
+              >Join the OSFNA GC →</a
+            >
+            <a href="index.html" class="btn-ghost">Back Home</a>
+          </div>
+          <div class="passport-gate-perks">
+            <span class="gate-perk">Venue drops in the GC</span>
+            <span class="gate-perk">Live updates</span>
+            <span class="gate-perk">Free to join</span>
+          </div>
+        </div>
+      </div>
+      <div class="gated-content">
+        <section
+          class="section section-dark"
+          style="border-top: 1px solid rgba(255, 255, 255, 0.05)"
+        >
+          <div class="section-inner">
+            <!-- Game + Party Combo -->
+            <p class="day-label" style="color: #fbbf24">Bundle · 5v5 + Party</p>
+            <div class="ticket-grid" style="margin-bottom: 1.4rem">
+              <div class="ticket-card combo">
+                <p class="ticket-type">Combo Pass</p>
+                <h3 class="ticket-name">5v5 Game + Party Combo</h3>
+                <ul class="ticket-perks">
+                  <li>Entry to OSFNA 5v5 basketball</li>
+                  <li>Party access included</li>
+                  <li>Bundle price — less than buying separately</li>
+                </ul>
+                <p class="event-note">
+                  Pricing and on-sale date drop in the GC. Join now for first
+                  access.
+                </p>
+                <button class="buy-btn buy-btn-combo" disabled>
+                  Coming Soon
+                </button>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Get notified in GC →</a
+                >
+              </div>
+            </div>
+
+            <!-- Tuesday -->
+            <p id="tuesday" class="day-label">Tuesday · Date TBD</p>
+            <div class="ticket-grid" style="margin-bottom: 0.8rem">
+              <div
+                class="ticket-card"
+                style="
+                  background: #f6fbf5;
+                  border-color: rgba(20, 130, 58, 0.18);
+                "
+              >
+                <img
+                  class="ticket-flyer"
+                  src="assets/oromummaa-flyer.jpg"
+                  alt="OSFNA 2026 Oromummaa Welcoming Party — Day 01, Tuesday, Minneapolis, free admission"
+                  loading="lazy"
+                />
+                <p class="ticket-type" style="color: #13823a">Free Admission</p>
+                <h3 class="ticket-name">“OROMUMMAA” Welcoming Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+            </div>
+
+            <!-- Wednesday -->
+            <p id="wednesday" class="day-label">Wednesday · Date TBD</p>
+            <div class="ticket-grid" style="margin-bottom: 0.8rem">
+              <div class="ticket-card">
+                <img
+                  class="ticket-flyer"
+                  src="assets/faana-nagaa-flyer.jpg"
+                  alt="OSFNA 2026 Faana Nagaa Party Night — Day 02, Wednesday, Minneapolis"
+                  loading="lazy"
+                />
+                <p class="ticket-type">Party Night</p>
+                <h3 class="ticket-name">“FAANA NAGAA” Party Night</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+            </div>
+
+            <!-- Thursday -->
+            <p id="thursday" class="day-label">Thursday · Date TBD</p>
+            <div class="ticket-grid" style="margin-bottom: 0.8rem">
+              <div class="ticket-card">
+                <img
+                  class="ticket-flyer"
+                  src="assets/galmee-seena-flyer.jpg"
+                  alt="OSFNA 2026 Galmee Seena Opening Concert Night — Day 03, Thursday, Minneapolis"
+                  loading="lazy"
+                />
+                <p class="ticket-type">Opening Party</p>
+                <h3 class="ticket-name">“GALMEE SEENA” Concert Night</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+              <div class="ticket-card">
+                <img
+                  class="ticket-flyer"
+                  src="assets/thursday-late-night-flyer.jpg"
+                  alt="OSFNA 2026 Thursday Late Night After Party — Minneapolis"
+                  loading="lazy"
+                />
+                <p class="ticket-type">Thu Late Night</p>
+                <h3 class="ticket-name">Late Night After Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+            </div>
+
+            <!-- Friday -->
+            <p id="friday" class="day-label">Friday · Date TBD</p>
+            <div class="ticket-grid" style="margin-bottom: 0.8rem">
+              <div class="ticket-card">
+                <img
+                  class="ticket-flyer"
+                  src="assets/adaa-night-flyer.jpg"
+                  alt="OSFNA 2026 Adaa Night Cultural Party — Day 04, Friday, Minneapolis"
+                  loading="lazy"
+                />
+                <p class="ticket-type">Cultural Night</p>
+                <h3 class="ticket-name">“ADAA NIGHT” Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+              <div class="ticket-card">
+                <img
+                  class="ticket-flyer"
+                  src="assets/rooftop-party-poster.jpg"
+                  alt="OSFNA 2026 Friday Rooftop Party — Minneapolis"
+                  loading="lazy"
+                />
+                <p class="ticket-type">Fri Night Party</p>
+                <h3 class="ticket-name">Rooftop Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+              <div class="ticket-card">
+                <p class="ticket-type">Fri Late Night</p>
+                <h3 class="ticket-name">Late Night After Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+            </div>
+
+            <!-- Saturday -->
+            <p id="saturday" class="day-label">Saturday · Aug 8</p>
+            <div class="ticket-grid" style="margin-bottom: 0.8rem">
+              <div class="ticket-card">
+                <p class="ticket-type">Headline · By OSFNA</p>
+                <h3 class="ticket-name">Closing Night Concert After Party</h3>
+                <p class="event-note">
+                  Date, venue, and lineup will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+              <div class="ticket-card">
+                <p class="ticket-type">Sat Late Night</p>
+                <h3 class="ticket-name">Late Night After Party</h3>
+                <p class="event-note">
+                  Date, venue, and final details will be shared in the GC.
+                </p>
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  class="buy-btn buy-btn-ga gc-link"
+                  >Updates in GC →</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- /gated-content -->
     </div>
-  </div>
-</section>
+    <!-- /gated-wrap -->
 
-<!-- ══ PASSPORT GATE WRAPPER ══ -->
-<div class="gated-wrap" id="party-gate-wrap">
-  <div class="passport-overlay" aria-live="polite">
-    <div class="passport-gate-card">
-      <div class="passport-gate-icon">📲</div>
-      <h3>Party Updates Live In<br><span>The GC</span></h3>
-      <p>Join the <strong>@osfna2026</strong> Instagram group chat for venue drops, access notes, and same-day updates.</p>
-      <div class="passport-gate-btns">
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="btn-gold">Join the OSFNA GC →</a>
-        <a href="index.html" class="btn-ghost">Back Home</a>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-logo">OSFNA<span> 2026</span></div>
+            <p>
+              Official OSFNA 2026 party weekend hub for Thursday, Friday,
+              Saturday, and same-day event updates.
+            </p>
+          </div>
+          <div>
+            <p class="footer-col-title">Quick Links</p>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="media.html">Media</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            © 2026 Oromo Sports Federation in North America.
+          </p>
+        </div>
       </div>
-      <div class="passport-gate-perks">
-        <span class="gate-perk">Venue drops in the GC</span>
-        <span class="gate-perk">Live updates</span>
-        <span class="gate-perk">Free to join</span>
-      </div>
-    </div>
-  </div>
-  <div class="gated-content">
+    </footer>
 
-<section class="section section-dark" style="border-top:1px solid rgba(255,255,255,.05)">
-  <div class="section-inner">
-
-    <!-- Tuesday -->
-    <p id="tuesday" class="day-label">Tuesday · Date TBD</p>
-    <div class="ticket-grid" style="margin-bottom:.8rem;">
-      <div class="ticket-card" style="background:#f6fbf5;border-color:rgba(20,130,58,.18);">
-        <img class="ticket-flyer" src="assets/oromummaa-flyer.jpg" alt="OSFNA 2026 Oromummaa Welcoming Party — Day 01, Tuesday, Minneapolis, free admission" loading="lazy" />
-        <p class="ticket-type" style="color:#13823a;">Free Admission</p>
-        <h3 class="ticket-name">“OROMUMMAA” Welcoming Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-    </div>
-
-    <!-- Wednesday -->
-    <p id="wednesday" class="day-label">Wednesday · Date TBD</p>
-    <div class="ticket-grid" style="margin-bottom:.8rem;">
-      <div class="ticket-card">
-        <img class="ticket-flyer" src="assets/faana-nagaa-flyer.jpg" alt="OSFNA 2026 Faana Nagaa Party Night — Day 02, Wednesday, Minneapolis" loading="lazy" />
-        <p class="ticket-type">Party Night</p>
-        <h3 class="ticket-name">“FAANA NAGAA” Party Night</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-    </div>
-
-    <!-- Thursday -->
-    <p id="thursday" class="day-label">Thursday · Date TBD</p>
-    <div class="ticket-grid" style="margin-bottom:.8rem;">
-      <div class="ticket-card">
-        <img class="ticket-flyer" src="assets/galmee-seena-flyer.jpg" alt="OSFNA 2026 Galmee Seena Opening Concert Night — Day 03, Thursday, Minneapolis" loading="lazy" />
-        <p class="ticket-type">Opening Party</p>
-        <h3 class="ticket-name">“GALMEE SEENA” Concert Night</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-      <div class="ticket-card">
-        <img class="ticket-flyer" src="assets/thursday-late-night-flyer.jpg" alt="OSFNA 2026 Thursday Late Night After Party — Minneapolis" loading="lazy" />
-        <p class="ticket-type">Thu Late Night</p>
-        <h3 class="ticket-name">Late Night After Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-    </div>
-
-    <!-- Friday -->
-    <p id="friday" class="day-label">Friday · Date TBD</p>
-    <div class="ticket-grid" style="margin-bottom:.8rem;">
-      <div class="ticket-card">
-        <img class="ticket-flyer" src="assets/adaa-night-flyer.jpg" alt="OSFNA 2026 Adaa Night Cultural Party — Day 04, Friday, Minneapolis" loading="lazy" />
-        <p class="ticket-type">Cultural Night</p>
-        <h3 class="ticket-name">“ADAA NIGHT” Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-      <div class="ticket-card">
-        <img class="ticket-flyer" src="assets/rooftop-party-poster.jpg" alt="OSFNA 2026 Friday Rooftop Party — Minneapolis" loading="lazy" />
-        <p class="ticket-type">Fri Night Party</p>
-        <h3 class="ticket-name">Rooftop Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-      <div class="ticket-card">
-        <p class="ticket-type">Fri Late Night</p>
-        <h3 class="ticket-name">Late Night After Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-    </div>
-
-    <!-- Saturday -->
-    <p id="saturday" class="day-label">Saturday · Aug 8</p>
-    <div class="ticket-grid" style="margin-bottom:.8rem;">
-      <div class="ticket-card">
-        <p class="ticket-type">Headline · By OSFNA</p>
-        <h3 class="ticket-name">Closing Night Concert After Party</h3>
-        <p class="event-note">Date, venue, and lineup will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-      <div class="ticket-card">
-        <p class="ticket-type">Sat Late Night</p>
-        <h3 class="ticket-name">Late Night After Party</h3>
-        <p class="event-note">Date, venue, and final details will be shared in the GC.</p>
-        <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" class="buy-btn buy-btn-ga gc-link">Updates in GC →</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-  </div><!-- /gated-content -->
-</div><!-- /gated-wrap -->
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">OSFNA<span> 2026</span></div>
-        <p>Official OSFNA 2026 party weekend hub for Thursday, Friday, Saturday, and same-day event updates.</p>
-      </div>
-      <div>
-        <p class="footer-col-title">Quick Links</p>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="register.html">Register</a></li>
-          <li><a href="media.html">Media</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Oromo Sports Federation in North America.</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-(function() {
-  const token = localStorage.getItem('osfna_token');
-  const wrap = document.getElementById('party-gate-wrap');
-  if (!token) {
-    wrap.classList.add('locked');
-  } else {
-    fetch('/api/auth?mode=me', { headers: { Authorization: 'Bearer ' + token } })
-      .then((r) => { if (!r.ok) { localStorage.removeItem('osfna_token'); wrap.classList.add('locked'); } })
-      .catch(() => {});
-  }
-})();
-</script>
-<script src="script.js"></script>
-<script src="welcome-modal.js"></script>
-<script src="pwa-shell.js"></script>
-</body>
+    <script>
+      (function () {
+        const token = localStorage.getItem("osfna_token");
+        const wrap = document.getElementById("party-gate-wrap");
+        if (!token) {
+          wrap.classList.add("locked");
+        } else {
+          fetch("/api/auth?mode=me", {
+            headers: { Authorization: "Bearer " + token },
+          })
+            .then((r) => {
+              if (!r.ok) {
+                localStorage.removeItem("osfna_token");
+                wrap.classList.add("locked");
+              }
+            })
+            .catch(() => {});
+        }
+      })();
+    </script>
+    <script src="script.js"></script>
+    <script src="welcome-modal.js"></script>
+    <script src="pwa-shell.js"></script>
+  </body>
 </html>
