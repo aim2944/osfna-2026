@@ -32,7 +32,7 @@
         font-size: 0.75rem;
         letter-spacing: 0.3em;
         text-transform: uppercase;
-        color: var(--red);
+        color: var(--red-light);
         margin-bottom: 0.75rem;
       }
       .media-section-label::before {
@@ -130,6 +130,11 @@
         background: rgba(204, 32, 32, 0.15);
         border-color: var(--red);
         color: white;
+      }
+      /* Keep TikTok embed placeholder links readable on the dark background */
+      .tiktok-embed section a,
+      .tiktok-embed a {
+        color: #cbd5ff !important;
       }
     </style>
   </head>
@@ -615,5 +620,29 @@
     <script src="script.js"></script>
     <script src="welcome-modal.js"></script>
     <script src="pwa-shell.js"></script>
+    <script>
+      // Third-party social embeds inject untitled <iframe>s; give them
+      // accessible names so screen readers can identify each one (WCAG 4.1.2).
+      (function () {
+        function titleEmbeds() {
+          document
+            .querySelectorAll("iframe[id^='instagram-embed']:not([title])")
+            .forEach((f, i) =>
+              f.setAttribute("title", "Instagram post " + (i + 1)),
+            );
+          document
+            .querySelectorAll(
+              ".tiktok-embed iframe:not([title]), iframe[src*='tiktok.com']:not([title])",
+            )
+            .forEach((f, i) =>
+              f.setAttribute("title", "TikTok video " + (i + 1)),
+            );
+        }
+        const obs = new MutationObserver(titleEmbeds);
+        obs.observe(document.body, { childList: true, subtree: true });
+        window.addEventListener("load", titleEmbeds);
+        titleEmbeds();
+      })();
+    </script>
   </body>
 </html>

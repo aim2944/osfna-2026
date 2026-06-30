@@ -10,6 +10,9 @@
   --green-dark: #0f3a20;
   --red: #cc2020;
   --red-dark: #9a1515;
+  /* AA-contrast text variants of brand red: light red for dark bgs, dark red for light bgs */
+  --red-light: #ff6b61;
+  --red-strong: #b3151a;
   --dark: #000000;
   --dark-card: #0d0d0d;
   --off-white: #000000;
@@ -194,7 +197,7 @@ a {
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--red);
+  color: var(--red-light);
   text-transform: uppercase;
 }
 .nav-links {
@@ -488,7 +491,7 @@ a {
 }
 .section-dark .section-label,
 .section-green .section-label {
-  color: var(--red);
+  color: var(--red-light);
 }
 .section-label::before {
   content: "";
@@ -1825,7 +1828,7 @@ a {
 }
 .day-name {
   font-weight: 600;
-  color: var(--green);
+  color: #5cc98a;
   font-family: var(--font-head);
 }
 .day-date {
@@ -1852,7 +1855,7 @@ a {
   font-family: var(--font-head);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--red);
+  color: var(--red-light);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
@@ -1898,7 +1901,7 @@ a {
   font-family: var(--font-head);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--red);
+  color: #ffa49d;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
@@ -2904,7 +2907,7 @@ details p {
   color: #ffffff !important;
 }
 .footer-contact-item a {
-  color: var(--red) !important;
+  color: var(--red-light) !important;
 }
 
 /* ── Social links — always use dark-bg style ── */

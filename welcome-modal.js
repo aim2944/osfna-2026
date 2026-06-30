@@ -2,14 +2,14 @@
   if (window.__osfnaWelcomeShown) return;
   window.__osfnaWelcomeShown = true;
 
-  const GC_URL = 'https://ig.me/j/AbaBi7Pe-ECpvguw/';
-  const SESSION_KEY = 'osfna_welcome_seen';
+  const GC_URL = "https://ig.me/j/AbaBi7Pe-ECpvguw/";
+  const SESSION_KEY = "osfna_welcome_seen";
 
-  if (sessionStorage.getItem(SESSION_KEY) === '1') return;
+  if (sessionStorage.getItem(SESSION_KEY) === "1") return;
 
-  const hasTicket = !!localStorage.getItem('osfna_token');
-  const qrHref = hasTicket ? 'ticket.html' : 'passport.html?mode=login';
-  const qrLabel = hasTicket ? 'Show My QR →' : 'Sign In · Show My QR →';
+  const hasTicket = !!localStorage.getItem("osfna_token");
+  const qrHref = hasTicket ? "ticket.html" : "passport.html?mode=login";
+  const qrLabel = hasTicket ? "Show My QR →" : "Sign In · Show My QR →";
 
   const css = `
     .osfna-welcome-overlay {
@@ -44,7 +44,7 @@
     .osfna-welcome-eyebrow {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.6rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: #ef1b22;
+      text-transform: uppercase; color: #b3151a;
       margin-bottom: 0.4rem;
     }
     .osfna-welcome-title {
@@ -90,7 +90,7 @@
       border-color: #ef1b22; color: #ef1b22;
     }
     .osfna-btn-concert {
-      background: #ef1b22; color: #fff;
+      background: #c8161c; color: #fff;
       box-shadow: 0 14px 32px rgba(239,27,34,0.28);
     }
     .osfna-btn-concert .price {
@@ -104,20 +104,20 @@
     .osfna-welcome-note {
       margin: 0.65rem 0 0;
       font-size: 0.68rem; line-height: 1.45;
-      color: rgba(7,7,7,0.42); text-align: center;
+      color: rgba(7,7,7,0.66); text-align: center;
     }
     .osfna-welcome-note strong { color: #070707; font-weight: 700; }
   `;
 
-  const styleEl = document.createElement('style');
+  const styleEl = document.createElement("style");
   styleEl.textContent = css;
   document.head.appendChild(styleEl);
 
-  const overlay = document.createElement('div');
-  overlay.className = 'osfna-welcome-overlay';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-labelledby', 'osfna-welcome-title');
+  const overlay = document.createElement("div");
+  overlay.className = "osfna-welcome-overlay";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-labelledby", "osfna-welcome-title");
   overlay.innerHTML = `
     <div class="osfna-welcome-card">
       <button class="osfna-welcome-close" aria-label="Close">×</button>
@@ -137,30 +137,38 @@
   `;
 
   function close() {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    overlay.style.animation = 'osfnaFadeIn 0.18s reverse';
+    sessionStorage.setItem(SESSION_KEY, "1");
+    overlay.style.animation = "osfnaFadeIn 0.18s reverse";
     setTimeout(() => overlay.remove(), 180);
   }
 
-  overlay.querySelector('.osfna-welcome-close').addEventListener('click', close);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-  overlay.querySelector('[data-action="ig"]').addEventListener('click', () => {
-    sessionStorage.setItem(SESSION_KEY, '1');
+  overlay
+    .querySelector(".osfna-welcome-close")
+    .addEventListener("click", close);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
   });
-  overlay.querySelector('[data-action="qr"]').addEventListener('click', () => {
-    sessionStorage.setItem(SESSION_KEY, '1');
+  overlay.querySelector('[data-action="ig"]').addEventListener("click", () => {
+    sessionStorage.setItem(SESSION_KEY, "1");
   });
-  overlay.querySelector('[data-action="events"]').addEventListener('click', () => {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    overlay.remove();
+  overlay.querySelector('[data-action="qr"]').addEventListener("click", () => {
+    sessionStorage.setItem(SESSION_KEY, "1");
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.contains(overlay)) close();
+  overlay
+    .querySelector('[data-action="events"]')
+    .addEventListener("click", () => {
+      sessionStorage.setItem(SESSION_KEY, "1");
+      overlay.remove();
+    });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && document.body.contains(overlay)) close();
   });
 
-  function mount() { document.body.appendChild(overlay); }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
+  function mount() {
+    document.body.appendChild(overlay);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
   } else {
     mount();
   }
