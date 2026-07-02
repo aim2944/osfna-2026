@@ -1,162 +1,216 @@
-import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
-import { randomBytes } from 'crypto';
+import crypto from "crypto";
+import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
+import {
+  buildCheckoutBranding,
+  buildPaymentIntentBranding,
+} from "./_stripe-branding.js";
+import { bookHotel } from "./_book-hotel.js";
 
-// Revenue split constants (stored in metadata for transparency)
-const SPLIT = { venue: 0.60, treasury: 0.25, platform: 0.10, board_stipend: 0.05 };
+// Party-ticket checkout. Kept behind OSFNA_TICKETS_OPEN so it stays dormant until
+// prices/codes are provisioned. On open: validates input, applies a promo code,
+// writes a pending party_tickets row (with promo_code attribution), and returns a
+// Stripe Checkout URL. The webhook flips the row to paid; the wallet/scan use the
+// signed ticket_id (see _ticket-token.js).
 
-const TICKET_LABELS = {
-  ga:     'General Admission',
-  vip:    'VIP Express Pass',
-  bundle: 'All-Access Oromo Week Pass',
-  table:  'VIP Table Reservation',
+// Standard prices in cents (see PRICING.md). Early-bird variants applied when `early`.
+const PRICES = {
+  ga: { standard: 3000, early: 2000 },
+  vip: { standard: 8500 },
+  table: { standard: 40000 },
+  bundle: { standard: 9900, early: 8000 },
 };
 
-const MAX_QUANTITIES = { ga: 10, vip: 6, bundle: 4, table: 1 };
+const NIGHTS = new Set([
+  "tue-oromummaa",
+  "wed-faana-nagaa",
+  "thu-galmee-seena",
+  "thu-late-night",
+  "fri-adaa-night",
+  "fri-rooftop",
+  "sat-closing",
+  "sat-afterparty",
+  "thu-opening",
+  "thu-hookah",
+  "fri-nightclub",
+  "fri-hookah",
+  "all-access",
+]);
 
-function validate(data) {
-  const err = [];
-  const { ticket_type, quantity, unit_cents } = data;
+const TYPE_LABEL = {
+  ga: "General Entry",
+  vip: "VIP / Section",
+  table: "Table for 6",
+  bundle: "All-Access Week Pass",
+};
 
-  if (!TICKET_LABELS[ticket_type])         err.push('Invalid ticket type');
-  if (!Number.isInteger(quantity) || quantity < 1) err.push('Quantity must be at least 1');
-  if (quantity > (MAX_QUANTITIES[ticket_type] || 10)) err.push(`Max ${MAX_QUANTITIES[ticket_type]} per order for ${ticket_type}`);
-  if (!unit_cents || unit_cents < 1000)    err.push('Invalid price — must be at least $10');
-  if (unit_cents > 1000000)                err.push('Price exceeds maximum — contact organizers');
-  if (ticket_type === 'table' && !data.table_id) err.push('Table selection required');
-
-  return err;
+function newTicketId() {
+  // 8-char uppercase alphanumeric, matches existing ticket_id format.
+  return crypto
+    .randomBytes(6)
+    .toString("base64")
+    .replace(/[^A-Z0-9]/gi, "")
+    .toUpperCase()
+    .slice(0, 8)
+    .padEnd(8, "0");
 }
 
-function buildSplitMeta(totalCents) {
-  return {
-    split_venue:        String(Math.round(totalCents * SPLIT.venue)),
-    split_treasury:     String(Math.round(totalCents * SPLIT.treasury)),
-    split_platform:     String(Math.round(totalCents * SPLIT.platform)),
-    split_board_stipend:String(Math.round(totalCents * SPLIT.board_stipend)),
-  };
-}
-
-async function resolveAuthenticatedUser(req) {
-  const token = req.headers.authorization?.replace('Bearer ', '').trim();
-  if (!token || !process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) return null;
-
-  if (token === 'stub-token-dev') {
-    return { id: 'stub', email: 'demo@example.com', full_name: 'Demo User' };
-  }
-
-  const authClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-  const { data: { user }, error } = await authClient.auth.getUser(token);
-  if (error || !user) return null;
-
-  let profile = null;
-  if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    const adminClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-    const result = await adminClient
-      .from('attendee_profiles')
-      .select('full_name')
-      .eq('id', user.id)
-      .single();
-    profile = result.data || null;
-  }
-
-  return {
-    id: user.id,
-    email: user.email || null,
-    full_name: profile?.full_name || user.user_metadata?.full_name || null,
-  };
+function validateEmail(e) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e || "");
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
-  const data = req.body;
-  const errors = validate(data);
-  if (errors.length) return res.status(400).json({ error: errors[0], errors });
-
-  const { ticket_type, quantity, unit_cents, price_tier, night, table_id, table_seats } = data;
-  const totalCents = unit_cents * quantity;
-  const ticketId   = randomBytes(8).toString('hex').toUpperCase();
-  const label      = TICKET_LABELS[ticket_type];
-  const actor      = await resolveAuthenticatedUser(req);
-
-  // Persist to Supabase before checkout to get a record ID
-  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-    await sb.from('party_tickets').insert({
-      ticket_id:    ticketId,
-      ticket_type,
-      quantity,
-      unit_cents,
-      total_cents:  totalCents,
-      price_tier:   price_tier || null,
-      night:        night || null,
-      table_id:     table_id || null,
-      table_seats:  table_seats ? parseInt(table_seats, 10) : null,
-      attendee_id:  actor?.id && actor.id !== 'stub' ? actor.id : null,
-      holder_email: actor?.email || null,
-      holder_name:  actor?.full_name || null,
-      status:       'pending_payment',
-      split_venue:        Math.round(totalCents * SPLIT.venue),
-      split_treasury:     Math.round(totalCents * SPLIT.treasury),
-      split_platform:     Math.round(totalCents * SPLIT.platform),
-      split_board_stipend:Math.round(totalCents * SPLIT.board_stipend),
-    });
+  // Hotel-block checkout shares this entrypoint (Hobby function-cap workaround).
+  const body = req.body || {};
+  if (body.booking_type === "hotel_block" || body.hotel_id) {
+    return bookHotel(req, res);
   }
 
-  if (process.env.STRIPE_SECRET_KEY) {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-11-20.acacia' });
-    const origin = req.headers.origin || 'https://osfna-2026.vercel.app';
+  if (process.env.OSFNA_TICKETS_OPEN !== "true") {
+    return res.status(410).json({
+      error:
+        "Online ticket sales are not open yet. Join the OSFNA GC for the drop.",
+    });
+  }
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(503).json({ error: "Checkout not configured" });
+  }
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    // Never sell a ticket we can't persist — the QR wallet + gate need the row.
+    return res.status(503).json({ error: "Ticketing database not configured" });
+  }
 
-    const nightLabel = night
-      ? { jul25:'Jul 25', jul26:'Jul 26', jul27:'Jul 27', jul28:'Jul 28', jul29:'Jul 29', jul31:'Jul 31', aug01:'Aug 1' }[night] || night
-      : null;
+  const b = req.body || {};
+  const ticket_type = String(b.ticket_type || "").toLowerCase();
+  const isBundle = ticket_type === "bundle";
+  const night = isBundle ? "all-access" : String(b.night || "");
+  const quantity = Math.max(1, Math.min(10, parseInt(b.quantity, 10) || 1));
+  const holder_name = String(b.holder_name || "")
+    .trim()
+    .slice(0, 120);
+  const holder_email = String(b.holder_email || "")
+    .trim()
+    .toLowerCase();
+  const promoInput = String(b.promo_code || "")
+    .trim()
+    .toUpperCase();
+  const early = b.early === true || b.early === "true";
 
-    const description = [
-      ticket_type === 'table' ? `Table ${table_id} (seats ${table_seats || '?'})` : null,
-      nightLabel ? `Night: ${nightLabel}` : null,
-      price_tier ? `${price_tier} pricing` : null,
-    ].filter(Boolean).join(' · ');
+  // ── Validate ──
+  const errors = [];
+  if (!PRICES[ticket_type]) errors.push("Invalid ticket type");
+  if (!isBundle && !NIGHTS.has(night)) errors.push("Invalid night");
+  if (!holder_name) errors.push("Name is required");
+  if (!validateEmail(holder_email)) errors.push("Valid email is required");
+  if (errors.length) return res.status(400).json({ errors });
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
+  const sb = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+  );
+
+  // ── Price ──
+  const tier = PRICES[ticket_type];
+  const unit_cents = early && tier.early ? tier.early : tier.standard;
+  let subtotal = unit_cents * quantity;
+
+  // ── Promo code (optional) ──
+  let promo_code = null;
+  if (promoInput) {
+    const { data: promo } = await sb
+      .from("promo_codes")
+      .select("code, discount_type, discount_value, active")
+      .eq("code", promoInput)
+      .single();
+    if (promo && promo.active) {
+      promo_code = promo.code;
+      if (promo.discount_type === "percent" && promo.discount_value > 0) {
+        subtotal = Math.round(
+          subtotal * (1 - Math.min(100, promo.discount_value) / 100),
+        );
+      } else if (
+        promo.discount_type === "fixed_cents" &&
+        promo.discount_value > 0
+      ) {
+        subtotal = Math.max(0, subtotal - promo.discount_value);
+      }
+    }
+  }
+
+  // ── Create pending ticket row ──
+  const ticket_id = newTicketId();
+  const { error: dbErr } = await sb.from("party_tickets").insert({
+    ticket_id,
+    ticket_type,
+    quantity,
+    unit_cents,
+    total_cents: subtotal,
+    price_tier: early ? "Early Bird" : "Standard",
+    night,
+    table_id:
+      ticket_type === "table"
+        ? String(b.table_id || "").slice(0, 12) || null
+        : null,
+    holder_name,
+    holder_email,
+    promo_code,
+    status: "pending_payment",
+  });
+  if (dbErr) {
+    console.error("[create-party-ticket] insert error:", dbErr.message);
+    return res
+      .status(500)
+      .json({ error: "Could not reserve ticket — try again" });
+  }
+
+  // ── Stripe checkout ──
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const origin =
+    req.headers.origin ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    "https://osfna-2026.vercel.app";
+  const label = `OSFNA 2026 — ${TYPE_LABEL[ticket_type]}${isBundle ? "" : ` · ${night}`}`;
+
+  const session = await stripe.checkout.sessions.create({
+    ...buildCheckoutBranding({
+      submitMessage: "Official OSFNA 2026 party ticket checkout.",
+    }),
+    payment_method_types: ["card"],
+    customer_email: holder_email,
+    line_items: [
+      {
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
-            name:        `OSFNA 2026 — ${label}`,
-            description: description || 'Oromo Week 2026 · July 25 – Aug 1',
-            images: [],
+            name: label,
+            description: `${quantity} × ${TYPE_LABEL[ticket_type]}${promo_code ? ` (promo ${promo_code})` : ""}`,
           },
-          unit_amount: unit_cents,
+          // Charge the (possibly discounted) per-unit amount; quantity carried by Stripe.
+          unit_amount: Math.round(subtotal / quantity),
         },
         quantity,
-      }],
-      mode: 'payment',
-      success_url: `${origin}/ticket.html?ref=${ticketId}&paid=1`,
-      cancel_url:  `${origin}/parties.html`,
-      metadata: {
-        ticket_id:   ticketId,
-        ticket_type,
-        quantity:    String(quantity),
-        night:       night || '',
-        table_id:    table_id || '',
-        price_tier:  price_tier || '',
-        holder_name: actor?.full_name || '',
-        holder_email: actor?.email || '',
-        ...buildSplitMeta(totalCents),
       },
-    });
-
-    return res.status(200).json({ checkoutUrl: session.url, ticket_id: ticketId });
-  }
-
-  // Fallback — no Stripe
-  return res.status(200).json({
-    success:   true,
-    fallback:  true,
-    ticket_id: ticketId,
-    wallet_url: `/ticket.html?ref=${ticketId}`,
-    message:   `${label} request received (${quantity}x ${(unit_cents/100).toFixed(0)} each). Payment details will be emailed within 24 hours. Reference: ${ticketId}`,
+    ],
+    mode: "payment",
+    payment_intent_data: buildPaymentIntentBranding({
+      description: `OSFNA 2026 ${TYPE_LABEL[ticket_type]} — ${ticket_id}`,
+      statementSuffix: "OSFNA PARTY",
+    }),
+    success_url: `${origin}/ticket.html?ref=${encodeURIComponent(ticket_id)}`,
+    cancel_url: `${origin}/parties.html`,
+    metadata: {
+      ticket_id,
+      ticket_type,
+      night,
+      quantity: String(quantity),
+      promo_code: promo_code || "",
+      holder_name,
+      holder_email,
+    },
   });
+
+  return res.status(200).json({ checkoutUrl: session.url, ticket_id });
 }
