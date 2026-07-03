@@ -20,9 +20,9 @@ const HOTELS = {
     rate_cents: 10900,
     discount_pct: 50,
   },
-  "best-western-como": {
-    name: "Best Western Plus Como Park (Bandana Square)",
-    rate_cents: 14900,
+  "country-inn-roseville": {
+    name: "Country Inn & Suites by Radisson, Roseville",
+    rate_cents: 11900,
     discount_pct: 50,
   },
   "hie-roseville": {
