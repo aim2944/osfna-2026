@@ -28,10 +28,12 @@
 - [x] Verified live: 17 cards render, all photos 200, live cs_live checkout session minted for country-inn (HB26D78A54) and saint-paul-hotel
 - [x] Bed-type options (9fcd470, deployed): per-hotel beds on cards + modal select, server-validated, in Stripe description/metadata; live-verified (valid → cs_live session, invalid → 400)
 - [x] Apply `supabase/migration_2026-07-03_hotel_bed_type.sql` — DONE Jul 3 via Management API; verified live booking HBA6103EA9 stored bed_type in hotel_bookings
+- [x] Per-room-type PRICING (team feedback: "can't book singles or double rooms") — every bed option has its own rate; cards show "From $X"; modal dropdown shows rate + sleeps per option with live total; server prices from bed.rate_cents; Marriott Roseville room types verified against property listings (Courtyard 2Q > K+sofa; Residence Inn = Queen studio / 1-BR / 2-BR suites)
+- [x] Round nightly to whole dollars server+client so charge == displayed price (was off by cents, pre-existing)
 
 ## Review / results
 - Checkout is LIVE and taking real money paths.
   - Room-block agreements: SIGNED (Aimon confirmed Jul 3, rates on page correct for all 17).
   - Remaining risk: Stripe key rotation (KEY_ROTATION.md) — still mandatory, not done.
 - Fine print still says "Photos are representative" — all 17 are now real; consider updating.
-- Test bookings HB26D78A54 + one saint-paul ref + "Bed Option Test" (quality-inn) + HBA6103EA9 "Bed Column Test" (residence-inn, Jul 3 bed-type verification) sit as unpaid pending rows in hotel_bookings; harmless, ignore in reconciliation.
+- Test bookings HB26D78A54 + one saint-paul ref + "Bed Option Test" (quality-inn) + HBA6103EA9 + HB7526CD3D/HBC7359507/HBBEFAF930/HB97C23DA9 (Jul 3 bed-type + pricing verification) sit as unpaid pending rows in hotel_bookings; harmless, ignore in reconciliation.
