@@ -1112,7 +1112,7 @@
           list = list.filter((h) => String(h.pct) === filter);
         for (const h of list) {
           const cheapest = h.beds.reduce((a, b) => (b.rate < a.rate ? b : a));
-          const now = cheapest.rate * (1 - h.pct / 100);
+          const now = Math.round(cheapest.rate * (1 - h.pct / 100));
           const varies = h.beds.some((b) => b.rate !== cheapest.rate);
           const card = document.createElement("article");
           card.className = "hotel-card";
@@ -1175,7 +1175,7 @@
         const bedsSel = document.getElementById("hm-beds");
         bedsSel.innerHTML = "";
         for (const bed of activeHotel.beds) {
-          const bedNow = bed.rate * (1 - activeHotel.pct / 100);
+          const bedNow = Math.round(bed.rate * (1 - activeHotel.pct / 100));
           const opt = document.createElement("option");
           opt.value = bed.label;
           opt.textContent = `${bed.label} · sleeps ${bed.sleeps} — ${fmt(bedNow)}/night`;
@@ -1199,7 +1199,7 @@
       function updateRateLine() {
         if (!activeHotel) return;
         const bed = selectedBed();
-        const now = bed.rate * (1 - activeHotel.pct / 100);
+        const now = Math.round(bed.rate * (1 - activeHotel.pct / 100));
         document.getElementById("hm-rate").textContent =
           `${activeHotel.pct}% Oromo discount — ${fmt(now)}/night (was ${fmt(bed.rate)}) · ${bed.label}`;
       }
@@ -1215,7 +1215,7 @@
         const nights = Math.round((outD - inD) / 86400000);
         if (nights > 0) {
           const bed = selectedBed();
-          const now = bed.rate * (1 - activeHotel.pct / 100);
+          const now = Math.round(bed.rate * (1 - activeHotel.pct / 100));
           totalEl.textContent = `Total: ${fmt(now * nights * rooms)} — ${nights} night${nights > 1 ? "s" : ""}, ${rooms} room${rooms > 1 ? "s" : ""} · ${bed.label}`;
         } else {
           totalEl.textContent = "";

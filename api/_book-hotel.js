@@ -245,9 +245,9 @@ export async function bookHotel(req, res) {
   if (errors.length) return res.status(400).json({ errors });
 
   // ── Price (server-side only, per bed type) ──
-  const nightly_cents = Math.round(
-    bed.rate_cents * (1 - hotel.discount_pct / 100),
-  );
+  // Rounded to whole dollars so the charge matches the displayed rate exactly.
+  const nightly_cents =
+    Math.round((bed.rate_cents * (1 - hotel.discount_pct / 100)) / 100) * 100;
   const total_cents = nightly_cents * nights * rooms;
 
   // ── Create pending booking row (webhook flips to paid) ──
