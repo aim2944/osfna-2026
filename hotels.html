@@ -387,6 +387,14 @@
         color: rgba(26, 26, 26, 0.45);
         font-size: 0.95rem;
       }
+      .price-from {
+        font-family: "Oswald", sans-serif;
+        font-weight: 600;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(26, 26, 26, 0.55);
+      }
       .price-now {
         font-family: "Anton", sans-serif;
         font-size: 1.9rem;
@@ -719,11 +727,11 @@
 
       <p class="fine-print">
         Rates shown are signed OSFNA group-block community rates against
-        standard tournament-week pricing. Photos show each actual property. The
-        Oromo rate is the same for every bed type at a property; your bed choice
-        is a preference honored by the hotel subject to availability at
-        check-in. Bookings are handled by OSFNA 2026 and confirmed by email with
-        a booking reference. Questions:
+        standard tournament-week pricing. Photos show each actual property.
+        Nightly rates vary by room type — pick your beds in the booking form and
+        the price updates before you pay. Room types are honored by the hotel
+        subject to availability at check-in. Bookings are handled by OSFNA 2026
+        and confirmed by email with a booking reference. Questions:
         <a href="index.html#contact">contact OSFNA</a>.
       </p>
     </main>
@@ -832,11 +840,13 @@
           name: "Quality Inn Midway — St. Paul",
           tier: "50% Oromo Block · Budget",
           addr: "1964 University Ave W, St. Paul",
-          rate: 109,
           pct: 50,
           drive: 5,
           perks: ["Free parking", "Hot breakfast", "Indoor pool + sauna"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 109, sleeps: 4 },
+            { label: "1 King Bed", rate: 99, sleeps: 2 },
+          ],
           img: "assets/hotels/quality-inn-midway.jpg",
         },
         {
@@ -844,11 +854,13 @@
           name: "Country Inn & Suites Roseville",
           tier: "50% Oromo Block · Budget",
           addr: "2740 Snelling Ave N, Roseville",
-          rate: 119,
           pct: 50,
           drive: 10,
           perks: ["Free breakfast buffet", "Indoor pool", "Free parking"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 119, sleeps: 4 },
+            { label: "1 King Bed", rate: 109, sleeps: 2 },
+          ],
           img: "assets/hotels/country-inn-roseville.jpg",
         },
         {
@@ -856,11 +868,13 @@
           name: "Days Hotel University Ave SE",
           tier: "50% Oromo Block · Budget",
           addr: "2407 University Ave SE, Minneapolis",
-          rate: 99,
           pct: 50,
           drive: 8,
           perks: ["Free to-go breakfast", "Free parking", "Free local shuttle"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 99, sleeps: 4 },
+            { label: "1 King Bed", rate: 89, sleeps: 2 },
+          ],
           img: "assets/hotels/days-hotel-university-ave.jpg",
         },
         {
@@ -868,11 +882,13 @@
           name: "Motel 6 Roseville",
           tier: "50% Oromo Block · Budget",
           addr: "2300 Cleveland Ave N, Roseville",
-          rate: 79,
           pct: 50,
           drive: 10,
           perks: ["Lowest rates in area", "Free parking", "Outdoor pool"],
-          beds: ["1 Queen Bed", "2 Queen Beds"],
+          beds: [
+            { label: "1 Queen Bed", rate: 79, sleeps: 2 },
+            { label: "2 Queen Beds", rate: 89, sleeps: 4 },
+          ],
           img: "assets/hotels/motel-6-roseville.jpg",
         },
         {
@@ -880,11 +896,13 @@
           name: "Holiday Inn Express Roseville",
           tier: "40% Oromo Rate · Mid-tier",
           addr: "2715 Long Lake Rd, Roseville",
-          rate: 139,
           pct: 40,
           drive: 13,
           perks: ["Hot breakfast", "Indoor pool", "Area shuttle + EV charging"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 139, sleeps: 4 },
+            { label: "1 King Bed", rate: 129, sleeps: 2 },
+          ],
           img: "assets/hotels/hie-roseville.jpg",
         },
         {
@@ -892,11 +910,13 @@
           name: "Fairfield Inn & Suites Roseville",
           tier: "40% Oromo Rate · Mid-tier",
           addr: "3045 Centre Pointe Dr N, Roseville",
-          rate: 159,
           pct: 40,
           drive: 14,
           perks: ["Free breakfast", "Free parking", "Fitness center"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 159, sleeps: 4 },
+            { label: "1 King Bed + Sofa Bed", rate: 149, sleeps: 3 },
+          ],
           img: "assets/hotels/fairfield-roseville.jpg",
         },
         {
@@ -904,11 +924,13 @@
           name: "Hampton Inn Roseville",
           tier: "40% Oromo Rate · Mid-tier",
           addr: "2050 Iona Ln W, Roseville",
-          rate: 165,
           pct: 40,
           drive: 15,
           perks: ["Hot breakfast", "Indoor pool", "Free parking"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 165, sleeps: 4 },
+            { label: "1 King Bed", rate: 155, sleeps: 2 },
+          ],
           img: "assets/hotels/hampton-roseville.jpg",
         },
         {
@@ -916,11 +938,13 @@
           name: "DoubleTree St. Paul East",
           tier: "40% Oromo Rate · Mid-tier",
           addr: "2201 Burns Ave, St. Paul",
-          rate: 155,
           pct: 40,
           drive: 16,
           perks: ["Warm cookie check-in", "Indoor pool", "Free parking"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 155, sleeps: 4 },
+            { label: "1 King Bed", rate: 145, sleeps: 2 },
+          ],
           img: "assets/hotels/doubletree-east.jpg",
         },
         {
@@ -928,11 +952,13 @@
           name: "Home2 Suites Roseville",
           tier: "40% Oromo Rate · Extended Stay",
           addr: "2020 Iona Ln W, Roseville",
-          rate: 149,
           pct: 40,
           drive: 8,
           perks: ["Kitchenette suites", "Free breakfast", "Indoor pool"],
-          beds: ["1 King Studio Suite", "2 Queen Studio Suite"],
+          beds: [
+            { label: "1 King Studio Suite", rate: 149, sleeps: 3 },
+            { label: "2 Queen Studio Suite", rate: 159, sleeps: 5 },
+          ],
           img: "assets/hotels/home2-suites-roseville.jpg",
         },
         {
@@ -940,7 +966,6 @@
           name: "Courtyard Roseville",
           tier: "40% Oromo Rate · Mid-tier",
           addr: "2905 Centre Pointe Dr, Roseville",
-          rate: 149,
           pct: 40,
           drive: 12,
           perks: [
@@ -948,7 +973,10 @@
             "Bistro restaurant + bar",
             "Fitness center",
           ],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 149, sleeps: 4 },
+            { label: "1 King Bed + Sofa Bed", rate: 134, sleeps: 3 },
+          ],
           img: "assets/hotels/courtyard-roseville.jpg",
         },
         {
@@ -956,7 +984,6 @@
           name: "Residence Inn Roseville",
           tier: "40% Oromo Rate · Extended Stay",
           addr: "2985 Centre Pointe Dr, Roseville",
-          rate: 169,
           pct: 40,
           drive: 12,
           perks: [
@@ -964,7 +991,19 @@
             "Free hot breakfast",
             "Indoor pool + sports court",
           ],
-          beds: ["Studio Suite — 1 King", "1-Bedroom Suite — 1 King"],
+          beds: [
+            { label: "Queen Studio Suite + Sofa Bed", rate: 169, sleeps: 3 },
+            {
+              label: "1-Bedroom Queen Suite + Sofa Bed",
+              rate: 189,
+              sleeps: 4,
+            },
+            {
+              label: "2-Bedroom Suite — 2 Queens + Sofa Bed",
+              rate: 239,
+              sleeps: 6,
+            },
+          ],
           img: "assets/hotels/residence-inn-roseville.jpg",
         },
         {
@@ -972,11 +1011,13 @@
           name: "Hyatt Place St. Paul Downtown",
           tier: "30% Oromo Rate · Downtown",
           addr: "180 E Kellogg Blvd, St. Paul",
-          rate: 185,
           pct: 30,
           drive: 11,
           perks: ["Free breakfast", "Bar + lounge", "Walk to Xcel Center"],
-          beds: ["1 King Bed + Sofa Bed", "2 Queen Beds + Sofa Bed"],
+          beds: [
+            { label: "1 King Bed + Sofa Bed", rate: 185, sleeps: 4 },
+            { label: "2 Queen Beds + Sofa Bed", rate: 199, sleeps: 6 },
+          ],
           img: "assets/hotels/hyatt-place-downtown.jpg",
         },
         {
@@ -984,11 +1025,13 @@
           name: "SpringHill Suites Downtown",
           tier: "30% Oromo Rate · Downtown",
           addr: "472 Jackson St, St. Paul",
-          rate: 195,
           pct: 30,
           drive: 11,
           perks: ["All-suite rooms", "Fitness center", "Walk to CHS Field"],
-          beds: ["King Suite + Sofa Bed", "2 Queen Suite + Sofa Bed"],
+          beds: [
+            { label: "King Suite + Sofa Bed", rate: 195, sleeps: 4 },
+            { label: "2 Queen Suite + Sofa Bed", rate: 209, sleeps: 6 },
+          ],
           img: "assets/hotels/springhill-downtown.jpg",
         },
         {
@@ -996,11 +1039,13 @@
           name: "Drury Plaza St. Paul Downtown",
           tier: "30% Oromo Rate · Upscale",
           addr: "175 10th St E, St. Paul",
-          rate: 209,
           pct: 30,
           drive: 11,
           perks: ["Free hot breakfast", "Free 5:30 Kickback", "Indoor pool"],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 209, sleeps: 4 },
+            { label: "1 King Bed", rate: 199, sleeps: 2 },
+          ],
           img: "assets/hotels/drury-plaza-downtown.jpg",
         },
         {
@@ -1008,11 +1053,13 @@
           name: "InterContinental Riverfront",
           tier: "30% Oromo Rate · Upscale",
           addr: "11 E Kellogg Blvd, St. Paul",
-          rate: 259,
           pct: 30,
           drive: 11,
           perks: ["River views", "Restaurant + bar", "Fitness center"],
-          beds: ["1 King Bed", "2 Double Beds"],
+          beds: [
+            { label: "1 King Bed", rate: 259, sleeps: 2 },
+            { label: "2 Double Beds", rate: 269, sleeps: 4 },
+          ],
           img: "assets/hotels/intercontinental-riverfront.jpg",
         },
         {
@@ -1020,7 +1067,6 @@
           name: "Hampton Inn & Suites Downtown St. Paul",
           tier: "30% Oromo Rate · Downtown",
           addr: "200 7th St W, St. Paul",
-          rate: 169,
           pct: 30,
           drive: 11,
           perks: [
@@ -1028,7 +1074,10 @@
             "Steps from Xcel Center",
             "Fitness center",
           ],
-          beds: ["2 Queen Beds", "1 King Bed"],
+          beds: [
+            { label: "2 Queen Beds", rate: 169, sleeps: 4 },
+            { label: "1 King Bed", rate: 159, sleeps: 2 },
+          ],
           img: "assets/hotels/hampton-inn-downtown-stpaul.jpg",
         },
         {
@@ -1036,7 +1085,6 @@
           name: "The Saint Paul Hotel",
           tier: "30% Oromo Rate · Upscale",
           addr: "350 Market St, St. Paul",
-          rate: 209,
           pct: 30,
           drive: 11,
           perks: [
@@ -1044,7 +1092,11 @@
             "St. Paul Grill restaurant",
             "Walk to Xcel Center",
           ],
-          beds: ["1 King Bed", "1 Queen Bed", "2 Double Beds"],
+          beds: [
+            { label: "1 King Bed", rate: 209, sleeps: 2 },
+            { label: "1 Queen Bed", rate: 189, sleeps: 2 },
+            { label: "2 Double Beds", rate: 229, sleeps: 4 },
+          ],
           img: "assets/hotels/saint-paul-hotel.jpg",
         },
       ];
@@ -1059,7 +1111,9 @@
         else if (filter !== "all")
           list = list.filter((h) => String(h.pct) === filter);
         for (const h of list) {
-          const now = h.rate * (1 - h.pct / 100);
+          const cheapest = h.beds.reduce((a, b) => (b.rate < a.rate ? b : a));
+          const now = cheapest.rate * (1 - h.pct / 100);
+          const varies = h.beds.some((b) => b.rate !== cheapest.rate);
           const card = document.createElement("article");
           card.className = "hotel-card";
           card.innerHTML =
@@ -1072,12 +1126,13 @@
             `<p class="card-tier">${h.tier}</p>` +
             `<h3 class="card-name">${h.name}</h3>` +
             `<p class="card-addr">${h.addr}</p>` +
-            `<p class="card-beds">${h.beds.join(' <span class="sep">·</span> ')}</p>` +
+            `<p class="card-beds">${h.beds.map((b) => b.label).join(' <span class="sep">·</span> ')}</p>` +
             '<div class="card-perks">' +
             h.perks.map((p) => `<span class="perk">${p}</span>`).join("") +
             "</div>" +
             '<div class="card-price">' +
-            `<span class="price-was">${fmt(h.rate)}</span>` +
+            (varies ? '<span class="price-from">From</span>' : "") +
+            `<span class="price-was">${fmt(cheapest.rate)}</span>` +
             `<span class="price-now">${fmt(now)}</span>` +
             '<span class="price-per">/ night</span>' +
             "</div>" +
@@ -1117,24 +1172,37 @@
         activeHotel = HOTELS.find((h) => h.id === btn.dataset.id);
         if (!activeHotel) return;
         document.getElementById("hm-title").textContent = activeHotel.name;
-        const now = activeHotel.rate * (1 - activeHotel.pct / 100);
-        document.getElementById("hm-rate").textContent =
-          `${activeHotel.pct}% Oromo discount — ${fmt(now)}/night (was ${fmt(activeHotel.rate)})`;
         const bedsSel = document.getElementById("hm-beds");
         bedsSel.innerHTML = "";
         for (const bed of activeHotel.beds) {
+          const bedNow = bed.rate * (1 - activeHotel.pct / 100);
           const opt = document.createElement("option");
-          opt.value = bed;
-          opt.textContent = bed;
+          opt.value = bed.label;
+          opt.textContent = `${bed.label} · sleeps ${bed.sleeps} — ${fmt(bedNow)}/night`;
           bedsSel.appendChild(opt);
         }
         errEl.classList.remove("show");
+        updateRateLine();
         updateTotal();
         lastTrigger = btn;
         overlay.classList.add("open");
         document.getElementById("hm-in").focus();
       });
 
+      function selectedBed() {
+        if (!activeHotel) return null;
+        const label = document.getElementById("hm-beds").value;
+        return (
+          activeHotel.beds.find((b) => b.label === label) || activeHotel.beds[0]
+        );
+      }
+      function updateRateLine() {
+        if (!activeHotel) return;
+        const bed = selectedBed();
+        const now = bed.rate * (1 - activeHotel.pct / 100);
+        document.getElementById("hm-rate").textContent =
+          `${activeHotel.pct}% Oromo discount — ${fmt(now)}/night (was ${fmt(bed.rate)}) · ${bed.label}`;
+      }
       function updateTotal() {
         if (!activeHotel) return;
         const inD = new Date(
@@ -1146,14 +1214,18 @@
         const rooms = parseInt(document.getElementById("hm-rooms").value, 10);
         const nights = Math.round((outD - inD) / 86400000);
         if (nights > 0) {
-          const now = activeHotel.rate * (1 - activeHotel.pct / 100);
-          totalEl.textContent = `Total: ${fmt(now * nights * rooms)} — ${nights} night${nights > 1 ? "s" : ""}, ${rooms} room${rooms > 1 ? "s" : ""}`;
+          const bed = selectedBed();
+          const now = bed.rate * (1 - activeHotel.pct / 100);
+          totalEl.textContent = `Total: ${fmt(now * nights * rooms)} — ${nights} night${nights > 1 ? "s" : ""}, ${rooms} room${rooms > 1 ? "s" : ""} · ${bed.label}`;
         } else {
           totalEl.textContent = "";
         }
       }
-      ["hm-in", "hm-out", "hm-rooms"].forEach((id) =>
-        document.getElementById(id).addEventListener("change", updateTotal),
+      ["hm-in", "hm-out", "hm-rooms", "hm-beds"].forEach((id) =>
+        document.getElementById(id).addEventListener("change", () => {
+          updateRateLine();
+          updateTotal();
+        }),
       );
       // Keep check-out floor one day past check-in so the native picker
       // can't produce an inverted range.

@@ -12,110 +12,147 @@ import {
 // (see KEY_ROTATION.md). Pricing is authoritative HERE — the client page
 // only displays; it never sends amounts.
 
-// Standard tournament-week nightly rate in cents + negotiated Oromo discount.
-// Must stay in sync with the HOTELS array in hotels.html (display only).
+// Standard tournament-week nightly rate in cents PER BED TYPE + negotiated
+// Oromo discount. Bed labels and rates must stay in sync with the HOTELS
+// array in hotels.html (display only).
 const HOTELS = {
   "quality-inn-midway": {
     name: "Quality Inn Midway — St. Paul",
-    rate_cents: 10900,
     discount_pct: 50,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 10900 },
+      { label: "1 King Bed", rate_cents: 9900 },
+    ],
   },
   "country-inn-roseville": {
     name: "Country Inn & Suites by Radisson, Roseville",
-    rate_cents: 11900,
     discount_pct: 50,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 11900 },
+      { label: "1 King Bed", rate_cents: 10900 },
+    ],
   },
   "days-hotel-university-ave": {
     name: "Days Hotel by Wyndham University Ave SE",
-    rate_cents: 9900,
     discount_pct: 50,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 9900 },
+      { label: "1 King Bed", rate_cents: 8900 },
+    ],
   },
   "motel-6-roseville": {
     name: "Motel 6 Roseville — Minneapolis North",
-    rate_cents: 7900,
     discount_pct: 50,
-    beds: ["1 Queen Bed", "2 Queen Beds"],
+    beds: [
+      { label: "1 Queen Bed", rate_cents: 7900 },
+      { label: "2 Queen Beds", rate_cents: 8900 },
+    ],
   },
   "home2-suites-roseville": {
     name: "Home2 Suites by Hilton Roseville",
-    rate_cents: 14900,
     discount_pct: 40,
-    beds: ["1 King Studio Suite", "2 Queen Studio Suite"],
+    beds: [
+      { label: "1 King Studio Suite", rate_cents: 14900 },
+      { label: "2 Queen Studio Suite", rate_cents: 15900 },
+    ],
   },
   "courtyard-roseville": {
     name: "Courtyard Minneapolis St. Paul/Roseville",
-    rate_cents: 14900,
     discount_pct: 40,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 14900 },
+      { label: "1 King Bed + Sofa Bed", rate_cents: 13400 },
+    ],
   },
   "residence-inn-roseville": {
     name: "Residence Inn Minneapolis St. Paul/Roseville",
-    rate_cents: 16900,
     discount_pct: 40,
-    beds: ["Studio Suite — 1 King", "1-Bedroom Suite — 1 King"],
+    beds: [
+      { label: "Queen Studio Suite + Sofa Bed", rate_cents: 16900 },
+      { label: "1-Bedroom Queen Suite + Sofa Bed", rate_cents: 18900 },
+      { label: "2-Bedroom Suite — 2 Queens + Sofa Bed", rate_cents: 23900 },
+    ],
   },
   "hie-roseville": {
     name: "Holiday Inn Express Roseville–St. Paul",
-    rate_cents: 13900,
     discount_pct: 40,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 13900 },
+      { label: "1 King Bed", rate_cents: 12900 },
+    ],
   },
   "fairfield-roseville": {
     name: "Fairfield Inn & Suites Roseville",
-    rate_cents: 15900,
     discount_pct: 40,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 15900 },
+      { label: "1 King Bed + Sofa Bed", rate_cents: 14900 },
+    ],
   },
   "hampton-roseville": {
     name: "Hampton Inn Minneapolis/Roseville",
-    rate_cents: 16500,
     discount_pct: 40,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 16500 },
+      { label: "1 King Bed", rate_cents: 15500 },
+    ],
   },
   "doubletree-east": {
     name: "DoubleTree by Hilton St. Paul East",
-    rate_cents: 15500,
     discount_pct: 40,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 15500 },
+      { label: "1 King Bed", rate_cents: 14500 },
+    ],
   },
   "hyatt-place-downtown": {
     name: "Hyatt Place St. Paul / Downtown",
-    rate_cents: 18500,
     discount_pct: 30,
-    beds: ["1 King Bed + Sofa Bed", "2 Queen Beds + Sofa Bed"],
+    beds: [
+      { label: "1 King Bed + Sofa Bed", rate_cents: 18500 },
+      { label: "2 Queen Beds + Sofa Bed", rate_cents: 19900 },
+    ],
   },
   "springhill-downtown": {
     name: "SpringHill Suites St. Paul Downtown",
-    rate_cents: 19500,
     discount_pct: 30,
-    beds: ["King Suite + Sofa Bed", "2 Queen Suite + Sofa Bed"],
+    beds: [
+      { label: "King Suite + Sofa Bed", rate_cents: 19500 },
+      { label: "2 Queen Suite + Sofa Bed", rate_cents: 20900 },
+    ],
   },
   "drury-plaza-downtown": {
     name: "Drury Plaza Hotel St. Paul Downtown",
-    rate_cents: 20900,
     discount_pct: 30,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 20900 },
+      { label: "1 King Bed", rate_cents: 19900 },
+    ],
   },
   "intercontinental-riverfront": {
     name: "InterContinental Saint Paul Riverfront",
-    rate_cents: 25900,
     discount_pct: 30,
-    beds: ["1 King Bed", "2 Double Beds"],
+    beds: [
+      { label: "1 King Bed", rate_cents: 25900 },
+      { label: "2 Double Beds", rate_cents: 26900 },
+    ],
   },
   "hampton-inn-downtown-stpaul": {
     name: "Hampton Inn & Suites St. Paul Downtown",
-    rate_cents: 16900,
     discount_pct: 30,
-    beds: ["2 Queen Beds", "1 King Bed"],
+    beds: [
+      { label: "2 Queen Beds", rate_cents: 16900 },
+      { label: "1 King Bed", rate_cents: 15900 },
+    ],
   },
   "saint-paul-hotel": {
     name: "The Saint Paul Hotel",
-    rate_cents: 20900,
     discount_pct: 30,
-    beds: ["1 King Bed", "1 Queen Bed", "2 Double Beds"],
+    beds: [
+      { label: "1 King Bed", rate_cents: 20900 },
+      { label: "1 Queen Bed", rate_cents: 18900 },
+      { label: "2 Double Beds", rate_cents: 22900 },
+    ],
   },
 };
 
@@ -177,16 +214,19 @@ export async function bookHotel(req, res) {
     .slice(0, 254);
   const check_in = parseDay(b.check_in);
   const check_out = parseDay(b.check_out);
-  // Bed choice must be one of the hotel's block options; clients that don't
-  // send one get the hotel's default (first option).
+  // Bed choice must be one of the hotel's block options — it sets the nightly
+  // rate. Clients that don't send one get the hotel's default (first option).
   const bed_type_raw = String(b.bed_type || "").slice(0, 60);
-  let bed_type = "";
+  let bed = null;
   if (hotel) {
-    if (bed_type_raw && !hotel.beds.includes(bed_type_raw)) {
+    bed = bed_type_raw
+      ? hotel.beds.find((x) => x.label === bed_type_raw)
+      : hotel.beds[0];
+    if (!bed) {
       return res.status(400).json({ errors: ["Invalid bed type"] });
     }
-    bed_type = bed_type_raw || hotel.beds[0];
   }
+  const bed_type = bed ? bed.label : "";
 
   // ── Validate ──
   const errors = [];
@@ -204,9 +244,9 @@ export async function bookHotel(req, res) {
   }
   if (errors.length) return res.status(400).json({ errors });
 
-  // ── Price (server-side only) ──
+  // ── Price (server-side only, per bed type) ──
   const nightly_cents = Math.round(
-    hotel.rate_cents * (1 - hotel.discount_pct / 100),
+    bed.rate_cents * (1 - hotel.discount_pct / 100),
   );
   const total_cents = nightly_cents * nights * rooms;
 
