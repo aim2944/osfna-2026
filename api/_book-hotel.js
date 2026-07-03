@@ -19,86 +19,103 @@ const HOTELS = {
     name: "Quality Inn Midway — St. Paul",
     rate_cents: 10900,
     discount_pct: 50,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "country-inn-roseville": {
     name: "Country Inn & Suites by Radisson, Roseville",
     rate_cents: 11900,
     discount_pct: 50,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "days-hotel-university-ave": {
     name: "Days Hotel by Wyndham University Ave SE",
     rate_cents: 9900,
     discount_pct: 50,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "motel-6-roseville": {
     name: "Motel 6 Roseville — Minneapolis North",
     rate_cents: 7900,
     discount_pct: 50,
+    beds: ["1 Queen Bed", "2 Queen Beds"],
   },
   "home2-suites-roseville": {
     name: "Home2 Suites by Hilton Roseville",
     rate_cents: 14900,
     discount_pct: 40,
+    beds: ["1 King Studio Suite", "2 Queen Studio Suite"],
   },
   "courtyard-roseville": {
     name: "Courtyard Minneapolis St. Paul/Roseville",
     rate_cents: 14900,
     discount_pct: 40,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "residence-inn-roseville": {
     name: "Residence Inn Minneapolis St. Paul/Roseville",
     rate_cents: 16900,
     discount_pct: 40,
+    beds: ["Studio Suite — 1 King", "1-Bedroom Suite — 1 King"],
   },
   "hie-roseville": {
     name: "Holiday Inn Express Roseville–St. Paul",
     rate_cents: 13900,
     discount_pct: 40,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "fairfield-roseville": {
     name: "Fairfield Inn & Suites Roseville",
     rate_cents: 15900,
     discount_pct: 40,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "hampton-roseville": {
     name: "Hampton Inn Minneapolis/Roseville",
     rate_cents: 16500,
     discount_pct: 40,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "doubletree-east": {
     name: "DoubleTree by Hilton St. Paul East",
     rate_cents: 15500,
     discount_pct: 40,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "hyatt-place-downtown": {
     name: "Hyatt Place St. Paul / Downtown",
     rate_cents: 18500,
     discount_pct: 30,
+    beds: ["1 King Bed + Sofa Bed", "2 Queen Beds + Sofa Bed"],
   },
   "springhill-downtown": {
     name: "SpringHill Suites St. Paul Downtown",
     rate_cents: 19500,
     discount_pct: 30,
+    beds: ["King Suite + Sofa Bed", "2 Queen Suite + Sofa Bed"],
   },
   "drury-plaza-downtown": {
     name: "Drury Plaza Hotel St. Paul Downtown",
     rate_cents: 20900,
     discount_pct: 30,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "intercontinental-riverfront": {
     name: "InterContinental Saint Paul Riverfront",
     rate_cents: 25900,
     discount_pct: 30,
+    beds: ["1 King Bed", "2 Double Beds"],
   },
   "hampton-inn-downtown-stpaul": {
     name: "Hampton Inn & Suites St. Paul Downtown",
     rate_cents: 16900,
     discount_pct: 30,
+    beds: ["2 Queen Beds", "1 King Bed"],
   },
   "saint-paul-hotel": {
     name: "The Saint Paul Hotel",
     rate_cents: 20900,
     discount_pct: 30,
+    beds: ["1 King Bed", "1 Queen Bed", "2 Double Beds"],
   },
 };
 
@@ -160,6 +177,16 @@ export async function bookHotel(req, res) {
     .slice(0, 254);
   const check_in = parseDay(b.check_in);
   const check_out = parseDay(b.check_out);
+  // Bed choice must be one of the hotel's block options; clients that don't
+  // send one get the hotel's default (first option).
+  const bed_type_raw = String(b.bed_type || "").slice(0, 60);
+  let bed_type = "";
+  if (hotel) {
+    if (bed_type_raw && !hotel.beds.includes(bed_type_raw)) {
+      return res.status(400).json({ errors: ["Invalid bed type"] });
+    }
+    bed_type = bed_type_raw || hotel.beds[0];
+  }
 
   // ── Validate ──
   const errors = [];
@@ -189,7 +216,7 @@ export async function bookHotel(req, res) {
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
-  const { error: dbErr } = await sb.from("hotel_bookings").insert({
+  const bookingRow = {
     booking_ref,
     hotel_id,
     hotel_name: hotel.name,
@@ -197,13 +224,24 @@ export async function bookHotel(req, res) {
     check_out: b.check_out,
     nights,
     rooms,
+    bed_type,
     nightly_cents,
     total_cents,
     discount_pct: hotel.discount_pct,
     guest_name,
     guest_email,
     status: "pending_payment",
-  });
+  };
+  let { error: dbErr } = await sb.from("hotel_bookings").insert(bookingRow);
+  if (dbErr && /bed_type/.test(dbErr.message || "")) {
+    // bed_type column migration not applied yet — Stripe metadata still
+    // carries the choice, so don't fail the booking over it.
+    console.warn(
+      "[book-hotel] bed_type column missing, inserting without it — apply supabase/migration_2026-07-03_hotel_bed_type.sql",
+    );
+    const { bed_type: _omit, ...legacyRow } = bookingRow;
+    ({ error: dbErr } = await sb.from("hotel_bookings").insert(legacyRow));
+  }
   if (dbErr) {
     console.error("[book-hotel] insert error:", dbErr.message);
     return res
@@ -239,7 +277,7 @@ export async function bookHotel(req, res) {
             currency: "usd",
             product_data: {
               name: `OSFNA Oromo Rate — ${hotel.name}`,
-              description: `${nights} night${nights > 1 ? "s" : ""} · ${rooms} room${rooms > 1 ? "s" : ""} · ${inStr} → ${outStr} · ${hotel.discount_pct}% community discount`,
+              description: `${nights} night${nights > 1 ? "s" : ""} · ${rooms} room${rooms > 1 ? "s" : ""} · ${bed_type} · ${inStr} → ${outStr} · ${hotel.discount_pct}% community discount`,
             },
             unit_amount: nightly_cents,
           },
@@ -262,6 +300,7 @@ export async function bookHotel(req, res) {
         check_out: outStr,
         nights: String(nights),
         rooms: String(rooms),
+        bed_type,
         discount_pct: String(hotel.discount_pct),
         guest_name,
         guest_email,

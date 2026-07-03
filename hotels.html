@@ -349,6 +349,18 @@
         color: rgba(26, 26, 26, 0.62);
         margin-bottom: 0.7rem;
       }
+      .card-beds {
+        font-family: "Oswald", sans-serif;
+        font-weight: 600;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--hgreen-dark);
+        margin-bottom: 0.7rem;
+      }
+      .card-beds .sep {
+        color: var(--hgold);
+      }
       .card-perks {
         display: flex;
         flex-wrap: wrap;
@@ -707,9 +719,11 @@
 
       <p class="fine-print">
         Rates shown are signed OSFNA group-block community rates against
-        standard tournament-week pricing. Photos show each actual property.
-        Bookings are handled by OSFNA 2026 and confirmed by email with a booking
-        reference. Questions:
+        standard tournament-week pricing. Photos show each actual property. The
+        Oromo rate is the same for every bed type at a property; your bed choice
+        is a preference honored by the hotel subject to availability at
+        check-in. Bookings are handled by OSFNA 2026 and confirmed by email with
+        a booking reference. Questions:
         <a href="index.html#contact">contact OSFNA</a>.
       </p>
     </main>
@@ -760,10 +774,12 @@
               </select>
             </div>
             <div>
-              <label for="hm-name">Full name</label>
-              <input type="text" id="hm-name" maxlength="120" required />
+              <label for="hm-beds">Bed type</label>
+              <select id="hm-beds"></select>
             </div>
           </div>
+          <label for="hm-name">Full name</label>
+          <input type="text" id="hm-name" maxlength="120" required />
           <label for="hm-email">Email</label>
           <input type="email" id="hm-email" required />
           <p class="hm-total" id="hm-total"></p>
@@ -820,6 +836,7 @@
           pct: 50,
           drive: 5,
           perks: ["Free parking", "Hot breakfast", "Indoor pool + sauna"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/quality-inn-midway.jpg",
         },
         {
@@ -831,6 +848,7 @@
           pct: 50,
           drive: 10,
           perks: ["Free breakfast buffet", "Indoor pool", "Free parking"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/country-inn-roseville.jpg",
         },
         {
@@ -842,6 +860,7 @@
           pct: 50,
           drive: 8,
           perks: ["Free to-go breakfast", "Free parking", "Free local shuttle"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/days-hotel-university-ave.jpg",
         },
         {
@@ -853,6 +872,7 @@
           pct: 50,
           drive: 10,
           perks: ["Lowest rates in area", "Free parking", "Outdoor pool"],
+          beds: ["1 Queen Bed", "2 Queen Beds"],
           img: "assets/hotels/motel-6-roseville.jpg",
         },
         {
@@ -864,6 +884,7 @@
           pct: 40,
           drive: 13,
           perks: ["Hot breakfast", "Indoor pool", "Area shuttle + EV charging"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/hie-roseville.jpg",
         },
         {
@@ -875,6 +896,7 @@
           pct: 40,
           drive: 14,
           perks: ["Free breakfast", "Free parking", "Fitness center"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/fairfield-roseville.jpg",
         },
         {
@@ -886,6 +908,7 @@
           pct: 40,
           drive: 15,
           perks: ["Hot breakfast", "Indoor pool", "Free parking"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/hampton-roseville.jpg",
         },
         {
@@ -897,6 +920,7 @@
           pct: 40,
           drive: 16,
           perks: ["Warm cookie check-in", "Indoor pool", "Free parking"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/doubletree-east.jpg",
         },
         {
@@ -908,6 +932,7 @@
           pct: 40,
           drive: 8,
           perks: ["Kitchenette suites", "Free breakfast", "Indoor pool"],
+          beds: ["1 King Studio Suite", "2 Queen Studio Suite"],
           img: "assets/hotels/home2-suites-roseville.jpg",
         },
         {
@@ -923,6 +948,7 @@
             "Bistro restaurant + bar",
             "Fitness center",
           ],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/courtyard-roseville.jpg",
         },
         {
@@ -938,6 +964,7 @@
             "Free hot breakfast",
             "Indoor pool + sports court",
           ],
+          beds: ["Studio Suite — 1 King", "1-Bedroom Suite — 1 King"],
           img: "assets/hotels/residence-inn-roseville.jpg",
         },
         {
@@ -949,6 +976,7 @@
           pct: 30,
           drive: 11,
           perks: ["Free breakfast", "Bar + lounge", "Walk to Xcel Center"],
+          beds: ["1 King Bed + Sofa Bed", "2 Queen Beds + Sofa Bed"],
           img: "assets/hotels/hyatt-place-downtown.jpg",
         },
         {
@@ -960,6 +988,7 @@
           pct: 30,
           drive: 11,
           perks: ["All-suite rooms", "Fitness center", "Walk to CHS Field"],
+          beds: ["King Suite + Sofa Bed", "2 Queen Suite + Sofa Bed"],
           img: "assets/hotels/springhill-downtown.jpg",
         },
         {
@@ -971,6 +1000,7 @@
           pct: 30,
           drive: 11,
           perks: ["Free hot breakfast", "Free 5:30 Kickback", "Indoor pool"],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/drury-plaza-downtown.jpg",
         },
         {
@@ -982,6 +1012,7 @@
           pct: 30,
           drive: 11,
           perks: ["River views", "Restaurant + bar", "Fitness center"],
+          beds: ["1 King Bed", "2 Double Beds"],
           img: "assets/hotels/intercontinental-riverfront.jpg",
         },
         {
@@ -997,6 +1028,7 @@
             "Steps from Xcel Center",
             "Fitness center",
           ],
+          beds: ["2 Queen Beds", "1 King Bed"],
           img: "assets/hotels/hampton-inn-downtown-stpaul.jpg",
         },
         {
@@ -1012,6 +1044,7 @@
             "St. Paul Grill restaurant",
             "Walk to Xcel Center",
           ],
+          beds: ["1 King Bed", "1 Queen Bed", "2 Double Beds"],
           img: "assets/hotels/saint-paul-hotel.jpg",
         },
       ];
@@ -1039,6 +1072,7 @@
             `<p class="card-tier">${h.tier}</p>` +
             `<h3 class="card-name">${h.name}</h3>` +
             `<p class="card-addr">${h.addr}</p>` +
+            `<p class="card-beds">${h.beds.join(' <span class="sep">·</span> ')}</p>` +
             '<div class="card-perks">' +
             h.perks.map((p) => `<span class="perk">${p}</span>`).join("") +
             "</div>" +
@@ -1086,6 +1120,14 @@
         const now = activeHotel.rate * (1 - activeHotel.pct / 100);
         document.getElementById("hm-rate").textContent =
           `${activeHotel.pct}% Oromo discount — ${fmt(now)}/night (was ${fmt(activeHotel.rate)})`;
+        const bedsSel = document.getElementById("hm-beds");
+        bedsSel.innerHTML = "";
+        for (const bed of activeHotel.beds) {
+          const opt = document.createElement("option");
+          opt.value = bed;
+          opt.textContent = bed;
+          bedsSel.appendChild(opt);
+        }
         errEl.classList.remove("show");
         updateTotal();
         lastTrigger = btn;
@@ -1152,6 +1194,7 @@
               check_in: document.getElementById("hm-in").value,
               check_out: document.getElementById("hm-out").value,
               rooms: document.getElementById("hm-rooms").value,
+              bed_type: document.getElementById("hm-beds").value,
               guest_name: document.getElementById("hm-name").value,
               guest_email: document.getElementById("hm-email").value,
             }),
