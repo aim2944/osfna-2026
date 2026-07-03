@@ -25,6 +25,31 @@ const HOTELS = {
     rate_cents: 11900,
     discount_pct: 50,
   },
+  "days-hotel-university-ave": {
+    name: "Days Hotel by Wyndham University Ave SE",
+    rate_cents: 9900,
+    discount_pct: 50,
+  },
+  "motel-6-roseville": {
+    name: "Motel 6 Roseville — Minneapolis North",
+    rate_cents: 7900,
+    discount_pct: 50,
+  },
+  "home2-suites-roseville": {
+    name: "Home2 Suites by Hilton Roseville",
+    rate_cents: 14900,
+    discount_pct: 40,
+  },
+  "courtyard-roseville": {
+    name: "Courtyard Minneapolis St. Paul/Roseville",
+    rate_cents: 14900,
+    discount_pct: 40,
+  },
+  "residence-inn-roseville": {
+    name: "Residence Inn Minneapolis St. Paul/Roseville",
+    rate_cents: 16900,
+    discount_pct: 40,
+  },
   "hie-roseville": {
     name: "Holiday Inn Express Roseville–St. Paul",
     rate_cents: 13900,
@@ -63,6 +88,16 @@ const HOTELS = {
   "intercontinental-riverfront": {
     name: "InterContinental Saint Paul Riverfront",
     rate_cents: 25900,
+    discount_pct: 30,
+  },
+  "hampton-inn-downtown-stpaul": {
+    name: "Hampton Inn & Suites St. Paul Downtown",
+    rate_cents: 16900,
+    discount_pct: 30,
+  },
+  "saint-paul-hotel": {
+    name: "The Saint Paul Hotel",
+    rate_cents: 20900,
     discount_pct: 30,
   },
 };
