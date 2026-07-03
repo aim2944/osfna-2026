@@ -27,11 +27,11 @@
 - [x] Hotels nav link added to schedule/itinerary/media/register/vendor (9b65ab9)
 - [x] Verified live: 17 cards render, all photos 200, live cs_live checkout session minted for country-inn (HB26D78A54) and saint-paul-hotel
 - [x] Bed-type options (9fcd470, deployed): per-hotel beds on cards + modal select, server-validated, in Stripe description/metadata; live-verified (valid → cs_live session, invalid → 400)
-- [ ] Apply `supabase/migration_2026-07-03_hotel_bed_type.sql` in the Supabase SQL editor (adds `hotel_bookings.bed_type`; API falls back gracefully until then)
+- [x] Apply `supabase/migration_2026-07-03_hotel_bed_type.sql` — DONE Jul 3 via Management API; verified live booking HBA6103EA9 stored bed_type in hotel_bookings
 
 ## Review / results
 - Checkout is LIVE and taking real money paths.
   - Room-block agreements: SIGNED (Aimon confirmed Jul 3, rates on page correct for all 17).
   - Remaining risk: Stripe key rotation (KEY_ROTATION.md) — still mandatory, not done.
 - Fine print still says "Photos are representative" — all 17 are now real; consider updating.
-- Test bookings HB26D78A54 + one saint-paul ref + one "Bed Option Test" (quality-inn, Jul 3 bed-type verification) sit as unpaid pending rows in hotel_bookings; harmless, ignore in reconciliation.
+- Test bookings HB26D78A54 + one saint-paul ref + "Bed Option Test" (quality-inn) + HBA6103EA9 "Bed Column Test" (residence-inn, Jul 3 bed-type verification) sit as unpaid pending rows in hotel_bookings; harmless, ignore in reconciliation.
