@@ -1,804 +1,1639 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Register — OSFNA 2026</title>
-  <meta name="description" content="Register for OSFNA 2026 — Teams, Volunteers, Vendors, Sponsors, Events, Hotels." />
-  <meta name="theme-color" content="#000000" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/logo-main.png" />
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ── Tab navigation ── */
-    .reg-tabs-wrap {
-      background: #000;
-      position: sticky;
-      top: 70px;
-      z-index: 50;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .reg-tabs {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .reg-tabs::-webkit-scrollbar { display: none; }
-    .reg-tab {
-      flex-shrink: 0;
-      padding: 1rem 1.25rem;
-      font-family: var(--font-head);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-      background: none;
-      border-left: none;
-      border-right: none;
-      border-top: none;
-      white-space: nowrap;
-    }
-    .reg-tab:hover { color: rgba(255,255,255,0.85); }
-    .reg-tab.active {
-      color: #ffffff;
-      border-bottom-color: var(--red);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Register — OSFNA 2026</title>
+    <meta
+      name="description"
+      content="OSFNA 2026 — volunteer, sponsor, venue, and hotel inquiries."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="OSFNA 2026" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/logo-main.png" />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* ── Tab navigation ── */
+      .reg-tabs-wrap {
+        background: #000;
+        position: sticky;
+        top: 70px;
+        z-index: 50;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .reg-tabs {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        gap: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .reg-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .reg-tab {
+        flex-shrink: 0;
+        padding: 1rem 1.25rem;
+        font-family: var(--font-head);
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+        background: none;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        white-space: nowrap;
+      }
+      .reg-tab:hover {
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .reg-tab.active {
+        color: #ffffff;
+        border-bottom-color: var(--red);
+      }
 
-    /* ── Form panels ── */
-    .reg-panel { display: none; }
-    .reg-panel.active { display: block; }
-    @media (max-width: 760px) {
-      #panel-basketball .reg-form-wrap { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-    }
+      /* ── Form panels ── */
+      .reg-panel {
+        display: none;
+      }
+      .reg-panel.active {
+        display: block;
+      }
+      @media (max-width: 760px) {
+        #panel-basketball .reg-form-wrap {
+          grid-template-columns: 1fr !important;
+          gap: 1.5rem !important;
+        }
+      }
 
-    /* ── Form layout ── */
-    .reg-form-wrap {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-    .reg-form-header {
-      margin-bottom: 2.5rem;
-    }
-    .reg-form-header h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-    .reg-form-header p {
-      color: rgba(255,255,255,0.55);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    .reg-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .form-row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1rem;
-    }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .field label {
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .field label span { color: var(--red); }
-    .field input,
-    .field select,
-    .field textarea {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      padding: 0.75rem 1rem;
-      transition: border-color 0.2s, background 0.2s;
-      width: 100%;
-    }
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      outline: none;
-      border-color: var(--red);
-      background: rgba(255,255,255,0.07);
-    }
-    .field input::placeholder,
-    .field textarea::placeholder { color: rgba(255,255,255,0.2); }
-    .field select option { background: #111; color: #fff; }
-    .field textarea { min-height: 90px; resize: vertical; }
-    .field.checkbox-field {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-    .field.checkbox-field input { width: auto; margin-top: 2px; }
-    .field.checkbox-field label {
-      font-size: 0.85rem;
-      text-transform: none;
-      letter-spacing: 0;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.5;
-    }
-    .form-divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      margin: 0.5rem 0;
-    }
-    .form-section-label {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: -0.25rem;
-    }
-    .submit-btn {
-      background: var(--red);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      font-family: var(--font-head);
-      font-size: 0.9rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-    .submit-btn:hover {
-      background: var(--red-dark);
-      transform: translateY(-1px);
-    }
-    .form-note {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
-      text-align: center;
-      line-height: 1.5;
-    }
-    .form-note a { color: var(--red); }
+      /* ── Form layout ── */
+      .reg-form-wrap {
+        max-width: 820px;
+        margin: 0 auto;
+      }
+      .reg-form-header {
+        margin-bottom: 2.5rem;
+      }
+      .reg-form-header h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .reg-form-header p {
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .reg-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .form-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .form-row-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .field label {
+        font-family: var(--font-head);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .field label span {
+        color: var(--red);
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        width: 100%;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--red);
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .field select option {
+        background: #111;
+        color: #fff;
+      }
+      .field textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+      .field.checkbox-field {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .field.checkbox-field input {
+        width: auto;
+        margin-top: 2px;
+      }
+      .field.checkbox-field label {
+        font-size: 0.85rem;
+        text-transform: none;
+        letter-spacing: 0;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.5;
+      }
+      .form-divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        margin: 0.5rem 0;
+      }
+      .form-section-label {
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: -0.25rem;
+      }
+      .submit-btn {
+        background: var(--red);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 1rem 2rem;
+        font-family: var(--font-head);
+        font-size: 0.9rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+      .submit-btn:hover {
+        background: var(--red-dark);
+        transform: translateY(-1px);
+      }
+      .form-note {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.3);
+        text-align: center;
+        line-height: 1.5;
+      }
+      .form-note a {
+        color: var(--red);
+      }
 
-    @media (max-width: 640px) {
-      .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
-    }
+      @media (max-width: 640px) {
+        .form-row-2,
+        .form-row-3 {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    /* ── Form feedback ── */
-    .form-msg {
-      border-radius: 8px;
-      padding: 0.9rem 1.1rem;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      display: none;
-    }
-    .form-msg.error   { background: rgba(204,32,32,0.12); border: 1px solid rgba(204,32,32,0.4); color: #ff9090; display: block; }
-    .form-msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: #86efac; display: block; }
-    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+      /* ── Form feedback ── */
+      .form-msg {
+        border-radius: 8px;
+        padding: 0.9rem 1.1rem;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        display: none;
+      }
+      .form-msg.error {
+        background: rgba(204, 32, 32, 0.12);
+        border: 1px solid rgba(204, 32, 32, 0.4);
+        color: #ff9090;
+        display: block;
+      }
+      .form-msg.success {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: #86efac;
+        display: block;
+      }
+      .submit-btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+      }
 
-    /* ── Top-level success banner ── */
-    .success-banner {
-      background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.35);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin: 0 auto 2rem;
-      max-width: 820px;
-      text-align: center;
-      color: #86efac;
-    }
-    .success-banner strong { display: block; font-size: 1.1rem; margin-bottom: 0.4rem; }
-  </style>
-</head>
-<body>
+      /* ── Top-level success banner ── */
+      .success-banner {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        border-radius: 12px;
+        padding: 1.5rem 2rem;
+        margin: 0 auto 2rem;
+        max-width: 820px;
+        text-align: center;
+        color: #86efac;
+      }
+      .success-banner strong {
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo-link">
-    <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
-    <span class="nav-year">2026</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="register.html" class="active">Register</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
-  <button class="hamburger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <li><a href="register.html">Register</a></li>
-  <li><a href="index.html#contact">Contact</a></li>
-</ul>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html" class="nav-logo-link">
+        <img src="assets/logo-main.png" alt="OSFNA" class="nav-logo-img" />
+        <span class="nav-year">2026</span>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a href="register.html" class="active" aria-current="page"
+            >Register</a
+          >
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <ul class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <li><a href="register.html" aria-current="page">Register</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
 
-<!-- PAGE HERO -->
-<section class="page-hero" style="border-bottom:none;padding-bottom:0;">
-  <div class="page-hero-content">
-    <h1>Register</h1>
-    <p>OSFNA 2026 — July 25 – August 1, 2026</p>
-  </div>
-</section>
-
-<!-- TAB BAR -->
-<div class="reg-tabs-wrap">
-  <div class="reg-tabs" role="tablist">
-    <button class="reg-tab active" role="tab" aria-selected="true"  data-tab="basketball">4v4 Basketball</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="volunteers">Volunteers</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="vendor">Vendor</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="sponsorship">Sponsorship</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="event">Event Registration</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="venue">Venue</button>
-    <button class="reg-tab"        role="tab" aria-selected="false" data-tab="hotels">Hotels Deal</button>
-  </div>
-</div>
-
-<!-- PANELS -->
-<div class="section section-dark" style="padding-top:3rem;padding-bottom:5rem;">
-  <div class="section-inner">
-
-    <!-- ══════ BASKETBALL TEAM REGISTRATION ══════ -->
-    <div class="reg-panel active" id="panel-basketball" role="tabpanel">
-      <div class="reg-form-wrap" style="max-width:1100px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:2.25rem;align-items:start;">
-        <aside class="bball-side" style="display:flex;flex-direction:column;gap:1.1rem;">
-          <img src="assets/basketball-4v4-flyer.jpg" alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas." style="width:100%;display:block;border-radius:14px;border:1px solid rgba(255,255,255,0.08);" />
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;">
-            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Date</div><div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:0.95rem;margin-top:0.25rem;">Jul 30 – Aug 1</div></div>
-            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">City</div><div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:0.95rem;margin-top:0.25rem;">MPLS, MN</div></div>
-            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Format</div><div style="font-family:var(--font-display);font-weight:700;color:var(--red);font-size:0.95rem;margin-top:0.25rem;">4v4</div></div>
-          </div>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.55rem;font-size:0.9rem;color:rgba(255,255,255,0.78);line-height:1.45;">
-            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">🏀</span><span><strong style="color:#fff;">4v4 format</strong> — 4 starters + up to 2 subs (6 max).</span></li>
-            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">💵</span><span><strong style="color:#fff;">Cash prize</strong> for the winning team.</span></li>
-            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">🏆</span><span><strong style="color:#fff;">2025 champs:</strong> New Dallas.</span></li>
-            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">📍</span><span>Played during <strong style="color:#fff;">Oromo Week MMXXVI</strong>, Minneapolis.</span></li>
-            <li style="display:flex;gap:0.6rem;"><span aria-hidden="true">💬</span><span>Bracket + court drops in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener" style="color:var(--red);">@osfna2026 group chat</a>.</span></li>
-          </ul>
-        </aside>
-        <div>
-        <div class="reg-form-header">
-          <h2>4v4 Basketball — Quick Register</h2>
-          <p>Jul 30 – Aug 1 · Minneapolis · Cash prize. Fill this in, hit send, and we'll DM @osfna2026 for you. No accounts, no payment forms — just a one-tap message.</p>
+    <main id="main">
+      <!-- PAGE HERO -->
+      <section class="page-hero" style="border-bottom: none; padding-bottom: 0">
+        <div class="page-hero-content">
+          <h1>Get Involved</h1>
+          <p>OSFNA 2026 · Oromo Week · Minneapolis · Dates TBD</p>
         </div>
-        <form class="reg-form" id="form-basketball" novalidate>
-          <div class="form-row-2">
-            <div class="field"><label>Team Name <span>*</span></label><input type="text" name="team_name" placeholder="e.g., New Dallas" required /></div>
-            <div class="field"><label>City <span>*</span></label><input type="text" name="team_city" placeholder="e.g., Minneapolis, MN" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Captain Name <span>*</span></label><input type="text" name="captain_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Captain Phone <span>*</span></label><input type="tel" name="captain_phone" placeholder="(555) 123-4567" required /></div>
-          </div>
-          <div class="field"><label>Captain Email <span>*</span></label><input type="email" name="captain_email" placeholder="email@example.com" required /></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="bball-agree" name="agree" required />
-            <label for="bball-agree">We'll follow OSFNA 4v4 tournament rules. <span style="color:var(--red)">*</span></label>
-          </div>
-          <input type="hidden" name="sport" value="basketball" />
-          <input type="hidden" name="format" value="4v4" />
-          <div class="form-msg" id="basketball-msg"></div>
-          <button type="submit" class="submit-btn" id="basketball-submit-btn">Send via Instagram DM →</button>
-          <p class="form-note">Tap submit and we'll open an Instagram DM to <strong style="color:#fff;">@osfna2026</strong> with your registration message ready to paste — one tap to send. Bracket + court drops in the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">group chat</a>.</p>
-        </form>
+      </section>
+
+      <!-- TAB BAR -->
+      <div class="reg-tabs-wrap">
+        <div
+          class="reg-tabs"
+          role="tablist"
+          aria-label="Registration categories"
+        >
+          <button
+            class="reg-tab active"
+            id="tab-volunteers"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-volunteers"
+            data-tab="volunteers"
+          >
+            Volunteers
+          </button>
+          <button
+            class="reg-tab"
+            id="tab-sponsorship"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-sponsorship"
+            data-tab="sponsorship"
+          >
+            Sponsorship
+          </button>
+          <button
+            class="reg-tab"
+            id="tab-venue"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-venue"
+            data-tab="venue"
+          >
+            Venue
+          </button>
+          <button
+            class="reg-tab"
+            id="tab-hotels"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-hotels"
+            data-tab="hotels"
+          >
+            Hotels Deal
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- ══════ VOLUNTEERS ══════ -->
-    <div class="reg-panel" id="panel-volunteers" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Volunteer Registration</h2>
-          <p>Help make OSFNA 2026 the best event yet. Volunteers are needed for tournament operations, cultural events, setup/teardown, hospitality, and more.</p>
-        </div>
-        <form class="reg-form" id="form-volunteers" novalidate>
-          <p class="form-section-label">Personal Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>First Name <span>*</span></label><input type="text" name="first_name" placeholder="First name" required /></div>
-            <div class="field"><label>Last Name <span>*</span></label><input type="text" name="last_name" placeholder="Last name" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
-            <div class="field"><label>Phone <span>*</span></label><input type="tel" name="phone" placeholder="(555) 123-4567" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="e.g., Minneapolis, MN" /></div>
-            <div class="field"><label>Age Group</label>
-              <select name="age_group">
-                <option value="">— Select —</option>
-                <option>16–20</option>
-                <option>21–30</option>
-                <option>31–45</option>
-                <option>46+</option>
-              </select>
+      <!-- PANELS -->
+      <div
+        class="section section-dark"
+        style="padding-top: 3rem; padding-bottom: 5rem"
+      >
+        <div class="section-inner">
+          <!-- ══════ BASKETBALL TEAM REGISTRATION (CLOSED) ══════ -->
+          <div
+            class="reg-panel"
+            id="panel-basketball"
+            role="tabpanel"
+            hidden
+            aria-hidden="true"
+            style="display: none !important"
+          >
+            <div
+              class="reg-form-wrap"
+              style="
+                max-width: 1100px;
+                display: grid;
+                grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+                gap: 2.25rem;
+                align-items: start;
+              "
+            >
+              <aside
+                class="bball-side"
+                style="display: flex; flex-direction: column; gap: 1.1rem"
+              >
+                <img
+                  src="assets/basketball-4v4-flyer.jpg"
+                  alt="OSFNA 2026 Oromo 4v4 Basketball Tournament — Jul 30 to Aug 1, Minneapolis MN, cash prize. 2025 champs New Dallas."
+                  style="
+                    width: 100%;
+                    display: block;
+                    border-radius: 14px;
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                  "
+                />
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 0.5rem;
+                  "
+                >
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.04);
+                      border: 1px solid rgba(255, 255, 255, 0.08);
+                      border-radius: 10px;
+                      padding: 0.7rem;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        letter-spacing: 0.18em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.5);
+                      "
+                    >
+                      Date
+                    </div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 700;
+                        color: #fff;
+                        font-size: 0.95rem;
+                        margin-top: 0.25rem;
+                      "
+                    >
+                      Jul 30 – Aug 1
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.04);
+                      border: 1px solid rgba(255, 255, 255, 0.08);
+                      border-radius: 10px;
+                      padding: 0.7rem;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        letter-spacing: 0.18em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.5);
+                      "
+                    >
+                      City
+                    </div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 700;
+                        color: #fff;
+                        font-size: 0.95rem;
+                        margin-top: 0.25rem;
+                      "
+                    >
+                      MPLS, MN
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.04);
+                      border: 1px solid rgba(255, 255, 255, 0.08);
+                      border-radius: 10px;
+                      padding: 0.7rem;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        letter-spacing: 0.18em;
+                        text-transform: uppercase;
+                        color: rgba(255, 255, 255, 0.5);
+                      "
+                    >
+                      Format
+                    </div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 700;
+                        color: var(--red);
+                        font-size: 0.95rem;
+                        margin-top: 0.25rem;
+                      "
+                    >
+                      4v4
+                    </div>
+                  </div>
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.55rem;
+                    font-size: 0.9rem;
+                    color: rgba(255, 255, 255, 0.78);
+                    line-height: 1.45;
+                  "
+                >
+                  <li style="display: flex; gap: 0.6rem">
+                    <span aria-hidden="true">🏀</span
+                    ><span
+                      ><strong style="color: #fff">4v4 format</strong> — 4
+                      starters + up to 2 subs (6 max).</span
+                    >
+                  </li>
+                  <li style="display: flex; gap: 0.6rem">
+                    <span aria-hidden="true">💵</span
+                    ><span
+                      ><strong style="color: #fff">Cash prize</strong> for the
+                      winning team.</span
+                    >
+                  </li>
+                  <li style="display: flex; gap: 0.6rem">
+                    <span aria-hidden="true">🏆</span
+                    ><span
+                      ><strong style="color: #fff">2025 champs:</strong> New
+                      Dallas.</span
+                    >
+                  </li>
+                  <li style="display: flex; gap: 0.6rem">
+                    <span aria-hidden="true">📍</span
+                    ><span
+                      >Played during
+                      <strong style="color: #fff">Oromo Week MMXXVI</strong>,
+                      Minneapolis.</span
+                    >
+                  </li>
+                  <li style="display: flex; gap: 0.6rem">
+                    <span aria-hidden="true">💬</span
+                    ><span
+                      >Bracket + court drops in the
+                      <a
+                        href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                        target="_blank"
+                        rel="noopener"
+                        style="color: var(--red)"
+                        >@osfna2026 group chat</a
+                      >.</span
+                    >
+                  </li>
+                </ul>
+              </aside>
+              <div>
+                <div class="reg-form-header">
+                  <h2>4v4 Basketball — Lock In Your Team</h2>
+                  <p>
+                    Jul 30 – Aug 1 · Minneapolis · Cash prize. Enter your team
+                    details and check out to lock in your spot.
+                  </p>
+                </div>
+                <form class="reg-form" id="form-basketball" novalidate>
+                  <div class="form-row-2">
+                    <div class="field">
+                      <label for="bb-team-name">Team Name <span>*</span></label
+                      ><input
+                        type="text"
+                        id="bb-team-name"
+                        name="team_name"
+                        placeholder="e.g., New Dallas"
+                        required
+                        aria-required="true"
+                      />
+                    </div>
+                    <div class="field">
+                      <label for="bb-team-city">City <span>*</span></label
+                      ><input
+                        type="text"
+                        id="bb-team-city"
+                        name="team_city"
+                        placeholder="e.g., Minneapolis, MN"
+                        required
+                        aria-required="true"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row-2">
+                    <div class="field">
+                      <label for="bb-captain-name"
+                        >Captain Name <span>*</span></label
+                      ><input
+                        type="text"
+                        id="bb-captain-name"
+                        name="captain_name"
+                        placeholder="Full name"
+                        required
+                        aria-required="true"
+                      />
+                    </div>
+                    <div class="field">
+                      <label for="bb-captain-phone"
+                        >Captain Phone <span>*</span></label
+                      ><input
+                        type="tel"
+                        id="bb-captain-phone"
+                        name="captain_phone"
+                        placeholder="(555) 123-4567"
+                        required
+                        aria-required="true"
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="bb-captain-email"
+                      >Captain Email <span>*</span></label
+                    ><input
+                      type="email"
+                      id="bb-captain-email"
+                      name="captain_email"
+                      placeholder="email@example.com"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="bb-player-count"
+                      >Players Registering <span>*</span></label
+                    >
+                    <select
+                      id="bb-player-count"
+                      name="player_count"
+                      required
+                      aria-required="true"
+                    >
+                      <option value="">— Select —</option>
+                      <option value="4">4 players</option>
+                      <option value="5">5 players</option>
+                      <option value="6">6 players</option>
+                    </select>
+                  </div>
+                  <div class="field checkbox-field">
+                    <input
+                      type="checkbox"
+                      id="bball-agree"
+                      name="agree"
+                      required
+                      aria-required="true"
+                    />
+                    <label for="bball-agree"
+                      >We'll follow OSFNA 4v4 tournament rules.
+                      <span style="color: var(--red)">*</span></label
+                    >
+                  </div>
+                  <input type="hidden" name="sport" value="basketball" />
+                  <input type="hidden" name="format" value="4v4" />
+                  <div
+                    class="form-msg"
+                    id="basketball-msg"
+                    role="alert"
+                    aria-live="assertive"
+                  ></div>
+                  <button
+                    type="submit"
+                    class="submit-btn"
+                    id="basketball-submit-btn"
+                  >
+                    Continue To Checkout →
+                  </button>
+                  <p class="form-note">
+                    After checkout, you'll get a confirmation and join the
+                    <a
+                      href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                      target="_blank"
+                      rel="noopener"
+                      >group chat</a
+                    >
+                    for bracket + court updates.
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Availability &amp; Roles</p>
-          <div class="field"><label>Days Available <span>*</span></label>
-            <select name="days_available" required>
-              <option value="">— Select —</option>
-              <option>Full week (July 25 – Aug 1)</option>
-              <option>Weekend only (July 25–26)</option>
-              <option>Weekdays only</option>
-              <option>Specific days (specify in notes)</option>
-            </select>
-          </div>
-          <div class="field"><label>Preferred Role <span>*</span></label>
-            <select name="preferred_role" required>
-              <option value="">— Choose a role —</option>
-              <option>Tournament Operations (field marshaling, scorekeeping)</option>
-              <option>Hospitality (welcome, information desk)</option>
-              <option>Cultural Events (stage setup, crowd management)</option>
-              <option>Registration Desk</option>
-              <option>Vendor Area Management</option>
-              <option>Setup &amp; Teardown Crew</option>
-              <option>Media &amp; Photography</option>
-              <option>Translation / Interpretation (Afaan Oromo)</option>
-              <option>General Support — Wherever Needed</option>
-            </select>
-          </div>
-          <div class="field"><label>Languages Spoken</label><input type="text" name="languages" placeholder="e.g., Afaan Oromo, Amharic, English" /></div>
-          <div class="field"><label>Prior Volunteer / Event Experience</label><textarea name="experience" placeholder="Tell us about any relevant experience"></textarea></div>
-          <div class="field"><label>Special Skills or Notes</label><textarea name="skills" placeholder="First aid, photography, logistics, etc."></textarea></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="vol-agree" name="agree" required />
-            <label for="vol-agree">I confirm I am available for my selected dates and agree to follow OSFNA volunteer guidelines.</label>
-          </div>
-          <button type="submit" class="submit-btn">Submit Volunteer Application →</button>
-          <p class="form-note">Volunteer confirmation and orientation details sent by email.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
-        </form>
-      </div>
-    </div>
 
-    <!-- ══════ VENDOR ══════ -->
-    <div class="reg-panel" id="panel-vendor" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Event Vendor Application</h2>
-          <p>Apply for a vendor slot at the 7 official OSFNA 2026 night events — late-night food, hookah, lounge, merch, jewelry, photo activations, and brand pop-ups. This is for the parties, not the daytime soccer tournament.</p>
+          <!-- ══════ VOLUNTEERS ══════ -->
+          <div
+            class="reg-panel active"
+            id="panel-volunteers"
+            role="tabpanel"
+            aria-labelledby="tab-volunteers"
+          >
+            <div class="reg-form-wrap">
+              <div class="reg-form-header">
+                <h2>Volunteer Registration</h2>
+                <p>
+                  Help make OSFNA 2026 the best event yet. Volunteers are needed
+                  for tournament operations, cultural events, setup/teardown,
+                  hospitality, and more.
+                </p>
+              </div>
+              <form class="reg-form" id="form-volunteers" novalidate>
+                <p class="form-section-label">Personal Info</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="vol-first-name">First Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="vol-first-name"
+                      name="first_name"
+                      placeholder="First name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="vol-last-name">Last Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="vol-last-name"
+                      name="last_name"
+                      placeholder="Last name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="vol-email">Email <span>*</span></label
+                    ><input
+                      type="email"
+                      id="vol-email"
+                      name="email"
+                      placeholder="email@example.com"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="vol-phone">Phone <span>*</span></label
+                    ><input
+                      type="tel"
+                      id="vol-phone"
+                      name="phone"
+                      placeholder="(555) 123-4567"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="vol-city">City / State</label
+                    ><input
+                      type="text"
+                      id="vol-city"
+                      name="city"
+                      placeholder="e.g., Minneapolis, MN"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="vol-age-group">Age Group</label>
+                    <select id="vol-age-group" name="age_group">
+                      <option value="">— Select —</option>
+                      <option>16–20</option>
+                      <option>21–30</option>
+                      <option>31–45</option>
+                      <option>46+</option>
+                    </select>
+                  </div>
+                </div>
+                <hr class="form-divider" />
+                <p class="form-section-label">Availability &amp; Roles</p>
+                <div class="field">
+                  <label for="vol-days-available"
+                    >Days Available <span>*</span></label
+                  >
+                  <select
+                    id="vol-days-available"
+                    name="days_available"
+                    required
+                    aria-required="true"
+                  >
+                    <option value="">— Select —</option>
+                    <option>Full week (July 25 – Aug 1)</option>
+                    <option>Weekend only (July 25–26)</option>
+                    <option>Weekdays only</option>
+                    <option>Specific days (specify in notes)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="vol-preferred-role"
+                    >Preferred Role <span>*</span></label
+                  >
+                  <select
+                    id="vol-preferred-role"
+                    name="preferred_role"
+                    required
+                    aria-required="true"
+                  >
+                    <option value="">— Choose a role —</option>
+                    <option>
+                      Tournament Operations (field marshaling, scorekeeping)
+                    </option>
+                    <option>Hospitality (welcome, information desk)</option>
+                    <option>
+                      Cultural Events (stage setup, crowd management)
+                    </option>
+                    <option>Registration Desk</option>
+                    <option>Guest Check-In &amp; Entry</option>
+                    <option>Setup &amp; Teardown Crew</option>
+                    <option>Media &amp; Photography</option>
+                    <option>Translation / Interpretation (Afaan Oromo)</option>
+                    <option>General Support — Wherever Needed</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="vol-languages">Languages Spoken</label
+                  ><input
+                    type="text"
+                    id="vol-languages"
+                    name="languages"
+                    placeholder="e.g., Afaan Oromo, Amharic, English"
+                  />
+                </div>
+                <div class="field">
+                  <label for="vol-experience"
+                    >Prior Volunteer / Event Experience</label
+                  ><textarea
+                    id="vol-experience"
+                    name="experience"
+                    placeholder="Tell us about any relevant experience"
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="vol-skills">Special Skills or Notes</label
+                  ><textarea
+                    id="vol-skills"
+                    name="skills"
+                    placeholder="First aid, photography, logistics, etc."
+                  ></textarea>
+                </div>
+                <div class="field checkbox-field">
+                  <input
+                    type="checkbox"
+                    id="vol-agree"
+                    name="agree"
+                    required
+                    aria-required="true"
+                  />
+                  <label for="vol-agree"
+                    >I confirm I am available for my selected dates and agree to
+                    follow OSFNA volunteer guidelines.</label
+                  >
+                </div>
+                <button type="submit" class="submit-btn">
+                  Submit Volunteer Application →
+                </button>
+                <p class="form-note">
+                  Volunteer confirmation and orientation details sent by
+                  email.<br />Questions?
+                  <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a>
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- ══════ SPONSORSHIP ══════ -->
+          <div
+            class="reg-panel"
+            id="panel-sponsorship"
+            role="tabpanel"
+            aria-labelledby="tab-sponsorship"
+          >
+            <div class="reg-form-wrap">
+              <div class="reg-form-header">
+                <h2>Sponsorship Inquiry</h2>
+                <p>
+                  Partner with OSFNA 2026 to reach the most engaged Oromo
+                  diaspora community in North America. Sponsorship packages
+                  include logo placement, stage presence, social media features,
+                  and more. Custom packages available.
+                </p>
+              </div>
+              <form class="reg-form" id="form-sponsorship" novalidate>
+                <p class="form-section-label">Organization Info</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="spon-org-name"
+                      >Organization / Company Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="spon-org-name"
+                      name="org_name"
+                      placeholder="Your organization"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="spon-industry">Industry / Sector</label
+                    ><input
+                      type="text"
+                      id="spon-industry"
+                      name="industry"
+                      placeholder="e.g., Finance, Healthcare, Media"
+                    />
+                  </div>
+                </div>
+                <hr class="form-divider" />
+                <p class="form-section-label">Contact</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="spon-contact-name"
+                      >Contact Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="spon-contact-name"
+                      name="contact_name"
+                      placeholder="Full name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="spon-title">Title / Role</label
+                    ><input
+                      type="text"
+                      id="spon-title"
+                      name="title"
+                      placeholder="e.g., Marketing Director"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="spon-email">Email <span>*</span></label
+                    ><input
+                      type="email"
+                      id="spon-email"
+                      name="email"
+                      placeholder="email@company.com"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="spon-phone">Phone</label
+                    ><input
+                      type="tel"
+                      id="spon-phone"
+                      name="phone"
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                </div>
+                <hr class="form-divider" />
+                <p class="form-section-label">Sponsorship Details</p>
+                <div class="field">
+                  <label for="spon-tier">Sponsorship Tier Interest</label>
+                  <select id="spon-tier" name="tier">
+                    <option value="">— Select preferred tier —</option>
+                    <option>
+                      Title Sponsor — Premier visibility, exclusive naming
+                      rights for one event
+                    </option>
+                    <option>
+                      Gold Sponsor — Stage banners, all print materials, social
+                      features
+                    </option>
+                    <option>
+                      Silver Sponsor — Signage, event program, social mention
+                    </option>
+                    <option>
+                      Community Partner — Table presence, listing on site and
+                      materials
+                    </option>
+                    <option>Custom — I have a specific idea / budget</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="spon-goals"
+                    >Goals / What You Hope to Achieve</label
+                  ><textarea
+                    id="spon-goals"
+                    name="goals"
+                    placeholder="Tell us what you're looking to accomplish through sponsorship"
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="spon-notes">Additional Notes or Questions</label
+                  ><textarea
+                    id="spon-notes"
+                    name="notes"
+                    placeholder="Any specific requirements or ideas?"
+                  ></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                  Submit Sponsorship Inquiry →
+                </button>
+                <p class="form-note">
+                  Our partnerships team will respond within 3 business days.<br />Questions?
+                  <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a>
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- ══════ EVENT REGISTRATION ══════ -->
+          <div
+            class="reg-panel"
+            id="panel-event"
+            role="tabpanel"
+            hidden
+            aria-hidden="true"
+            style="display: none !important"
+          >
+            <div
+              class="reg-form-wrap"
+              style="max-width: 1100px; display: grid; gap: 1.25rem"
+            >
+              <div class="reg-form-header">
+                <h2>Party Weekend Updates</h2>
+                <p>
+                  One hub for Thursday and Friday party cards, Saturday closing
+                  concert updates, venue drops, and same-day access notes. Join
+                  the GC for final details.
+                </p>
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                  gap: 1rem;
+                "
+              >
+                <a
+                  href="parties.html#thursday"
+                  style="
+                    text-decoration: none;
+                    color: inherit;
+                    background: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                    padding: 1.25rem;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      letter-spacing: 0.18em;
+                      text-transform: uppercase;
+                      color: var(--red);
+                      margin-bottom: 0.6rem;
+                    "
+                  >
+                    Thursday
+                  </div>
+                  <h3
+                    style="margin: 0 0 0.45rem; color: #fff; font-size: 1.2rem"
+                  >
+                    Opening Night
+                  </h3>
+                  <p
+                    style="
+                      margin: 0;
+                      color: rgba(255, 255, 255, 0.68);
+                      line-height: 1.55;
+                    "
+                  >
+                    Opening party plus the late-night hookah-lounge afterparty
+                    updates.
+                  </p>
+                </a>
+                <a
+                  href="parties.html#friday"
+                  style="
+                    text-decoration: none;
+                    color: inherit;
+                    background: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                    padding: 1.25rem;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      letter-spacing: 0.18em;
+                      text-transform: uppercase;
+                      color: #fbbf24;
+                      margin-bottom: 0.6rem;
+                    "
+                  >
+                    Friday
+                  </div>
+                  <h3
+                    style="margin: 0 0 0.45rem; color: #fff; font-size: 1.2rem"
+                  >
+                    Rooftop + Night
+                  </h3>
+                  <p
+                    style="
+                      margin: 0;
+                      color: rgba(255, 255, 255, 0.68);
+                      line-height: 1.55;
+                    "
+                  >
+                    Rooftop party, nightclub, and Friday hookah updates in one
+                    section.
+                  </p>
+                </a>
+                <a
+                  href="parties.html#saturday"
+                  style="
+                    text-decoration: none;
+                    color: inherit;
+                    background: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                    padding: 1.25rem;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      letter-spacing: 0.18em;
+                      text-transform: uppercase;
+                      color: #93c5fd;
+                      margin-bottom: 0.6rem;
+                    "
+                  >
+                    Saturday
+                  </div>
+                  <h3
+                    style="margin: 0 0 0.45rem; color: #fff; font-size: 1.2rem"
+                  >
+                    Closing Concert
+                  </h3>
+                  <p
+                    style="
+                      margin: 0;
+                      color: rgba(255, 255, 255, 0.68);
+                      line-height: 1.55;
+                    "
+                  >
+                    Community picnic details, closing-concert notes, and
+                    afterparty updates.
+                  </p>
+                </a>
+              </div>
+              <p class="form-note">
+                Need the venue drops first? Join the
+                <a
+                  href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
+                  target="_blank"
+                  rel="noopener"
+                  >@osfna2026 group chat</a
+                >, then come back here for the latest updates.
+              </p>
+            </div>
+          </div>
+
+          <!-- ══════ VENUE ══════ -->
+          <div
+            class="reg-panel"
+            id="panel-venue"
+            role="tabpanel"
+            aria-labelledby="tab-venue"
+          >
+            <div class="reg-form-wrap">
+              <div class="reg-form-header">
+                <h2>Venue Inquiry</h2>
+                <p>
+                  Interested in hosting an OSFNA 2026 event, practice session,
+                  or satellite activity at your venue? Submit your inquiry and
+                  our events team will be in touch.
+                </p>
+              </div>
+              <form class="reg-form" id="form-venue" novalidate>
+                <p class="form-section-label">Venue Details</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="ven-venue-name">Venue Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="ven-venue-name"
+                      name="venue_name"
+                      placeholder="Venue or facility name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="ven-venue-type">Venue Type</label>
+                    <select id="ven-venue-type" name="venue_type">
+                      <option value="">— Select —</option>
+                      <option>Soccer / Multi-sport Field</option>
+                      <option>Indoor Sports Facility</option>
+                      <option>Hotel / Conference Center</option>
+                      <option>Community Center</option>
+                      <option>Outdoor Park</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ven-address">Address <span>*</span></label
+                  ><input
+                    type="text"
+                    id="ven-address"
+                    name="address"
+                    placeholder="Full address"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="ven-city">City <span>*</span></label
+                    ><input
+                      type="text"
+                      id="ven-city"
+                      name="city"
+                      placeholder="City"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="ven-state">State</label
+                    ><input
+                      type="text"
+                      id="ven-state"
+                      name="state"
+                      placeholder="State"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-3">
+                  <div class="field">
+                    <label for="ven-capacity">Capacity (max)</label
+                    ><input
+                      type="number"
+                      id="ven-capacity"
+                      name="capacity"
+                      placeholder="e.g., 500"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="ven-fields">Fields / Courts</label
+                    ><input
+                      type="text"
+                      id="ven-fields"
+                      name="fields"
+                      placeholder="e.g., 4 soccer fields"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="ven-parking">Parking Spaces</label
+                    ><input
+                      type="number"
+                      id="ven-parking"
+                      name="parking"
+                      placeholder="Approx. count"
+                    />
+                  </div>
+                </div>
+                <hr class="form-divider" />
+                <p class="form-section-label">Contact</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="ven-contact-name"
+                      >Contact Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="ven-contact-name"
+                      name="contact_name"
+                      placeholder="Full name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="ven-email">Email <span>*</span></label
+                    ><input
+                      type="email"
+                      id="ven-email"
+                      name="email"
+                      placeholder="email@example.com"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ven-phone">Phone</label
+                  ><input
+                    type="tel"
+                    id="ven-phone"
+                    name="phone"
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
+                <div class="field">
+                  <label for="ven-availability">Availability / Dates</label
+                  ><textarea
+                    id="ven-availability"
+                    name="availability"
+                    placeholder="Available dates during July 25 – Aug 1, 2026 or for pre-event use"
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="ven-notes">Additional Info</label
+                  ><textarea
+                    id="ven-notes"
+                    name="notes"
+                    placeholder="Amenities, restrictions, rental terms, etc."
+                  ></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                  Submit Venue Inquiry →
+                </button>
+                <p class="form-note">
+                  Our events team will follow up within 5 business days.<br /><a
+                    href="mailto:myosfna@gmail.com"
+                    >myosfna@gmail.com</a
+                  >
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- ══════ HOTELS DEAL ══════ -->
+          <div
+            class="reg-panel"
+            id="panel-hotels"
+            role="tabpanel"
+            aria-labelledby="tab-hotels"
+          >
+            <div class="reg-form-wrap">
+              <div class="reg-form-header">
+                <h2>Hotels Deal</h2>
+                <p>
+                  Traveling to OSFNA 2026? Register your hotel interest and
+                  we'll connect you with our negotiated group rate partners.
+                  Rooms are limited — submit early to secure your rate.
+                </p>
+              </div>
+              <form class="reg-form" id="form-hotels" novalidate>
+                <p class="form-section-label">Your Info</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="hot-full-name">Full Name <span>*</span></label
+                    ><input
+                      type="text"
+                      id="hot-full-name"
+                      name="full_name"
+                      placeholder="Full name"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="hot-email">Email <span>*</span></label
+                    ><input
+                      type="email"
+                      id="hot-email"
+                      name="email"
+                      placeholder="email@example.com"
+                      required
+                      aria-required="true"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="hot-phone">Phone</label
+                    ><input
+                      type="tel"
+                      id="hot-phone"
+                      name="phone"
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="hot-city">Traveling From</label
+                    ><input
+                      type="text"
+                      id="hot-city"
+                      name="city"
+                      placeholder="e.g., Houston, TX"
+                    />
+                  </div>
+                </div>
+                <hr class="form-divider" />
+                <p class="form-section-label">Stay Details</p>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="hot-checkin">Check-in Date</label
+                    ><input
+                      type="date"
+                      id="hot-checkin"
+                      name="checkin"
+                      min="2026-07-23"
+                      max="2026-08-01"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="hot-checkout">Check-out Date</label
+                    ><input
+                      type="date"
+                      id="hot-checkout"
+                      name="checkout"
+                      min="2026-07-25"
+                      max="2026-08-03"
+                    />
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="field">
+                    <label for="hot-room-type">Room Type Preference</label>
+                    <select id="hot-room-type" name="room_type">
+                      <option value="">— Select —</option>
+                      <option>Single / 1 bed</option>
+                      <option>Double / 2 beds</option>
+                      <option>Suite</option>
+                      <option>No preference</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="hot-rooms-count">Number of Rooms</label>
+                    <select id="hot-rooms-count" name="rooms_count">
+                      <option value="">— Select —</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5+</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="hot-guests">Number of Guests</label
+                  ><input
+                    type="number"
+                    id="hot-guests"
+                    name="guests"
+                    placeholder="Total number of guests across all rooms"
+                  />
+                </div>
+                <div class="field">
+                  <label for="hot-notes">Special Requests</label
+                  ><textarea
+                    id="hot-notes"
+                    name="notes"
+                    placeholder="Accessibility needs, room preferences, group booking notes, etc."
+                  ></textarea>
+                </div>
+                <div class="field checkbox-field">
+                  <input
+                    type="checkbox"
+                    id="hotel-interest"
+                    name="interest_confirmed"
+                    required
+                    aria-required="true"
+                  />
+                  <label for="hotel-interest"
+                    >I'm interested in the OSFNA group hotel rate and would like
+                    to be contacted with details.</label
+                  >
+                </div>
+                <button type="submit" class="submit-btn">
+                  Submit Hotel Interest →
+                </button>
+                <p class="form-note">
+                  Group rate details and partner hotel list sent by email.<br />Questions?
+                  <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a>
+                </p>
+              </form>
+            </div>
+          </div>
         </div>
-        <form class="reg-form" id="form-vendor" novalidate>
-          <p class="form-section-label">Business Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>Business Name <span>*</span></label><input type="text" name="business_name" placeholder="Your business name" required /></div>
-            <div class="field"><label>Business Type</label>
-              <select name="business_type">
-                <option value="">— Select —</option>
-                <option>Late-Night Food / Food Truck</option>
-                <option>Hookah / Lounge</option>
-                <option>Streetwear &amp; Apparel</option>
-                <option>Jewelry &amp; Accessories</option>
-                <option>Photo / Video Activation</option>
-                <option>Brand Activation (Beverage / Fintech / Telecom / Auto)</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Contact</p>
-          <div class="form-row-2">
-            <div class="field"><label>Owner / Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Phone <span>*</span></label><input type="tel" name="phone" placeholder="(555) 123-4567" required /></div>
-            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="e.g., Atlanta, GA" /></div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Slot &amp; Nights</p>
-          <div class="form-row-2">
-            <div class="field"><label>Slot Type <span>*</span></label>
-              <select name="booth_size" required>
-                <option value="">— Select —</option>
-                <option value="lobby">Lobby Table (merch / accessories)</option>
-                <option value="late_night_food">Late-Night Food (outdoor / curbside)</option>
-                <option value="hookah_lounge">Hookah / Lounge Zone</option>
-                <option value="brand_activation">Brand Activation / Pop-Up</option>
-                <option value="custom">Custom / Inquire</option>
-              </select>
-            </div>
-            <div class="field"><label>Electrical Power Needed?</label>
-              <select name="power">
-                <option value="">— Select —</option>
-                <option>No power needed</option>
-                <option>Standard outlet (110V)</option>
-                <option>Heavy power (220V / multiple outlets)</option>
-              </select>
-            </div>
-          </div>
-          <div class="field"><label>Products / Services Description <span>*</span></label><textarea name="products_desc" placeholder="Briefly describe what you will be selling or offering" required></textarea></div>
-          <div class="field"><label>Which Nights? (select all that apply)</label>
-            <select name="nights" multiple size="4">
-              <option value="jul25">Jul 25 — Opening Night</option>
-              <option value="jul26">Jul 26 — Diaspora Night</option>
-              <option value="jul27">Jul 27 — Heritage / Afaan Oromo</option>
-              <option value="jul28">Jul 28 — Tournament Night</option>
-              <option value="jul29">Jul 29 — All-Star / Artist Showcase</option>
-              <option value="jul31">Jul 31 — Championship Eve</option>
-              <option value="aug01">Aug 1 — Closing Gala</option>
-            </select>
-          </div>
-          <div class="field"><label>Additional Notes</label><textarea name="notes" placeholder="Any other requirements or questions"></textarea></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="vendor-agree" name="agree" required />
-            <label for="vendor-agree">I agree to comply with all event vendor guidelines and health/safety regulations. I understand slot assignments are night-specific and subject to approval. <span style="color:var(--red)">*</span></label>
-          </div>
-          <div class="form-msg" id="vendor-msg"></div>
-          <button type="submit" class="submit-btn" id="vendor-submit-btn">Submit Vendor Application →</button>
-          <p class="form-note">Booth assignments and load-in details announced through the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">@osfna2026 Instagram group chat</a>.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a> · <a href="tel:7632188700">763-218-8700</a></p>
-        </form>
+        <!-- /section-inner -->
       </div>
-    </div>
+      <!-- /section-dark -->
+    </main>
 
-    <!-- ══════ SPONSORSHIP ══════ -->
-    <div class="reg-panel" id="panel-sponsorship" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Sponsorship Inquiry</h2>
-          <p>Partner with OSFNA 2026 to reach the most engaged Oromo diaspora community in North America. Sponsorship packages include logo placement, stage presence, social media features, and more. Custom packages available.</p>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-logo">OSFNA<span> 2026</span></div>
+            <p>The Oromo Sports Federation in North America.</p>
+          </div>
+          <div>
+            <p class="footer-col-title">Quick Links</p>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="parties.html">Parties</a></li>
+              <li><a href="hotels.html">Hotels</a></li>
+              <li><a href="media.html">Media</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
         </div>
-        <form class="reg-form" id="form-sponsorship" novalidate>
-          <p class="form-section-label">Organization Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>Organization / Company Name <span>*</span></label><input type="text" name="org_name" placeholder="Your organization" required /></div>
-            <div class="field"><label>Industry / Sector</label><input type="text" name="industry" placeholder="e.g., Finance, Healthcare, Media" /></div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Contact</p>
-          <div class="form-row-2">
-            <div class="field"><label>Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Title / Role</label><input type="text" name="title" placeholder="e.g., Marketing Director" /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@company.com" required /></div>
-            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Sponsorship Details</p>
-          <div class="field"><label>Sponsorship Tier Interest</label>
-            <select name="tier">
-              <option value="">— Select preferred tier —</option>
-              <option>Title Sponsor — Premier visibility, exclusive naming rights for one event</option>
-              <option>Gold Sponsor — Stage banners, all print materials, social features</option>
-              <option>Silver Sponsor — Signage, event program, social mention</option>
-              <option>Community Partner — Table presence, listing on site and materials</option>
-              <option>Custom — I have a specific idea / budget</option>
-            </select>
-          </div>
-          <div class="field"><label>Goals / What You Hope to Achieve</label><textarea name="goals" placeholder="Tell us what you're looking to accomplish through sponsorship"></textarea></div>
-          <div class="field"><label>Additional Notes or Questions</label><textarea name="notes" placeholder="Any specific requirements or ideas?"></textarea></div>
-          <button type="submit" class="submit-btn">Submit Sponsorship Inquiry →</button>
-          <p class="form-note">Our partnerships team will respond within 3 business days.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
-        </form>
-      </div>
-    </div>
-
-    <!-- ══════ EVENT REGISTRATION ══════ -->
-    <div class="reg-panel" id="panel-event" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Event Registration</h2>
-          <p>Register to attend specific OSFNA 2026 cultural events — including Miss Oromo NA, nightly concerts, community forums, and more. General tournament access is open to all attendees.</p>
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            © 2026 Oromo Sports Federation in North America.
+          </p>
         </div>
-        <form class="reg-form" id="form-event" novalidate>
-          <p class="form-section-label">Attendee Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>First Name <span>*</span></label><input type="text" name="first_name" placeholder="First name" required /></div>
-            <div class="field"><label>Last Name <span>*</span></label><input type="text" name="last_name" placeholder="Last name" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
-            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>City / State</label><input type="text" name="city" placeholder="Traveling from" /></div>
-            <div class="field"><label>Number of Attendees <span>*</span></label>
-              <select name="party_size" required>
-                <option value="">— Select —</option>
-                <option>1</option><option>2</option><option>3</option>
-                <option>4</option><option>5–10</option><option>10+</option>
-              </select>
-            </div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Event Interests</p>
-          <div class="field"><label>Which events are you interested in attending?</label><textarea name="events_interest" placeholder="e.g., Miss Oromo NA pageant, nightly concerts, cultural forum, all events..."></textarea></div>
-          <div class="field"><label>Dietary Restrictions / Accessibility Needs</label><textarea name="accessibility" placeholder="Any accommodations we should be aware of"></textarea></div>
-          <button type="submit" class="submit-btn">Submit Event Registration →</button>
-          <p class="form-note">Event schedule and details will be emailed closer to the event.<br><a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
-        </form>
       </div>
-    </div>
+    </footer>
 
-    <!-- ══════ VENUE ══════ -->
-    <div class="reg-panel" id="panel-venue" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Venue Inquiry</h2>
-          <p>Interested in hosting an OSFNA 2026 event, practice session, or satellite activity at your venue? Submit your inquiry and our events team will be in touch.</p>
-        </div>
-        <form class="reg-form" id="form-venue" novalidate>
-          <p class="form-section-label">Venue Details</p>
-          <div class="form-row-2">
-            <div class="field"><label>Venue Name <span>*</span></label><input type="text" name="venue_name" placeholder="Venue or facility name" required /></div>
-            <div class="field"><label>Venue Type</label>
-              <select name="venue_type">
-                <option value="">— Select —</option>
-                <option>Soccer / Multi-sport Field</option>
-                <option>Indoor Sports Facility</option>
-                <option>Hotel / Conference Center</option>
-                <option>Community Center</option>
-                <option>Outdoor Park</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="field"><label>Address <span>*</span></label><input type="text" name="address" placeholder="Full address" required /></div>
-          <div class="form-row-2">
-            <div class="field"><label>City <span>*</span></label><input type="text" name="city" placeholder="City" required /></div>
-            <div class="field"><label>State</label><input type="text" name="state" placeholder="State" /></div>
-          </div>
-          <div class="form-row-3">
-            <div class="field"><label>Capacity (max)</label><input type="number" name="capacity" placeholder="e.g., 500" /></div>
-            <div class="field"><label>Fields / Courts</label><input type="text" name="fields" placeholder="e.g., 4 soccer fields" /></div>
-            <div class="field"><label>Parking Spaces</label><input type="number" name="parking" placeholder="Approx. count" /></div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Contact</p>
-          <div class="form-row-2">
-            <div class="field"><label>Contact Name <span>*</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
-          </div>
-          <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
-          <div class="field"><label>Availability / Dates</label><textarea name="availability" placeholder="Available dates during July 25 – Aug 1, 2026 or for pre-event use"></textarea></div>
-          <div class="field"><label>Additional Info</label><textarea name="notes" placeholder="Amenities, restrictions, rental terms, etc."></textarea></div>
-          <button type="submit" class="submit-btn">Submit Venue Inquiry →</button>
-          <p class="form-note">Our events team will follow up within 5 business days.<br><a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
-        </form>
-      </div>
-    </div>
+    <script src="script.js"></script>
+    <script>
+      // ---- Tab switching ----
+      const tabs = document.querySelectorAll(".reg-tab");
+      const panels = document.querySelectorAll(".reg-panel");
 
-    <!-- ══════ HOTELS DEAL ══════ -->
-    <div class="reg-panel" id="panel-hotels" role="tabpanel">
-      <div class="reg-form-wrap">
-        <div class="reg-form-header">
-          <h2>Hotels Deal</h2>
-          <p>Traveling to OSFNA 2026? Register your hotel interest and we'll connect you with our negotiated group rate partners. Rooms are limited — submit early to secure your rate.</p>
-        </div>
-        <form class="reg-form" id="form-hotels" novalidate>
-          <p class="form-section-label">Your Info</p>
-          <div class="form-row-2">
-            <div class="field"><label>Full Name <span>*</span></label><input type="text" name="full_name" placeholder="Full name" required /></div>
-            <div class="field"><label>Email <span>*</span></label><input type="email" name="email" placeholder="email@example.com" required /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567" /></div>
-            <div class="field"><label>Traveling From</label><input type="text" name="city" placeholder="e.g., Houston, TX" /></div>
-          </div>
-          <hr class="form-divider" />
-          <p class="form-section-label">Stay Details</p>
-          <div class="form-row-2">
-            <div class="field"><label>Check-in Date</label><input type="date" name="checkin" min="2026-07-23" max="2026-08-01" /></div>
-            <div class="field"><label>Check-out Date</label><input type="date" name="checkout" min="2026-07-25" max="2026-08-03" /></div>
-          </div>
-          <div class="form-row-2">
-            <div class="field"><label>Room Type Preference</label>
-              <select name="room_type">
-                <option value="">— Select —</option>
-                <option>Single / 1 bed</option>
-                <option>Double / 2 beds</option>
-                <option>Suite</option>
-                <option>No preference</option>
-              </select>
-            </div>
-            <div class="field"><label>Number of Rooms</label>
-              <select name="rooms_count">
-                <option value="">— Select —</option>
-                <option>1</option><option>2</option><option>3</option>
-                <option>4</option><option>5+</option>
-              </select>
-            </div>
-          </div>
-          <div class="field"><label>Number of Guests</label><input type="number" name="guests" placeholder="Total number of guests across all rooms" /></div>
-          <div class="field"><label>Special Requests</label><textarea name="notes" placeholder="Accessibility needs, room preferences, group booking notes, etc."></textarea></div>
-          <div class="field checkbox-field">
-            <input type="checkbox" id="hotel-interest" name="interest_confirmed" required />
-            <label for="hotel-interest">I'm interested in the OSFNA group hotel rate and would like to be contacted with details.</label>
-          </div>
-          <button type="submit" class="submit-btn">Submit Hotel Interest →</button>
-          <p class="form-note">Group rate details and partner hotel list sent by email.<br>Questions? <a href="mailto:myosfna@gmail.com">myosfna@gmail.com</a></p>
-        </form>
-      </div>
-    </div>
-
-  </div><!-- /section-inner -->
-</div><!-- /section-dark -->
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">OSFNA<span> 2026</span></div>
-        <p>The Oromo Sports Federation in North America.</p>
-      </div>
-      <div>
-        <p class="footer-col-title">Quick Links</p>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="vendor.html">Vendors</a></li>
-          <li><a href="media.html">Media</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Oromo Sports Federation in North America.</p>
-    </div>
-  </div>
-</footer>
-
-<script src="script.js"></script>
-<script>
-  // ---- Tab switching ----
-  const tabs   = document.querySelectorAll('.reg-tab');
-  const panels = document.querySelectorAll('.reg-panel');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-      panels.forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected','true');
-      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-      document.querySelector('.reg-tabs-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  const hash = location.hash.replace('#','');
-  if (hash) { const t = document.querySelector(`[data-tab="${hash}"]`); if (t) t.click(); }
-
-  // ---- Success banner from redirect ----
-  const sp = new URLSearchParams(location.search);
-  if (sp.get('success') === 'team') {
-    const teamName = sp.get('team') || 'Your team';
-    const banner = document.createElement('div');
-    banner.className = 'success-banner';
-    banner.innerHTML = `<strong>Registration complete — ${teamName}</strong>You're officially registered for OSFNA 2026. Check your email for confirmation and next steps.`;
-    document.querySelector('.section-inner').prepend(banner);
-  }
-
-  // ---- Generic form submit handler ----
-  async function wireForm(formId, endpoint, btnId, msgId) {
-    const form = document.getElementById(formId);
-    const btn  = document.getElementById(btnId);
-    const msg  = document.getElementById(msgId);
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-
-      const data = Object.fromEntries(new FormData(form));
-      // Convert checkboxes — FormData omits unchecked boxes
-      form.querySelectorAll('input[type=checkbox]').forEach(cb => {
-        if (!data[cb.name]) data[cb.name] = null;
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+          panels.forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+          document
+            .getElementById("panel-" + tab.dataset.tab)
+            .classList.add("active");
+          document
+            .querySelector(".reg-tabs-wrap")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       });
 
-      btn.disabled = true;
-      btn.textContent = 'Submitting…';
-      msg.className = 'form-msg';
-      msg.textContent = '';
+      const hash = location.hash.replace("#", "");
+      const normalizedHash = hash === "vendor" ? "event" : hash;
+      if (normalizedHash) {
+        const t = document.querySelector(`[data-tab="${normalizedHash}"]`);
+        if (t) t.click();
+      }
 
-      try {
-        const res  = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+      // ---- Success banner from redirect ----
+      const sp = new URLSearchParams(location.search);
+      if (sp.get("success") === "team") {
+        const teamName = sp.get("team") || "Your team";
+        const banner = document.createElement("div");
+        banner.className = "success-banner";
+        banner.innerHTML = `<strong>Registration complete — ${teamName}</strong>You're officially in for OSFNA 2026. Check your email, then join the <a href="https://ig.me/j/AbaBi7Pe-ECpvguw/" target="_blank" rel="noopener">group chat</a> for bracket + court drops.`;
+        document.querySelector(".section-inner").prepend(banner);
+      }
+
+      // ---- Generic form submit handler ----
+      async function wireForm(formId, endpoint, btnId, msgId) {
+        const form = document.getElementById(formId);
+        const btn = document.getElementById(btnId);
+        const msg = document.getElementById(msgId);
+        if (!form) return;
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const data = Object.fromEntries(new FormData(form));
+          // Convert checkboxes — FormData omits unchecked boxes
+          form.querySelectorAll("input[type=checkbox]").forEach((cb) => {
+            if (!data[cb.name]) data[cb.name] = null;
+          });
+
+          btn.disabled = true;
+          btn.textContent = "Submitting…";
+          msg.className = "form-msg";
+          msg.textContent = "";
+
+          try {
+            const res = await fetch(endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+            const json = await res.json();
+
+            if (!res.ok) {
+              const errText = json.errors
+                ? json.errors.join("\n")
+                : json.error || "Submission failed.";
+              msg.className = "form-msg error";
+              msg.textContent = errText;
+              btn.disabled = false;
+              btn.textContent = btn.dataset.label;
+              return;
+            }
+
+            if (json.checkoutUrl) {
+              window.location.href = json.checkoutUrl;
+              return;
+            }
+
+            msg.className = "form-msg success";
+            msg.textContent = json.message || "Registration received!";
+            form.reset();
+            btn.textContent = "Submitted ✓";
+          } catch (err) {
+            msg.className = "form-msg error";
+            msg.textContent =
+              "Network error — please try again or email myosfna@gmail.com.";
+            btn.disabled = false;
+            btn.textContent = btn.dataset.label;
+          }
         });
-        const json = await res.json();
 
-        if (!res.ok) {
-          const errText = json.errors ? json.errors.join('\n') : (json.error || 'Submission failed.');
-          msg.className = 'form-msg error';
-          msg.textContent = errText;
-          btn.disabled = false;
-          btn.textContent = btn.dataset.label;
-          return;
-        }
-
-        if (json.checkoutUrl) {
-          window.location.href = json.checkoutUrl;
-          return;
-        }
-
-        msg.className = 'form-msg success';
-        msg.textContent = json.message || 'Registration received!';
-        form.reset();
-        btn.textContent = 'Submitted ✓';
-      } catch (err) {
-        msg.className = 'form-msg error';
-        msg.textContent = 'Network error — please try again or email myosfna@gmail.com.';
-        btn.disabled = false;
-        btn.textContent = btn.dataset.label;
-      }
-    });
-
-    if (btn) btn.dataset.label = btn.textContent;
-  }
-
-  wireForm('form-vendor',     '/api/register-vendor', 'vendor-submit-btn',     'vendor-msg');
-
-  // 4v4 Basketball: bypass backend, prefill IG DM to @osfna2026
-  (() => {
-    const form = document.getElementById('form-basketball');
-    const btn  = document.getElementById('basketball-submit-btn');
-    const msg  = document.getElementById('basketball-msg');
-    if (!form || !btn) return;
-    const originalLabel = btn.textContent;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-      const d = Object.fromEntries(new FormData(form));
-      const text = `OSFNA 2026 — 4v4 Basketball Registration\n\n` +
-        `Team: ${d.team_name || ''}\n` +
-        `City: ${d.team_city || ''}\n` +
-        `Captain: ${d.captain_name || ''}\n` +
-        `Phone: ${d.captain_phone || ''}\n` +
-        `Email: ${d.captain_email || ''}\n\n` +
-        `Locking in our 4v4 spot — Jul 30 to Aug 1, MPLS.`;
-
-      try { await navigator.clipboard.writeText(text); } catch {}
-
-      msg.className = 'form-msg success';
-      msg.innerHTML = '✓ Registration message copied. Opening Instagram — paste in the DM and hit send.';
-      btn.disabled = true;
-      btn.textContent = 'Opening Instagram…';
-
-      const igAppUrl = 'instagram://direct/new?username=osfna2026';
-      const igWebUrl = 'https://ig.me/m/osfna2026';
-      const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        window.location.href = igAppUrl;
-        setTimeout(() => { window.location.href = igWebUrl; }, 800);
-      } else {
-        window.open(igWebUrl, '_blank', 'noopener');
+        if (btn) btn.dataset.label = btn.textContent;
       }
 
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = originalLabel;
-      }, 2500);
-    });
-  })();
-</script>
-<script src="welcome-modal.js"></script>
-<script src="pwa-shell.js"></script>
-</body>
+      wireForm(
+        "form-basketball",
+        "/api/register-team",
+        "basketball-submit-btn",
+        "basketball-msg",
+      );
+    </script>
+    <script src="welcome-modal.js"></script>
+    <script src="pwa-shell.js"></script>
+  </body>
 </html>
