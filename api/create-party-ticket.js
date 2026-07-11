@@ -13,13 +13,35 @@ import { bookHotel } from "./_book-hotel.js";
 // Stripe Checkout URL. The webhook flips the row to paid; the wallet/scan use the
 // signed ticket_id (see _ticket-token.js).
 
-// Standard prices in cents (see PRICING.md). Early-bird variants applied when `early`.
+// Prices in cents (see PRICING.md). GA runs a presale ladder: $5 super-early →
+// $10 early → $30 standard/door. The live wave is chosen SERVER-SIDE (see
+// activeTier) so a client can never request a cheaper tier than what's on sale.
 const PRICES = {
-  ga: { standard: 3000, early: 2000 },
+  ga: { super_early: 500, early: 1000, standard: 3000 },
   vip: { standard: 8500 },
   table: { standard: 40000 },
-  bundle: { standard: 9900, early: 8000 },
+  bundle: { early: 8000, standard: 9900 },
 };
+
+const TIER_LABEL = {
+  super_early: "Super Early Bird",
+  early: "Early Bird",
+  standard: "Standard",
+};
+
+// Which presale wave is live, from OSFNA_GA_TIER (default super_early). Bump the
+// env var in Vercel to raise prices with no code deploy. If the requested wave
+// isn't defined for this ticket type (e.g. VIP has only `standard`), fall back to
+// the cheapest tier that IS defined.
+function activeTier(ticket_type) {
+  const want = String(process.env.OSFNA_GA_TIER || "super_early").toLowerCase();
+  const tiers = PRICES[ticket_type] || {};
+  if (tiers[want] != null) return want;
+  for (const t of ["super_early", "early", "standard"]) {
+    if (tiers[t] != null) return t;
+  }
+  return "standard";
+}
 
 const NIGHTS = new Set([
   "tue-oromummaa",
@@ -97,7 +119,6 @@ export default async function handler(req, res) {
   const promoInput = String(b.promo_code || "")
     .trim()
     .toUpperCase();
-  const early = b.early === true || b.early === "true";
 
   // ── Validate ──
   const errors = [];
@@ -112,9 +133,9 @@ export default async function handler(req, res) {
     process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
 
-  // ── Price ──
-  const tier = PRICES[ticket_type];
-  const unit_cents = early && tier.early ? tier.early : tier.standard;
+  // ── Price (wave chosen server-side, not by the client) ──
+  const tierKey = activeTier(ticket_type);
+  const unit_cents = PRICES[ticket_type][tierKey];
   let subtotal = unit_cents * quantity;
 
   // ── Promo code (optional) ──
@@ -148,7 +169,7 @@ export default async function handler(req, res) {
     quantity,
     unit_cents,
     total_cents: subtotal,
-    price_tier: early ? "Early Bird" : "Standard",
+    price_tier: TIER_LABEL[tierKey] || "Standard",
     night,
     table_id:
       ticket_type === "table"
