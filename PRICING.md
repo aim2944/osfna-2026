@@ -24,32 +24,30 @@ All prices in USD. Party tickets are the primary revenue lever — see `OSFNA_BR
 | Custom booth | negotiable | `STRIPE_VENDOR_BOOTH_CUSTOM` |
 
 ## Party tickets (your lane — THE money) — NEW
-Per-night unless noted. GA runs a presale ladder to pull commitment forward, then
-raises to the door price. Prices are inline in `api/create-party-ticket.js`
-(`PRICES`), not Stripe Price IDs.
+GA presale is priced **per night**: concert nights are $10, every other party night
+is $5. Prices are computed server-side in `api/create-party-ticket.js`
+(`priceFor` / `CONCERT_NIGHTS`), not from the client, so nobody can underpay.
 
-| Tier | ticket_type | Super-early | Early | Standard/Door |
-|---|---|---|---|---|
-| General Entry | `ga` | **$5** | **$10** | $30 |
-| VIP / Section / Bottle | `vip` | — | — | $85 |
-| Table for 6 | `table` | — | — | $400 |
-| All-Access Week Pass | `bundle` | — | $80 | $99 |
+| Tier | ticket_type | Price | Notes |
+|---|---|---|---|
+| General Entry — party night | `ga` | **$5** | Wed Faana Nagaa, Thu Late Night, Fri Adaa, Fri Rooftop, Fri Late Night, Sat Late Night |
+| General Entry — concert night | `ga` | **$10** | Thu "Galmee Seena" opening concert, Sat closing concert (`thu-galmee-seena`, `sat-closing`) |
+| VIP / Section / Bottle | `vip` | $85 | flat |
+| Table for 6 | `table` | $400 | flat |
+| All-Access Week Pass | `bundle` | $99 | flat |
 
-**Live wave is server-controlled by `OSFNA_GA_TIER`** (Vercel prod env):
-`super_early` → `early` → `standard`. Bump it to raise the GA price with **no code
-deploy** — the client can never request a cheaper tier. Currently set to
-`super_early` ($5). When you bump it, also update the "$5" label shown in
-`parties.html` (buy buttons + checkout modal) to match.
+To change a night's price, edit `GA_STANDARD_CENTS` / `GA_CONCERT_CENTS` (or
+`CONCERT_NIGHTS`) in `api/create-party-ticket.js`, and update the matching `$X` label
+on the buy buttons (`data-price` + button text) in `index.html` and `parties.html`.
 
 `OSFNA_TICKETS_OPEN=true` gates whether online sales are open at all (set live
-2026-07-10). GA checkout is wired to all 8 paid nights on `parties.html`; Tuesday
-"Oromummaa" stays free (GC link only).
+2026-07-10). GA checkout is wired to the homepage events cards (`index.html`) and to
+all 8 paid nights on `parties.html`; Tuesday "Oromummaa" stays free (GC link only).
 
-**Why these numbers:** the $5→$10→$30 ladder maximizes early social proof and cash
-flow — a $5 impulse presale is near-frictionless, and every wave bump signals
-scarcity. VIP at ~3× door. The **All-Access bundle is the key lever** — one $99 sale
-up front beats chasing four $30 door sales, and it locks the buyer in before a
-competing promoter can.
+**Why these numbers:** a $5 impulse presale is near-frictionless for the standard
+nights, while the two concert nights ($10) carry the headline talent and can bear the
+premium. VIP at ~3× the $30 door norm. The **All-Access bundle** locks the buyer in
+before a competing promoter can.
 
 **Revenue model:** base case ≈ 600 paid/night × 3 paid nights × ~$24 net (after ~15%
 promoter commission + Stripe fees) ≈ **$43k**, plus ~$12k vendor booths. See

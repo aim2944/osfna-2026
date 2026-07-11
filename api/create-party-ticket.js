@@ -13,34 +13,30 @@ import { bookHotel } from "./_book-hotel.js";
 // Stripe Checkout URL. The webhook flips the row to paid; the wallet/scan use the
 // signed ticket_id (see _ticket-token.js).
 
-// Prices in cents (see PRICING.md). GA runs a presale ladder: $5 super-early →
-// $10 early → $30 standard/door. The live wave is chosen SERVER-SIDE (see
-// activeTier) so a client can never request a cheaper tier than what's on sale.
+// Prices in cents (see PRICING.md). GA presale is priced per NIGHT: concert
+// nights (opening + closing) are $10, every other party night is $5. VIP/table/
+// bundle are flat. Prices are computed server-side so the client can't underpay.
 const PRICES = {
-  ga: { super_early: 500, early: 1000, standard: 3000 },
-  vip: { standard: 8500 },
-  table: { standard: 40000 },
-  bundle: { early: 8000, standard: 9900 },
+  vip: 8500,
+  table: 40000,
+  bundle: 9900,
 };
 
-const TIER_LABEL = {
-  super_early: "Super Early Bird",
-  early: "Early Bird",
-  standard: "Standard",
-};
+// Nights billed at the higher $10 concert presale price.
+const CONCERT_NIGHTS = new Set(["thu-galmee-seena", "sat-closing"]);
+const GA_CONCERT_CENTS = 1000; // $10
+const GA_STANDARD_CENTS = 500; // $5
 
-// Which presale wave is live, from OSFNA_GA_TIER (default super_early). Bump the
-// env var in Vercel to raise prices with no code deploy. If the requested wave
-// isn't defined for this ticket type (e.g. VIP has only `standard`), fall back to
-// the cheapest tier that IS defined.
-function activeTier(ticket_type) {
-  const want = String(process.env.OSFNA_GA_TIER || "super_early").toLowerCase();
-  const tiers = PRICES[ticket_type] || {};
-  if (tiers[want] != null) return want;
-  for (const t of ["super_early", "early", "standard"]) {
-    if (tiers[t] != null) return t;
+// Resolve the server-side price (cents) + human tier label for a request.
+function priceFor(ticket_type, night) {
+  if (ticket_type === "ga") {
+    const concert = CONCERT_NIGHTS.has(night);
+    return {
+      cents: concert ? GA_CONCERT_CENTS : GA_STANDARD_CENTS,
+      label: concert ? "Concert Presale" : "Presale",
+    };
   }
-  return "standard";
+  return { cents: PRICES[ticket_type], label: "Standard" };
 }
 
 const NIGHTS = new Set([
@@ -121,8 +117,9 @@ export default async function handler(req, res) {
     .toUpperCase();
 
   // ── Validate ──
+  const VALID_TYPES = new Set(["ga", "vip", "table", "bundle"]);
   const errors = [];
-  if (!PRICES[ticket_type]) errors.push("Invalid ticket type");
+  if (!VALID_TYPES.has(ticket_type)) errors.push("Invalid ticket type");
   if (!isBundle && !NIGHTS.has(night)) errors.push("Invalid night");
   if (!holder_name) errors.push("Name is required");
   if (!validateEmail(holder_email)) errors.push("Valid email is required");
@@ -133,9 +130,8 @@ export default async function handler(req, res) {
     process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
 
-  // ── Price (wave chosen server-side, not by the client) ──
-  const tierKey = activeTier(ticket_type);
-  const unit_cents = PRICES[ticket_type][tierKey];
+  // ── Price (computed server-side, not trusted from the client) ──
+  const { cents: unit_cents, label: tierLabel } = priceFor(ticket_type, night);
   let subtotal = unit_cents * quantity;
 
   // ── Promo code (optional) ──
@@ -169,7 +165,7 @@ export default async function handler(req, res) {
     quantity,
     unit_cents,
     total_cents: subtotal,
-    price_tier: TIER_LABEL[tierKey] || "Standard",
+    price_tier: tierLabel,
     night,
     table_id:
       ticket_type === "table"

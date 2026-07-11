@@ -1254,6 +1254,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="wed-faana-nagaa"
+                    data-price="5"
                     data-title="“FAANA NAGAA” Party Night"
                   >
                     Buy GA · $5 Presale
@@ -1295,9 +1296,10 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="thu-galmee-seena"
+                    data-price="10"
                     data-title="“GALMEE SEENA” Concert Night"
                   >
-                    Buy GA · $5 Presale
+                    Buy GA · $10 Presale
                   </button>
                   <a
                     href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
@@ -1331,6 +1333,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="thu-late-night"
+                    data-price="5"
                     data-title="Thursday Late Night After Party"
                   >
                     Buy GA · $5 Presale
@@ -1372,6 +1375,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="fri-adaa-night"
+                    data-price="5"
                     data-title="“ADAA NIGHT” Party"
                   >
                     Buy GA · $5 Presale
@@ -1408,6 +1412,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="fri-rooftop"
+                    data-price="5"
                     data-title="Friday Rooftop Party"
                   >
                     Buy GA · $5 Presale
@@ -1438,6 +1443,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="fri-nightclub"
+                    data-price="5"
                     data-title="Friday Late Night After Party"
                   >
                     Buy GA · $5 Presale
@@ -1473,9 +1479,10 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="sat-closing"
+                    data-price="10"
                     data-title="Closing Night Concert After Party"
                   >
-                    Buy GA · $5 Presale
+                    Buy GA · $10 Presale
                   </button>
                   <a
                     href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
@@ -1503,6 +1510,7 @@
                   <button
                     class="buy-btn buy-btn-ga js-buy"
                     data-night="sat-afterparty"
+                    data-price="5"
                     data-title="Saturday Late Night After Party"
                   >
                     Buy GA · $5 Presale
@@ -1547,8 +1555,8 @@
         </button>
         <p class="checkout-eyebrow">General Entry · Presale</p>
         <h3 class="checkout-title" id="coTitle">Party</h3>
-        <p class="checkout-price">
-          $5 <span>Super early bird · per ticket</span>
+        <p class="checkout-price" id="coPrice">
+          $5 <span>Presale · per ticket</span>
         </p>
         <div class="form-msg" id="coMsg" role="alert"></div>
         <label class="checkout-field"
@@ -1640,15 +1648,19 @@
         const emailEl = document.getElementById("coEmail");
         const qtyEl = document.getElementById("coQty");
         const submit = document.getElementById("coSubmit");
+        const priceEl = document.getElementById("coPrice");
         let night = null;
 
         function showErr(t) {
           msg.textContent = t;
           msg.className = "form-msg error";
         }
-        function openModal(n, title) {
+        function openModal(n, title, price) {
           night = n;
           titleEl.textContent = title;
+          if (priceEl)
+            priceEl.innerHTML =
+              "$" + (price || "5") + " <span>Presale · per ticket</span>";
           msg.className = "form-msg";
           msg.textContent = "";
           submit.disabled = false;
@@ -1666,7 +1678,11 @@
           .querySelectorAll(".js-buy")
           .forEach((b) =>
             b.addEventListener("click", () =>
-              openModal(b.dataset.night, b.dataset.title || "Party"),
+              openModal(
+                b.dataset.night,
+                b.dataset.title || "Party",
+                b.dataset.price || "5",
+              ),
             ),
           );
         modal

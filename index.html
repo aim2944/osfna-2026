@@ -730,6 +730,169 @@
           font-size: 0.6rem;
         }
       }
+      button.flyer-card {
+        width: 100%;
+        padding: 0;
+        border: none;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .checkout-modal[hidden] {
+        display: none;
+      }
+      .checkout-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      @media (min-width: 640px) {
+        .checkout-modal {
+          align-items: center;
+          padding: 1.5rem;
+        }
+      }
+      .checkout-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.62);
+        backdrop-filter: blur(3px);
+      }
+      .checkout-panel {
+        position: relative;
+        width: 100%;
+        max-width: 26rem;
+        background: #fff7ee;
+        color: #070707;
+        border-radius: 26px 26px 0 0;
+        padding: 1.8rem 1.6rem 1.6rem;
+        box-shadow: 0 -12px 44px rgba(0, 0, 0, 0.5);
+        animation: sheetUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @media (min-width: 640px) {
+        .checkout-panel {
+          border-radius: 26px;
+        }
+      }
+      @keyframes sheetUp {
+        from {
+          transform: translateY(18px);
+          opacity: 0;
+        }
+      }
+      .checkout-x {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(7, 7, 7, 0.14);
+        background: transparent;
+        color: #070707;
+        font-size: 1.2rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .checkout-eyebrow {
+        font-family: var(--font-head);
+        font-size: 0.68rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #b3151a;
+        margin-bottom: 0.45rem;
+      }
+      .checkout-title {
+        font-family: var(--font-display, var(--font-head));
+        font-size: 1.5rem;
+        line-height: 1.05;
+        margin: 0 0 0.5rem;
+      }
+      .checkout-price {
+        font-family: var(--font-display, var(--font-head));
+        font-size: 2rem;
+        margin: 0 0 1.2rem;
+      }
+      .checkout-price span {
+        display: block;
+        font-family: var(--font-head);
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(7, 7, 7, 0.55);
+        margin-top: 0.25rem;
+      }
+      .checkout-field {
+        display: block;
+        margin-bottom: 0.85rem;
+        font-family: var(--font-head);
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(7, 7, 7, 0.6);
+      }
+      .checkout-field input {
+        width: 100%;
+        margin-top: 0.4rem;
+        padding: 0.8rem 0.9rem;
+        border: 1px solid rgba(7, 7, 7, 0.16);
+        border-radius: 12px;
+        background: #fffdf9;
+        font-size: 1rem;
+        font-family: inherit;
+        letter-spacing: normal;
+        text-transform: none;
+        color: #070707;
+      }
+      .checkout-field input:focus {
+        outline: none;
+        border-color: #ef1b22;
+      }
+      #coSubmit {
+        width: 100%;
+        margin-top: 0.4rem;
+        padding: 0.95rem 1rem;
+        border: none;
+        border-radius: 999px;
+        background: #070707;
+        color: #fff7ee;
+        font-family: var(--font-head);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      #coSubmit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .checkout-fine {
+        margin: 0.85rem 0 0;
+        font-size: 0.72rem;
+        line-height: 1.5;
+        color: rgba(7, 7, 7, 0.5);
+        text-align: center;
+      }
+      .form-msg {
+        border-radius: 12px;
+        padding: 0.75rem 0.9rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        display: none;
+        margin-bottom: 0.9rem;
+      }
+      .form-msg.error {
+        display: block;
+        background: rgba(239, 27, 34, 0.12);
+        border: 1px solid rgba(239, 27, 34, 0.28);
+        color: #b3151a;
+      }
     </style>
   </head>
   <body>
@@ -908,12 +1071,13 @@
               Day 02 · Wednesday <span class="date-pill">Aug 5</span>
             </div>
             <div class="timeline-cards">
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Faana Nagaa Party Night — Day 02 Wednesday"
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="wed-faana-nagaa"
+                data-title="“Faana Nagaa” Party Night"
+                data-price="5"
+                aria-label="Buy tickets — Faana Nagaa Party Night — Day 02 Wednesday"
               >
                 <img
                   src="assets/faana-nagaa-flyer.jpg"
@@ -923,9 +1087,9 @@
                 <span class="flyer-meta red">Party Night</span>
                 <div class="flyer-cta">
                   <span>“Faana Nagaa” Party Night</span
-                  ><strong>Updates in GC →</strong>
+                  ><strong>Buy · $5 →</strong>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -934,12 +1098,13 @@
               Day 03 · Thursday <span class="date-pill">Aug 6</span>
             </div>
             <div class="timeline-cards">
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Galmee Seena Opening Concert Night — Day 03 Thursday"
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="thu-galmee-seena"
+                data-title="“Galmee Seena” Concert Night"
+                data-price="10"
+                aria-label="Buy tickets — Galmee Seena Opening Concert Night — Day 03 Thursday"
               >
                 <img
                   src="assets/galmee-seena-flyer.jpg"
@@ -949,15 +1114,16 @@
                 <span class="flyer-meta red">Opening Night</span>
                 <div class="flyer-cta">
                   <span>“Galmee Seena” Concert Night</span
-                  ><strong>Updates in GC →</strong>
+                  ><strong>Buy · $10 →</strong>
                 </div>
-              </a>
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Thursday Late Night After Party"
+              </button>
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="thu-late-night"
+                data-title="Late Night After Party"
+                data-price="5"
+                aria-label="Buy tickets — Thursday Late Night After Party"
               >
                 <img
                   src="assets/thursday-late-night-flyer.jpg"
@@ -966,10 +1132,9 @@
                 />
                 <span class="flyer-meta">Late Night</span>
                 <div class="flyer-cta">
-                  <span>Late Night After Party</span
-                  ><strong>Updates in GC →</strong>
+                  <span>Late Night After Party</span><strong>Buy · $5 →</strong>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -978,12 +1143,13 @@
               Day 04 · Friday <span class="date-pill">Aug 7</span>
             </div>
             <div class="timeline-cards">
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Adaa Night Cultural Party — Day 04 Friday"
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="fri-adaa-night"
+                data-title="“Adaa Night” Cultural Party"
+                data-price="5"
+                aria-label="Buy tickets — Adaa Night Cultural Party — Day 04 Friday"
               >
                 <img
                   src="assets/adaa-night-flyer.jpg"
@@ -993,15 +1159,16 @@
                 <span class="flyer-meta red">Cultural Night</span>
                 <div class="flyer-cta">
                   <span>“Adaa Night” Cultural Party</span
-                  ><strong>Updates in GC →</strong>
+                  ><strong>Buy · $5 →</strong>
                 </div>
-              </a>
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Friday Rooftop Party"
+              </button>
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="fri-rooftop"
+                data-title="Rooftop Party"
+                data-price="5"
+                aria-label="Buy tickets — Friday Rooftop Party"
               >
                 <img
                   src="assets/rooftop-party-poster.jpg"
@@ -1010,9 +1177,9 @@
                 />
                 <span class="flyer-meta">Rooftop</span>
                 <div class="flyer-cta">
-                  <span>Rooftop Party</span><strong>Updates in GC →</strong>
+                  <span>Rooftop Party</span><strong>Buy · $5 →</strong>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -1021,12 +1188,13 @@
               Day 05 · Saturday <span class="date-pill">Aug 8</span>
             </div>
             <div class="timeline-cards">
-              <a
-                class="flyer-card"
-                href="https://ig.me/j/AbaBi7Pe-ECpvguw/"
-                target="_blank"
-                rel="noopener"
-                aria-label="Closing Night Concert After Party — Saturday, August 8"
+              <button
+                type="button"
+                class="flyer-card js-buy"
+                data-night="sat-closing"
+                data-title="Closing Night Concert After Party"
+                data-price="10"
+                aria-label="Buy tickets — Closing Night Concert After Party — Saturday, August 8"
               >
                 <img
                   src="assets/closing-night-poster.jpg"
@@ -1036,13 +1204,62 @@
                 <span class="flyer-meta red">Headline · Closing Night</span>
                 <div class="flyer-cta">
                   <span>Closing Night Concert After Party</span
-                  ><strong>Updates in GC →</strong>
+                  ><strong>Buy · $10 →</strong>
                 </div>
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </section>
+      <!-- ══ CHECKOUT MODAL ══ -->
+      <div class="checkout-modal" id="checkoutModal" hidden>
+        <div class="checkout-backdrop" data-close></div>
+        <div
+          class="checkout-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="coTitle"
+        >
+          <button class="checkout-x" data-close aria-label="Close checkout">
+            ×
+          </button>
+          <p class="checkout-eyebrow">General Entry · Presale</p>
+          <h3 class="checkout-title" id="coTitle">Party</h3>
+          <p class="checkout-price" id="coPrice">
+            $5 <span>Presale · per ticket</span>
+          </p>
+          <div class="form-msg" id="coMsg" role="alert"></div>
+          <label class="checkout-field"
+            >Full name
+            <input
+              id="coName"
+              type="text"
+              autocomplete="name"
+              maxlength="120"
+            />
+          </label>
+          <label class="checkout-field"
+            >Email
+            <input
+              id="coEmail"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </label>
+          <label class="checkout-field"
+            >Quantity
+            <input id="coQty" type="number" min="1" max="10" value="1" />
+          </label>
+          <button id="coSubmit" type="button">
+            Continue to secure checkout →
+          </button>
+          <p class="checkout-fine">
+            Secure payment via Stripe. Your ticket + QR arrive by email. Venue
+            is announced in the GC before the event.
+          </p>
+        </div>
+      </div>
     </main>
 
     <div class="quick-links">
@@ -1107,5 +1324,107 @@
     </script>
     <script src="welcome-modal.js"></script>
     <script src="pwa-shell.js"></script>
+    <script>
+      // Homepage party-ticket checkout. Opens modal, posts to /api/create-party-ticket,
+      // redirects to Stripe. Price is enforced SERVER-SIDE per night (concerts $10,
+      // others $5); data-price is display only.
+      (function () {
+        const modal = document.getElementById("checkoutModal");
+        if (!modal) return;
+        const titleEl = document.getElementById("coTitle");
+        const priceEl = document.getElementById("coPrice");
+        const msg = document.getElementById("coMsg");
+        const nameEl = document.getElementById("coName");
+        const emailEl = document.getElementById("coEmail");
+        const qtyEl = document.getElementById("coQty");
+        const submit = document.getElementById("coSubmit");
+        let night = null;
+
+        function showErr(t) {
+          msg.textContent = t;
+          msg.className = "form-msg error";
+        }
+        function openModal(n, title, price) {
+          night = n;
+          titleEl.textContent = title;
+          priceEl.innerHTML =
+            "$" + price + " <span>Presale · per ticket</span>";
+          msg.className = "form-msg";
+          msg.textContent = "";
+          submit.disabled = false;
+          submit.textContent = "Continue to secure checkout →";
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+          setTimeout(function () {
+            nameEl.focus();
+          }, 60);
+        }
+        function closeModal() {
+          modal.hidden = true;
+          document.body.style.overflow = "";
+        }
+
+        document.querySelectorAll(".js-buy").forEach(function (b) {
+          b.addEventListener("click", function () {
+            openModal(
+              b.dataset.night,
+              b.dataset.title || "Party",
+              b.dataset.price || "5",
+            );
+          });
+        });
+        modal.querySelectorAll("[data-close]").forEach(function (el) {
+          el.addEventListener("click", closeModal);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !modal.hidden) closeModal();
+        });
+
+        submit.addEventListener("click", async function () {
+          const holder_name = nameEl.value.trim();
+          const holder_email = emailEl.value.trim();
+          const quantity = Math.max(
+            1,
+            Math.min(10, parseInt(qtyEl.value, 10) || 1),
+          );
+          msg.className = "form-msg";
+          if (!holder_name) return showErr("Please enter your name.");
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(holder_email))
+            return showErr("Please enter a valid email.");
+          submit.disabled = true;
+          submit.textContent = "Redirecting to checkout…";
+          try {
+            const r = await fetch("/api/create-party-ticket", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ticket_type: "ga",
+                night: night,
+                quantity: quantity,
+                holder_name: holder_name,
+                holder_email: holder_email,
+              }),
+            });
+            const data = await r.json().catch(function () {
+              return {};
+            });
+            if (!r.ok || !data.checkoutUrl) {
+              submit.disabled = false;
+              submit.textContent = "Continue to secure checkout →";
+              return showErr(
+                (data.errors && data.errors.join(" ")) ||
+                  data.error ||
+                  "Could not start checkout. Please try again.",
+              );
+            }
+            window.location.href = data.checkoutUrl;
+          } catch (e) {
+            submit.disabled = false;
+            submit.textContent = "Continue to secure checkout →";
+            showErr("Network error — please try again.");
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
